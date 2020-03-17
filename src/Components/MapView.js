@@ -1,6 +1,6 @@
 import React from 'react';
 import { divIcon } from 'leaflet';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 
 /*
 location confirmed count => icon style
@@ -83,7 +83,8 @@ function MapView(props) {
     });
 
     return (
-        <Map className="mapview" center={center} zoom={zoom}>
+        <Map className="mapview" center={center} zoom={zoom} zoomControl={false}>
+            <ZoomControl position="topright" />
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"

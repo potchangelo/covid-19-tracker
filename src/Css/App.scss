@@ -14,15 +14,54 @@ html, body {
     bottom: 0;
     left: 0;
     width: 322px;
-    z-index: 20;
+    z-index: 30;
+    transform: translateX(-100%);
+    
+    @media screen and (max-width: $desktop - 1px) {
+        &.is-on-tablet {
+            transform: translateX(0%);
+        }
+    }
+
+    @media screen and (min-width: $desktop) {
+        &.is-on-desktop {
+            transform: translateX(0%);
+        }
+    }
 }
-.listview__brand, .listview__stat {
+
+.listview__switch {
+    color: white;
+    background-color: $black-ter;
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 4px;
+    padding-left: 2px;
+    position: absolute;
+    left: 100%;
+    top: 9px;
+    z-index: 31;
+    cursor: pointer;
+}
+
+.listview__brand, 
+.listview__stat {
     background-color: white;
     border-bottom: 1px solid $grey-lighter;
     padding: 20px;
 }
 
+.listview__stat, 
 .listview__locations {
+    position: relative;
+}
+
+.listview__stat {
+    min-height: 240px;
+}
+
+.listview__locations {
+    flex-grow: 1;
     padding: 20px 0px;
     overflow-y: auto;
 }
@@ -43,8 +82,15 @@ html, body {
     &.selected,
     &.selected .title {
         color: white;
-        background-color: $grey-darker;
+        background-color: $black-ter;
     }
+}
+
+.listview__loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .mapview {
@@ -76,13 +122,21 @@ html, body {
 
 .detailsview {
     background-color: white;
-    border-top: 10px solid $grey-darker;
-    width: 322px;
+    border-top: 10px solid $black-ter;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 360px;
     padding: 20px;
     position: fixed;
-    bottom: 20px;
-    left: 342px;
-    z-index: 30;
+    bottom: 0px;
+    left: 50%;
+    z-index: 20;
+    transform: translateX(-50%);
+
+    @media screen and (max-width: $desktop - 1px) {
+        width: 100%;
+        max-width: 400px;
+    }
 }
 
 .detailsview__close {
@@ -90,4 +144,27 @@ html, body {
     top: 12px;
     right: 12px;
     cursor: pointer;
+}
+
+.loadingview {
+    color: $grey-lighter;
+    background-color: $black-ter;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 40;
+}
+
+.loadingview__label {
+    margin-left: 8px;
+}
+
+.icon.is-rotate-180 {
+    transform: rotate(180deg);
 }

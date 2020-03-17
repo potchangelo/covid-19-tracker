@@ -19,7 +19,7 @@ function App() {
 	const [locationArray, setLocationArray] = useState([]);
 	const [selectedLocation, setSelectedLocation] = useState(null);
 	const [mapCenter, setMapCenter] = useState([13, 100]);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	// Functions
 	function getLatestCount(location, _locationArray) {
@@ -76,12 +76,13 @@ function App() {
 	// Effects
 	useEffect(() => {
 		axios.get('https://coronavirus-tracker-api.herokuapp.com/all').then(response => {
-			console.log(response.data);
 			const { confirmed, recovered, deaths, latest } = response.data;
 			setLocationArray(combineLocationArray(confirmed, recovered, deaths));
 			setLatest(latest);
 		}).catch(error => {
 			console.error(error);
+		}).finally(() => {
+			setIsLoading(false);
 		});
 	}, []);
 
@@ -93,12 +94,25 @@ function App() {
 		);
 	}
 
+	let loadingView = null;
+	if (isLoading) {
+		loadingView = (
+			<div className="loadingview">
+				<span className="icon">
+                    <i className="fas fa-circle-notch fa-lg fa-spin" ></i>
+                </span>
+				<span className="loadingview__label">Loading</span>
+			</div>
+		);
+	}
+
 	return (
 		<div className="App">
 			<ListView 
 				latest={latest} 
 				locationArray={locationArray} 
 				selectedLocation={selectedLocation} 
+				isLoading={isLoading} 
 				onSelectItem={onSelectLocation} 
 				onDeselectItem={onDeselectLocation} />
 			<MapView 
@@ -107,6 +121,7 @@ function App() {
 				locationArray={locationArray}
 				onSelectMarker={onSelectLocation} />
 			{detailsView}
+			{loadingView}
 		</div>
 	);
 }

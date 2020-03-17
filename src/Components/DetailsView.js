@@ -10,8 +10,8 @@ function DetailsView(props) {
         const label = key.charAt(0).toUpperCase() + key.slice(1);
         const count = location[`${key}Count`];
         return (
-            <div key={key} className="columns">
-                <div className="column">
+            <div key={key} className="columns is-mobile">
+                <div className="column is-8">
                     <h6 className="title is-6">{label}</h6>
                 </div>
                 <div className="column">
