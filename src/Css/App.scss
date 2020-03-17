@@ -7,6 +7,8 @@ html, body {
 
 .listview {
     background-color: $white-ter;
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -37,6 +39,12 @@ html, body {
     &:hover {
         background-color: $white-bis;
     }
+
+    &.selected,
+    &.selected .title {
+        color: white;
+        background-color: $grey-darker;
+    }
 }
 
 .mapview {
@@ -64,4 +72,22 @@ html, body {
 .case__marker.red {
     background-color: rgba(224, 7, 7, 0.5);
     border-color: rgb(224, 7, 7);
+}
+
+.detailsview {
+    background-color: white;
+    border-top: 10px solid $grey-darker;
+    width: 322px;
+    padding: 20px;
+    position: fixed;
+    bottom: 20px;
+    left: 342px;
+    z-index: 30;
+}
+
+.detailsview__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    cursor: pointer;
 }

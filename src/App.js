@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import MapView from './Components/MapView';
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
 import ListView from './Components/ListView';
+import DetailsView from './Components/DetailsView';
 
 // API: https://coronavirus-tracker-api.herokuapp.com/all
 
@@ -16,6 +17,8 @@ function App() {
 		updatedDate: null
 	});
 	const [locationArray, setLocationArray] = useState([]);
+	const [selectedLocation, setSelectedLocation] = useState(null);
+	const [mapCenter, setMapCenter] = useState([13, 100]);
 	const [isLoading, setIsLoading] = useState(false);
 
 	// Functions
@@ -42,7 +45,7 @@ function App() {
 				history
 			} = location;
 			const id = `${countryCode}-${index}`;
-			const coordinates = { lat: Number(_lat), long: Number(_long) }
+			const coordinates = { lat: Number(_lat), long: Number(_long) };
 			const newLocation = { id, coordinates, country, countryCode, province, confirmedCount, history };
 
 			// Recovered, Deaths
@@ -57,6 +60,19 @@ function App() {
 		return combinedArray;
 	}
 
+	const onSelectLocation = useCallback((id) => {
+		const location = locationArray.find(_location => _location.id === id);
+		if (location === undefined) {
+			setSelectedLocation(null);
+			return;
+		}
+		const { coordinates: { lat, long } } = location;
+		setSelectedLocation(location);
+		setMapCenter([lat, long]);
+	}, [locationArray]);
+
+	const onDeselectLocation = useCallback(() => setSelectedLocation(null), []);
+
 	// Effects
 	useEffect(() => {
 		axios.get('https://coronavirus-tracker-api.herokuapp.com/all').then(response => {
@@ -69,10 +85,28 @@ function App() {
 		});
 	}, []);
 
+	// Elements
+	let detailsView = null;
+	if (selectedLocation !== null) {
+		detailsView = (
+			<DetailsView location={selectedLocation} onClickClose={onDeselectLocation} />
+		);
+	}
+
 	return (
 		<div className="App">
-			<ListView latest={latest} locationArray={locationArray} />
-			<MapView center={[13, 100]} zoom={5} locationArray={locationArray} />
+			<ListView 
+				latest={latest} 
+				locationArray={locationArray} 
+				selectedLocation={selectedLocation} 
+				onSelectItem={onSelectLocation} 
+				onDeselectItem={onDeselectLocation} />
+			<MapView 
+				center={mapCenter} 
+				zoom={5} 
+				locationArray={locationArray}
+				onSelectMarker={onSelectLocation} />
+			{detailsView}
 		</div>
 	);
 }

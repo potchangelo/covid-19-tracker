@@ -1,7 +1,19 @@
 import React from 'react';
 
 function ListView(props) {
-    const { latest, locationArray } = props;
+    const { 
+        latest, 
+        locationArray, 
+        selectedLocation, 
+        onSelectItem, 
+        onDeselectItem 
+    } = props;
+
+    function onClickItem(id) {
+        if (selectedLocation === null) onSelectItem(id);
+        else if (selectedLocation.id !== id) onSelectItem(id);
+        else onDeselectItem();
+    }
 
     // Elements
     const totalElements = ['confirmed', 'recovered', 'deaths'].map(key => {
@@ -22,8 +34,14 @@ function ListView(props) {
     const locationElements = locationArray.map(location => {
         const { id, country, province, confirmedCount } = location;
         const label = (province !== '') ? `${province}, ${country}` : country;
+        let locationClass = 'listview__location';
+        if (selectedLocation !== null) {
+            if (location.id === selectedLocation.id) {
+                locationClass += ' selected';
+            }
+        }
         return (
-            <div key={id} className="listview__location">
+            <div key={id} className={locationClass} onClick={_ => onClickItem(id)}>
                 <div className="columns">
                     <div className="column">
                         <h6 className="title is-6">{label}</h6>

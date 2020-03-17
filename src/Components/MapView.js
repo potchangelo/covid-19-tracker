@@ -37,7 +37,7 @@ const markerIcons = {
 };
 
 function MapView(props) {
-    const { locationArray, center, zoom } = props;
+    const { locationArray, center, zoom, onSelectMarker } = props;
     // Elements
     const markerElements = locationArray.map(location => {
         const {
@@ -72,6 +72,7 @@ function MapView(props) {
                 key={id}
                 position={[lat, long]}
                 icon={markerIcon}
+                onclick={_ => onSelectMarker(id)}
                 onmouseover={e => e.target.openPopup()}
                 onmouseout={e => e.target.closePopup()} >
                 <Popup>
