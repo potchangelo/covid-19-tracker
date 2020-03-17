@@ -1,0 +1,32 @@
+@import "./Vars";
+@import "~bulma/bulma.sass";
+
+html, body {
+    overflow: hidden;
+}
+
+.mapview {
+    width: 100vw;
+    height: 100vh;
+}
+
+.case__marker {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 50%;
+}
+
+.case__marker.pink {
+    background-color: rgba(245, 21, 245, 0.5);
+    border-color: rgb(245, 21, 245);
+}
+
+.case__marker.purple {
+    background-color: rgba(119, 5, 213, 0.5);
+    border-color: rgb(119, 5, 213);
+}
+
+.case__marker.red {
+    background-color: rgba(224, 7, 7, 0.5);
+    border-color: rgb(224, 7, 7);
+}
