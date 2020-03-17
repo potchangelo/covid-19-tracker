@@ -3,6 +3,7 @@ import axios from 'axios';
 import MapView from './Components/MapView';
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
+import ListView from './Components/ListView';
 
 // API: https://coronavirus-tracker-api.herokuapp.com/all
 
@@ -30,7 +31,7 @@ function App() {
 	}
 
 	function combineLocationArray(confirmed, recovered, deaths) {
-		return confirmed.locations.map((location, index) => {
+		const combinedArray = confirmed.locations.map((location, index) => {
 			// Confirmed
 			const {
 				coordinates: { lat: _lat, long: _long },
@@ -49,7 +50,11 @@ function App() {
 			newLocation.deathsCount = getLatestCount(newLocation, deaths.locations);
 
 			return newLocation;
-		})
+		});
+		combinedArray.sort((location1, location2) => {
+			return location2.confirmedCount - location1.confirmedCount;
+		});
+		return combinedArray;
 	}
 
 	// Effects
@@ -58,13 +63,15 @@ function App() {
 			console.log(response.data);
 			const { confirmed, recovered, deaths, latest } = response.data;
 			setLocationArray(combineLocationArray(confirmed, recovered, deaths));
+			setLatest(latest);
 		}).catch(error => {
 			console.error(error);
-		})
+		});
 	}, []);
 
 	return (
 		<div className="App">
+			<ListView latest={latest} locationArray={locationArray} />
 			<MapView center={[13, 100]} zoom={5} locationArray={locationArray} />
 		</div>
 	);

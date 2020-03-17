@@ -5,9 +5,44 @@ html, body {
     overflow: hidden;
 }
 
+.listview {
+    background-color: $white-ter;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 322px;
+    z-index: 20;
+}
+.listview__brand, .listview__stat {
+    background-color: white;
+    border-bottom: 1px solid $grey-lighter;
+    padding: 20px;
+}
+
+.listview__locations {
+    padding: 20px 0px;
+    overflow-y: auto;
+}
+
+.listview__location {
+    background-color: white;
+    padding: 20px;
+    cursor: pointer;
+    
+    &:not(:last-child) {
+        border-bottom: 1px solid $grey-lighter;
+    }
+
+    &:hover {
+        background-color: $white-bis;
+    }
+}
+
 .mapview {
     width: 100vw;
     height: 100vh;
+    z-index: 10;
 }
 
 .case__marker {
