@@ -1,7 +1,25 @@
 {
   "name": "covid-19-tracker",
-  "version": "0.1.0",
-  "private": true,
+  "description": "Covid-19 Tracker by Zinglecode",
+  "keywords": [
+    "covid-19",
+    "covid19",
+    "coronavirus",
+    "leaflet",
+    "react",
+    "bulma"
+  ],
+  "version": "1.0.0",
+  "author": "Potchara Puttawanchai",
+  "homepage": "https://covid-19-tracker-app.netlify.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/potchangelo/covid-19-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/potchangelo/covid-19-tracker.git/issues"
+  },
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
