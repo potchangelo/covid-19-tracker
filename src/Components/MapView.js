@@ -14,80 +14,86 @@ location confirmed count => icon style
 */
 const markerIcons = {
 	xxSmall: divIcon({
-		className: 'case__marker pink', iconSize: [10, 10],
+		className: 'map-view__marker pink', iconSize: [10, 10],
 	}),
 	xSmall: divIcon({
-		className: 'case__marker pink', iconSize: [16, 16]
+		className: 'map-view__marker pink', iconSize: [16, 16]
 	}),
 	small: divIcon({
-		className: 'case__marker pink', iconSize: [24, 24]
+		className: 'map-view__marker pink', iconSize: [24, 24]
 	}),
 	normal: divIcon({
-		className: 'case__marker purple', iconSize: [32, 32]
+		className: 'map-view__marker purple', iconSize: [32, 32]
 	}),
 	large: divIcon({
-		className: 'case__marker purple', iconSize: [48, 48]
+		className: 'map-view__marker purple', iconSize: [48, 48]
 	}),
 	xLarge: divIcon({
-		className: 'case__marker red', iconSize: [72, 72]
+		className: 'map-view__marker red', iconSize: [72, 72]
 	}),
 	xxLarge: divIcon({
-		className: 'case__marker red', iconSize: [96, 96]
+		className: 'map-view__marker red', iconSize: [96, 96]
 	})
 };
 
 function MapView(props) {
+    // Props
     const { locationArray, center, zoom, onSelectMarker } = props;
+    
     // Elements
     const markerElements = locationArray.map(location => {
         const {
-            id, coordinates: { lat, long },
-            country, province, confirmedCount
+            id, coordinates: { latitude, longitude },
+            country, country_code, province, 
+            latest: { confirmed }
         } = location;
 
         let markerIcon = markerIcons.xxSmall
-        if (confirmedCount >= 101 && confirmedCount <= 500) {
+        if (confirmed >= 101 && confirmed <= 500) {
             markerIcon = markerIcons.xSmall;
         }
-        else if (confirmedCount >= 501 && confirmedCount <= 1000) {
+        else if (confirmed >= 501 && confirmed <= 1000) {
             markerIcon = markerIcons.small;
         }
-        else if (confirmedCount >= 1001 && confirmedCount <= 5000) {
+        else if (confirmed >= 1001 && confirmed <= 5000) {
             markerIcon = markerIcons.normal;
         }
-        else if (confirmedCount >= 5001 && confirmedCount <= 10000) {
+        else if (confirmed >= 5001 && confirmed <= 10000) {
             markerIcon = markerIcons.large;
         }
-        else if (confirmedCount >= 10001 && confirmedCount <= 50000) {
+        else if (confirmed >= 10001 && confirmed <= 50000) {
             markerIcon = markerIcons.xLarge;
         }
-        else if (confirmedCount >= 50001) {
+        else if (confirmed >= 50001) {
             markerIcon = markerIcons.xxLarge;
         }
 
-        const label = (province !== '') ? `${province}, ${country}` : country;
+        let title = country;
+        if (province !== '' && province !== country) {
+            title = `${province}, ${country}`;
+        }
 
         return (
             <Marker
-                key={id}
-                position={[lat, long]}
+                key={`${id}-${country_code}`}
+                position={[latitude, longitude]}
                 icon={markerIcon}
                 onclick={_ => onSelectMarker(id)}
                 onmouseover={e => e.target.openPopup()}
                 onmouseout={e => e.target.closePopup()} >
                 <Popup>
-                    <b>{label}</b>
+                    <b>{title}</b>
                 </Popup>
             </Marker>
         );
     });
 
     return (
-        <Map className="mapview" center={center} zoom={zoom} zoomControl={false}>
+        <Map className="map-view" center={center} zoom={zoom} zoomControl={false}>
             <ZoomControl position="topright" />
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                attribution="&copy; <a href=&quot;http://osm.org/copyright&quot; target=&quot;_blank&quot;>OpenStreetMap</a> contributors"
             />
             {markerElements}
         </Map>

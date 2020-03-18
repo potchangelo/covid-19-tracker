@@ -5,10 +5,14 @@ html, body {
     overflow: hidden;
 }
 
-.listview {
+.icon.is-rotate-180 {
+    transform: rotate(180deg);
+}
+
+// List
+
+.list-view {
     background-color: $white-ter;
-    display: flex;
-    flex-direction: column;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -16,115 +20,165 @@ html, body {
     width: 322px;
     z-index: 30;
     transform: translateX(-100%);
+    transition: transform 0.15s ease-out;
     
     @media screen and (max-width: $desktop - 1px) {
         &.is-on-tablet {
+            box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
             transform: translateX(0%);
         }
     }
 
     @media screen and (min-width: $desktop) {
         &.is-on-desktop {
+            box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
             transform: translateX(0%);
         }
     }
 }
 
-.listview__switch {
+.list-view__switch {
     color: white;
     background-color: $black-ter;
     border-bottom-right-radius: 8px;
     border-top-right-radius: 8px;
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
     padding: 4px;
     padding-left: 2px;
     position: absolute;
     left: 100%;
-    top: 9px;
+    top: 12px;
     z-index: 31;
     cursor: pointer;
 }
 
-.listview__brand, 
-.listview__stat {
-    background-color: white;
-    border-bottom: 1px solid $grey-lighter;
-    padding: 20px;
+.list-view__content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    z-index: 32;
 }
 
-.listview__stat, 
-.listview__locations {
+.list-view__brand {
+    background-color: white;
+    border-bottom: 1px solid $grey-lighter;
+    height: 68px;
+    padding: 12px 16px 12px 60px;
+    position: relative;
+
+    .list-view__logo {
+        position: absolute;
+        left: 14px;
+        top: 16px;
+        width: 32px;
+    }
+}
+
+.list-view__stat {
+    background-color: white;
+    border-bottom: 1px solid $grey-lighter;
+    flex-shrink: 0;
+    min-height: 200px;
+    padding: 20px;
     position: relative;
 }
 
-.listview__stat {
-    min-height: 240px;
-}
-
-.listview__locations {
+.list-view__locations {
+    border-bottom: 1px solid $grey-lighter;
     flex-grow: 1;
-    padding: 20px 0px;
+    position: relative;
     overflow-y: auto;
-}
 
-.listview__location {
-    background-color: white;
-    padding: 20px;
-    cursor: pointer;
+    .list-view__location {
+        background-color: white;
+        padding: 20px;
+        cursor: pointer;
+
+        &:first-child {
+            margin-top: 20px;
+        }
+
+        &:last-child {
+            margin-bottom: 20px;
+        }
+        
+        &:not(:last-child) {
+            border-bottom: 1px solid $grey-lighter;
+        }
     
-    &:not(:last-child) {
-        border-bottom: 1px solid $grey-lighter;
-    }
-
-    &:hover {
-        background-color: $white-bis;
-    }
-
-    &.selected,
-    &.selected .title {
-        color: white;
-        background-color: $black-ter;
+        &:hover {
+            background-color: $white-bis;
+        }
+    
+        &.selected,
+        &.selected .title {
+            color: white;
+            background-color: $black-ter;
+        }
     }
 }
 
-.listview__loading {
+.list-view__loading {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.mapview {
+.list-view__credit {
+    color: $grey-dark;
+    background-color: white;
+    flex-shrink: 0;
+    padding: 8px 20px;
+    text-align: center;
+
+    p:not(:last-child) {
+        margin-bottom: 2px;
+    }
+
+    a:not(:last-child) {
+        margin-right: 16px;
+    }
+}
+
+// Map
+
+.map-view {
     width: 100vw;
     height: 100vh;
     z-index: 10;
 }
 
-.case__marker {
+.map-view__marker {
     border-width: 1px;
     border-style: solid;
     border-radius: 50%;
 }
 
-.case__marker.pink {
+.map-view__marker.pink {
     background-color: rgba(245, 21, 245, 0.5);
     border-color: rgb(245, 21, 245);
 }
 
-.case__marker.purple {
+.map-view__marker.purple {
     background-color: rgba(119, 5, 213, 0.5);
     border-color: rgb(119, 5, 213);
 }
 
-.case__marker.red {
+.map-view__marker.red {
     background-color: rgba(224, 7, 7, 0.5);
     border-color: rgb(224, 7, 7);
 }
 
-.detailsview {
+// Details
+
+.details-view {
     background-color: white;
     border-top: 10px solid $black-ter;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
     width: 360px;
     padding: 20px;
     position: fixed;
@@ -135,22 +189,29 @@ html, body {
 
     @media screen and (max-width: $desktop - 1px) {
         width: 100%;
-        max-width: 400px;
+        max-width: 360px;
+    }
+
+    .title {
+        padding-right: 48px;
     }
 }
 
-.detailsview__close {
+.details-view__close {
     position: absolute;
     top: 12px;
     right: 12px;
     cursor: pointer;
 }
 
-.loadingview {
+// Loading
+
+.loading-view {
     color: $grey-lighter;
     background-color: $black-ter;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    box-shadow: 2px 2px 20px 0px rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
     padding: 12px;
@@ -161,10 +222,6 @@ html, body {
     z-index: 40;
 }
 
-.loadingview__label {
+.loading-view__label {
     margin-left: 8px;
-}
-
-.icon.is-rotate-180 {
-    transform: rotate(180deg);
 }
