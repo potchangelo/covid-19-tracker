@@ -44,92 +44,84 @@ function ListView(props) {
         }
     }
 
-    function sumTotal(_locationArray, key) {
-        return _locationArray.reduce((sum, location) => {
-            return sum + location.latest[key];
-        }, 0);
-    }
-
     // Effects
     useEffect(() => {
         scrollToSelected(selectedLocation);
     }, [selectedLocation]);
 
     // Elements
-    let loadingView = null;
-    let totalElements = null;
-    let locationElements = null;
-    const totalData = {
-        confirmed: sumTotal(locationArray, 'confirmed'),
-        recovered: sumTotal(locationArray, 'recovered'),
-        deaths: sumTotal(locationArray, 'deaths')
-    };
-    if (isLoading) {
-        loadingView = (
-            <div className="list-view__loading">
-				<span className="icon">
-                    <i className="fas fa-circle-notch fa-lg fa-spin" ></i>
-                </span>
-			</div>
+    const totalDataElements = totalKeyArray.map(key => {
+        const title = key.charAt(0).toUpperCase() + key.slice(1);
+        const count = locationArray.reduce((sum, location) => {
+            return sum + location.latest[key];
+        }, 0);
+
+        let titleClass = 'title is-6';
+        if (key === 'recovered') titleClass += ' has-text-success';
+        else if (key === 'deaths') titleClass += ' has-text-danger';
+
+        return (
+            <div key={key} className="columns is-mobile">
+                <div className="column is-8">
+                    <h6 className={titleClass}>{title}</h6>
+                </div>
+                <div className="column">
+                    <p className="is-6 has-text-right">{count.toLocaleString('en')}</p>
+                </div>
+            </div>
         );
-    }
-    else {
-        const totalDataElements = totalKeyArray.map(key => {
-            const title = key.charAt(0).toUpperCase() + key.slice(1);
-            const count = totalData[key];
-            let titleClass = 'title is-6';
-            if (key === 'recovered') titleClass += ' has-text-success';
-            else if (key === 'deaths') titleClass += ' has-text-danger';
-            return (
-                <div key={key} className="columns is-mobile">
+    });
+    let totalElements = (
+        <>
+            <h4 className="title is-4">Total</h4>
+            {totalDataElements}
+        </>
+    );
+
+    let locationElements = locationArray.map(location => {
+        const {
+            id, country, country_code, province,
+            latest: { confirmed }
+        } = location;
+
+        let title = country;
+        if (province !== '' && province !== country) {
+            title = `${province}, ${country}`;
+        }
+        let locationClass = 'list-view__location';
+        if (selectedLocation !== null) {
+            if (location.id === selectedLocation.id) {
+                locationClass += ' selected';
+            }
+        }
+
+        return (
+            <div key={`${id}-${country_code}`} className={locationClass} onClick={_ => onClickItem(id)} data-id={id}>
+                <div className="columns is-mobile">
                     <div className="column is-8">
-                        <h6 className={titleClass}>{title}</h6>
+                        <h6 className="title is-6">{title}</h6>
                     </div>
                     <div className="column">
-                        <p className="is-6 has-text-right">{count.toLocaleString('en')}</p>
+                        <p className="is-6 has-text-right">{confirmed.toLocaleString('en')}</p>
                     </div>
                 </div>
-            );
-        });
-        totalElements = (
-            <>
-                <h4 className="title is-4">Total</h4>
-                {totalDataElements}
-            </>
+            </div>
         );
+    });
 
-        locationElements = locationArray.map(location => {
-            const {
-                id, country, country_code, province,
-                latest: { confirmed }
-            } = location;
-
-            let title = country;
-            if (province !== '' && province !== country) {
-                title = `${province}, ${country}`;
-            }
-            let locationClass = 'list-view__location';
-            if (selectedLocation !== null) {
-                if (location.id === selectedLocation.id) {
-                    locationClass += ' selected';
-                }
-            }
-
-            return (
-                <div key={`${id}-${country_code}`} className={locationClass} onClick={_ => onClickItem(id)} data-id={id}>
-                    <div className="columns is-mobile">
-                        <div className="column is-8">
-                            <h6 className="title is-6">{title}</h6>
-                        </div>
-                        <div className="column">
-                            <p className="is-6 has-text-right">{confirmed.toLocaleString('en')}</p>
-                        </div>
-                    </div>
-                </div>
-            );
-        });
+    let loadingView = null;
+    if (isLoading) {
+        totalElements = null;
+        locationElements = null;
+        loadingView = (
+            <div className="list-view__loading">
+                <span className="icon">
+                    <i className="fas fa-circle-notch fa-lg fa-spin" ></i>
+                </span>
+            </div>
+        );
     }
-
+    
     let listviewClass = 'list-view';
     let tabletIconClass = 'icon is-medium';
     let desktopIconClass = 'icon is-medium';

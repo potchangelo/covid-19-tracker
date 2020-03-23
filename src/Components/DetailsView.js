@@ -39,8 +39,16 @@ function DetailsView(props) {
                     <i className="fas fa-times fa-lg"></i>
                 </span>
             </div>
-            <h4 className="title is-4">{title}</h4>
-            {totalElements}
+            <div className="details-view__content">
+                <div className="details-view__text">
+                    <h4 className="title is-4">{title}</h4>
+                    {totalElements}
+                </div>
+                <div className="details-view__graph">
+                    <h4 className="title is-4">Confirmed timeline</h4>
+                    <div className="d3chart"></div>
+                </div>
+            </div>
         </div>
     );
 }

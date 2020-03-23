@@ -1,14 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import MapView from './Components/MapView';
+import { MapView, ListView, DetailsView } from './Components';
+import api from './Api';
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
-import ListView from './Components/ListView';
-import DetailsView from './Components/DetailsView';
-
-// API old: https://coronavirus-tracker-api.herokuapp.com/all
-// APi new: https://coronavirus-tracker-api.herokuapp.com/v2/locations
-const api = 'https://coronavirus-tracker-api.herokuapp.com/v2/locations';
 
 function App() {
 	// States
@@ -19,15 +13,16 @@ function App() {
 
 	// Functions
 	const onSelectLocation = useCallback((id) => {
-		const location = locationArray.find(_location => _location.id === id);
-		if (location === undefined) {
+		api.getLocation(id).then(response => {
+			const { location } = response.data;
+			const { coordinates: { latitude, longitude } } = location;
+			setSelectedLocation(location);
+			setMapCenter([latitude, longitude]);
+		}).catch(error => {
+			console.error(error);
 			setSelectedLocation(null);
-			return;
-		}
-		const { coordinates: { latitude, longitude } } = location;
-		setSelectedLocation(location);
-		setMapCenter([latitude, longitude]);
-	}, [locationArray]);
+		});
+	}, []);
 
 	const onDeselectLocation = useCallback(() => setSelectedLocation(null), []);
 
@@ -39,7 +34,7 @@ function App() {
 
 	// Effects
 	useEffect(() => {
-		axios.get(api).then(response => {
+		api.getLocations().then(response => {
 			const sortedLocation = getSortedLocation(response.data.locations);
 			setLocationArray(sortedLocation);
 		}).catch(error => {
