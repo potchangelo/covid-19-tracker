@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Logo from '../Images/Logo64.png';
-import LoadingView from './LoadingView';
+import LoadingView from './_LoadingView';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import LoadingView from './LoadingView';
-import DetailsViewChart, { chartYMax } from './DetailsViewChart';
+import LoadingView from './_LoadingView';
+import DetailsViewChart, { chartYMax } from './_DetailsViewChart';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 const latestDays = 5;
