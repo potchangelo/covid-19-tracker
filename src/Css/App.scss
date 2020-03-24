@@ -129,13 +129,6 @@ html, body {
     }
 }
 
-.list-view__loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .list-view__credit {
     color: $grey-dark;
     background-color: white;
@@ -241,7 +234,7 @@ html, body {
     }
 }
 
-.details-view__graph {
+.details-view__chart {
     padding: 20px;
 }
 
@@ -255,7 +248,11 @@ html, body {
 
 // Loading
 
-.loading-view {
+.loading-view__label {
+    margin-left: 8px;
+}
+
+.loading-view__app {
     color: $grey-lighter;
     background-color: $black-ter;
     border-bottom-left-radius: 8px;
@@ -271,6 +268,9 @@ html, body {
     z-index: 40;
 }
 
-.loading-view__label {
-    margin-left: 8px;
+.loading-view__side {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -4,7 +4,7 @@ import Axios from "axios";
 const baseUrl = 'https://coronavirus-tracker-api.herokuapp.com/v2';
 
 const api = {
-    getLocations: () => Axios.get(`${baseUrl}/locations`),
+    getAllLocation: () => Axios.get(`${baseUrl}/locations`),
     getLocation: (id) =>  Axios.get(`${baseUrl}/locations/${id}`)
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Logo from '../Images/Logo64.png';
+import LoadingView from './LoadingView';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 
@@ -50,6 +51,20 @@ function ListView(props) {
     }, [selectedLocation]);
 
     // Elements
+    // 1. Open / Close
+    let listviewClass = 'list-view';
+    let tabletIconClass = 'icon is-medium';
+    let desktopIconClass = 'icon is-medium';
+    if (isOnTablet) {
+        listviewClass += ' is-on-tablet';
+        tabletIconClass += ' is-rotate-180';
+    }
+    if (isOnDesktop) {
+        listviewClass += ' is-on-desktop';
+        desktopIconClass += ' is-rotate-180';
+    }
+
+    // 2. Total
     const totalDataElements = totalKeyArray.map(key => {
         const title = key.charAt(0).toUpperCase() + key.slice(1);
         const count = locationArray.reduce((sum, location) => {
@@ -71,6 +86,7 @@ function ListView(props) {
             </div>
         );
     });
+    
     let totalElements = (
         <>
             <h4 className="title is-4">Total</h4>
@@ -78,6 +94,7 @@ function ListView(props) {
         </>
     );
 
+    // 3. Locations
     let locationElements = locationArray.map(location => {
         const {
             id, country, country_code, province,
@@ -109,29 +126,13 @@ function ListView(props) {
         );
     });
 
-    let loadingView = null;
+    // 4. Loading
+    const loadingView = (
+        <LoadingView isLoading={isLoading} extraClass="loading-view__side" />
+    )
     if (isLoading) {
         totalElements = null;
         locationElements = null;
-        loadingView = (
-            <div className="list-view__loading">
-                <span className="icon">
-                    <i className="fas fa-circle-notch fa-lg fa-spin" ></i>
-                </span>
-            </div>
-        );
-    }
-    
-    let listviewClass = 'list-view';
-    let tabletIconClass = 'icon is-medium';
-    let desktopIconClass = 'icon is-medium';
-    if (isOnTablet) {
-        listviewClass += ' is-on-tablet';
-        tabletIconClass += ' is-rotate-180';
-    }
-    if (isOnDesktop) {
-        listviewClass += ' is-on-desktop';
-        desktopIconClass += ' is-rotate-180';
     }
 
     return (

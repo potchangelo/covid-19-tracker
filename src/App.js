@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { MapView, ListView, DetailsView } from './Components';
+import { MapView, ListView, DetailsView, LoadingView } from './Components';
 import api from './Api';
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
@@ -9,10 +9,12 @@ function App() {
 	const [locationArray, setLocationArray] = useState([]);
 	const [selectedLocation, setSelectedLocation] = useState(null);
 	const [mapCenter, setMapCenter] = useState([15, 101]);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isAllLocationLoading, setIsAllLocationLoading] = useState(true);
+	const [isLocationLoading, setIsLocationLoading] = useState(false);
 
 	// Functions
 	const onSelectLocation = useCallback((id) => {
+		setIsLocationLoading(true);
 		api.getLocation(id).then(response => {
 			const { location } = response.data;
 			const { coordinates: { latitude, longitude } } = location;
@@ -21,55 +23,34 @@ function App() {
 		}).catch(error => {
 			console.error(error);
 			setSelectedLocation(null);
+		}).finally(() => {
+			setIsLocationLoading(false);
 		});
 	}, []);
 
 	const onDeselectLocation = useCallback(() => setSelectedLocation(null), []);
 
-	function getSortedLocation(locations) {
-		return [...locations].sort((location1, location2) => {
-			return location2.latest.confirmed - location1.latest.confirmed;
-		});
-	}
-
 	// Effects
 	useEffect(() => {
-		api.getLocations().then(response => {
-			const sortedLocation = getSortedLocation(response.data.locations);
+		api.getAllLocation().then(response => {
+			const { locations } = response.data;
+			const sortedLocation = [...locations].sort((location1, location2) => {
+				return location2.latest.confirmed - location1.latest.confirmed;
+			});
 			setLocationArray(sortedLocation);
 		}).catch(error => {
 			console.error(error);
 		}).finally(() => {
-			setIsLoading(false);
+			setIsAllLocationLoading(false);
 		});
 	}, []);
 
-	// Elements
-	let detailsView = null;
-	if (selectedLocation !== null) {
-		detailsView = (
-			<DetailsView location={selectedLocation} onClickClose={onDeselectLocation} />
-		);
-	}
-
-	let loadingView = null;
-	if (isLoading) {
-		loadingView = (
-			<div className="loading-view">
-				<span className="icon">
-                    <i className="fas fa-circle-notch fa-lg fa-spin" ></i>
-                </span>
-				<span className="loading-view__label">Loading</span>
-			</div>
-		);
-	}
-
 	return (
-		<div className="App">
+		<div className="app">
 			<ListView 
 				locationArray={locationArray} 
 				selectedLocation={selectedLocation} 
-				isLoading={isLoading} 
+				isLoading={isAllLocationLoading} 
 				onSelectItem={onSelectLocation} 
 				onDeselectItem={onDeselectLocation} />
 			<MapView 
@@ -77,8 +58,14 @@ function App() {
 				zoom={5} 
 				locationArray={locationArray}
 				onSelectMarker={onSelectLocation} />
-			{detailsView}
-			{loadingView}
+			<DetailsView 
+				location={selectedLocation} 
+				isLoading={isLocationLoading} 
+				onClickClose={onDeselectLocation} />
+			<LoadingView
+				isLoading={isAllLocationLoading}
+				label="Loading"
+				extraClass="loading-view__app" />
 		</div>
 	);
 }
