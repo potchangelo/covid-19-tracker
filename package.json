@@ -26,12 +26,14 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bulma": "^0.8.0",
+    "dayjs": "^1.8.23",
     "leaflet": "^1.6.0",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-leaflet": "^2.6.3",
-    "react-scripts": "3.4.0"
+    "react-scripts": "3.4.0",
+    "recharts": "^1.8.5"
   },
   "scripts": {
     "start": "react-scripts start",
