@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Logo from '../Images/Logo64.png';
 import LoadingView from './_LoadingView';
+import './Css/ListView.scss';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 
@@ -153,11 +154,11 @@ function ListView(props) {
                     <h3 className="subtitle is-7">by Zinglecode</h3>
                     <img className="list-view__logo" src={Logo} alt="zinglecode" />
                 </div>
-                <div className="list-view__stat">
+                <div className="list-view__stat list-view__content-block">
                     {loadingView}
                     {totalElements}
                 </div>
-                <div className="list-view__locations" ref={listLocationsRef}>
+                <div className="list-view__locations list-view__content-block" ref={listLocationsRef}>
                     {loadingView}
                     {locationElements}
                 </div>

@@ -1,35 +1,26 @@
 import React from 'react';
 import { divIcon } from 'leaflet';
 import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
+import './Css/MapView.scss';
 
-/*
-location confirmed count => icon style
-1-100 => pink, super very small
-100-500 => pink, very small
-501-1000 => pink, small
-1001-5000 => purple, normal
-5001-10000 => purple, big
-10001-50000 => red, very big
-50000 up => red, super very big
-*/
 const markerIcons = {
 	xxSmall: divIcon({
-		className: 'map-view__marker pink', iconSize: [10, 10],
+		className: 'map-view__marker pink', iconSize: [16, 16],
 	}),
 	xSmall: divIcon({
-		className: 'map-view__marker pink', iconSize: [16, 16]
-	}),
-	small: divIcon({
 		className: 'map-view__marker pink', iconSize: [24, 24]
 	}),
-	normal: divIcon({
-		className: 'map-view__marker purple', iconSize: [32, 32]
+	small: divIcon({
+		className: 'map-view__marker pink', iconSize: [32, 32]
 	}),
-	large: divIcon({
+	normal: divIcon({
 		className: 'map-view__marker purple', iconSize: [48, 48]
 	}),
+	large: divIcon({
+		className: 'map-view__marker purple', iconSize: [64, 64]
+	}),
 	xLarge: divIcon({
-		className: 'map-view__marker red', iconSize: [72, 72]
+		className: 'map-view__marker red', iconSize: [80, 80]
 	}),
 	xxLarge: divIcon({
 		className: 'map-view__marker red', iconSize: [96, 96]
@@ -101,3 +92,14 @@ function MapView(props) {
 }
 
 export default MapView;
+
+/*
+location confirmed count => icon style
+1-100 => pink, super very small
+101-500 => pink, very small
+501-1000 => pink, small
+1001-5000 => purple, normal
+5001-10000 => purple, big
+10001-50000 => red, very big
+50000 up => red, super very big
+*/

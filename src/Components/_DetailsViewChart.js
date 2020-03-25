@@ -61,7 +61,7 @@ function ChartTooltip(props) {
         if (payload.length > 0) value = payload[0].value;
     }
     return (
-        <div className="barchart-tooltip">
+        <div className="details-view__chart-tooltip">
             <b>{value}</b>
         </div>
     );
