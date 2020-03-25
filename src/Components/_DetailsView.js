@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { chartYMax } from './_DetailsViewChart';
+import './Css/DetailsView.scss'
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 const latestDays = 5;
 
 function DetailsView(props) {
-    // Props
+    // Props, States
     const { location, isLoading, onClickClose } = props;
+    const [isOnTablet, setIsOnTablet] = useState(false);
+
+    // Effects
+    useEffect(() => {
+        if (location === null) setIsOnTablet(false);
+    }, [location]);
+
+    // Empty view conditions
     if (location === null) {
         if (!isLoading) return null;
         return (
@@ -26,10 +35,21 @@ function DetailsView(props) {
             </div>
         );
     };
-    const { country, province, latest, timelines } = location;
+
+    const day1 = dayjs('2020-03-22T00:00:00Z')
+    const day2 = dayjs('2020-03-23T00:00:00Z')
+    console.log(day1);
+    console.log(day2);
+    console.log(day1.isBefore(day2));
 
     // Elements
-    // 1. Text
+    const { country, province, latest, timelines } = location;
+
+    // - Class
+    let detailsClass = 'details-view';
+    if (isOnTablet) detailsClass += ' is-on-tablet';
+
+    // - Text
     let title = country;
     if (province !== '' && province !== country) {
         title = `${province}, ${country}`;
@@ -56,13 +76,13 @@ function DetailsView(props) {
     });
 
     let textElement = (
-        <div className="details-view__text">
+        <div className="details-view__text details-view__content-block">
             <h4 className="title is-4">{title}</h4>
             {totalElements}
         </div>
     );
 
-    // 2. Bar chart
+    // - Bar chart
     const barChartElements = totalKeyArray.map(key => {
         // If timeline empty, return nothing
         const { timeline } = timelines[key];
@@ -81,12 +101,15 @@ function DetailsView(props) {
         timelineArray = timelineArray.map(([dateStr, count]) => {
             return { dateStr, count };
         });
-        timelineArray.sort((dateStr1, dateStr2) => {
-            return (dayjs(dateStr1).isAfter(dayjs(dateStr2))) ? 1 : -1;
+        timelineArray.sort((time1, time2) => {
+            const date1 = dayjs(time1.dateStr);
+            const date2 = dayjs(time2.dateStr);
+            return (date1.isBefore(date2)) ? -1 : 1;
         });
         timelineArray = timelineArray.filter((_, index) => {
             return timelineArray.length - index <= latestDays;
         });
+        
         const maxData = timelineArray[latestDays - 1].count;
         const yAxisMax = chartYMax(maxData);
 
@@ -105,20 +128,32 @@ function DetailsView(props) {
     });
 
     let chartElement = (
-        <div className="details-view__chart">
+        <div className="details-view__chart details-view__content-block">
             <h4 className="title is-5">Latest {latestDays} days total</h4>
             {barChartElements}
         </div>
     );
 
-    // 3. Loading
+    // - More
+    let moreElement = (
+        <div className="details-view__more details-view__content-block has-text-centered">
+            <button 
+                className="button is-link is-outlined is-small"
+                onClick={_ => setIsOnTablet(prev => !prev)}>
+                {(isOnTablet) ? 'SHOW LESS': 'SHOW MORE'}
+            </button>
+        </div>
+    );
+
+    // - Loading
     if (isLoading) {
         textElement = null;
         chartElement = null;
+        moreElement = null;
     }
 
     return (
-        <div className="details-view">
+        <div className={detailsClass}>
             <div className="details-view__close" onClick={onClickClose}>
                 <span className="icon is-medium">
                     <i className="fas fa-times fa-lg"></i>
@@ -127,6 +162,7 @@ function DetailsView(props) {
             <div className="details-view__content">
                 {textElement}
                 {chartElement}
+                {moreElement}
                 <LoadingView isLoading={isLoading} extraClass="loading-view__side" />
             </div>
         </div>
