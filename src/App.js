@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { MapView, ListView, DetailsView, LoadingView } from './Components';
-import api from './Api';
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
+import React, { useState, useEffect, useCallback } from 'react';
+import { MapView, ListView, DetailsView, InfoView, LoadingView } from './Components';
+import api from './Api';
 
 function App() {
 	// States
@@ -11,6 +11,7 @@ function App() {
 	const [mapCenter, setMapCenter] = useState([15, 101]);
 	const [isAllLocationLoading, setIsAllLocationLoading] = useState(true);
 	const [isLocationLoading, setIsLocationLoading] = useState(false);
+	const [isShowInfo, setIsShowInfo] = useState(false);
 
 	// Functions
 	const onSelectLocation = useCallback((id) => {
@@ -27,8 +28,10 @@ function App() {
 			setIsLocationLoading(false);
 		});
 	}, []);
-
 	const onDeselectLocation = useCallback(() => setSelectedLocation(null), []);
+
+	const onOpenInfo = useCallback(() => setIsShowInfo(true), []);
+	const onCloseInfo = useCallback(() => setIsShowInfo(false), []);
 
 	// Effects
 	useEffect(() => {
@@ -52,7 +55,8 @@ function App() {
 				selectedLocation={selectedLocation} 
 				isLoading={isAllLocationLoading} 
 				onSelectItem={onSelectLocation} 
-				onDeselectItem={onDeselectLocation} />
+				onDeselectItem={onDeselectLocation} 
+				onClickInfo={onOpenInfo} />
 			<MapView 
 				center={mapCenter} 
 				zoom={5} 
@@ -62,6 +66,9 @@ function App() {
 				location={selectedLocation} 
 				isLoading={isLocationLoading} 
 				onClickClose={onDeselectLocation} />
+			<InfoView 
+				isShowInfo={isShowInfo} 
+				onClickClose={onCloseInfo} />
 			<LoadingView
 				isLoading={isAllLocationLoading}
 				label="Loading"

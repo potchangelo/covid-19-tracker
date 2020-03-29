@@ -1,7 +1,7 @@
+import './Css/MapView.scss';
 import React from 'react';
 import { divIcon } from 'leaflet';
 import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
-import './Css/MapView.scss';
 
 const markerIcons = {
 	xxSmall: divIcon({
