@@ -1,8 +1,8 @@
+import './Css/DetailsView.scss';
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { chartYMax } from './_DetailsViewChart';
-import './Css/DetailsView.scss'
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 const latestDays = 5;
@@ -36,12 +36,6 @@ function DetailsView(props) {
         );
     };
 
-    const day1 = dayjs('2020-03-22T00:00:00Z')
-    const day2 = dayjs('2020-03-23T00:00:00Z')
-    console.log(day1);
-    console.log(day2);
-    console.log(day1.isBefore(day2));
-
     // Elements
     const { country, province, latest, timelines } = location;
 
@@ -58,6 +52,8 @@ function DetailsView(props) {
     const totalElements = totalKeyArray.map(key => {
         const _title = key.charAt(0).toUpperCase() + key.slice(1);
         const count = latest[`${key}`];
+
+        if (count === 0) return null;
 
         let titleClass = 'title is-6';
         if (key === 'recovered') titleClass += ' has-text-success';
@@ -84,12 +80,10 @@ function DetailsView(props) {
 
     // - Bar chart
     const barChartElements = totalKeyArray.map(key => {
-        // If timeline empty, return nothing
         const { timeline } = timelines[key];
         let timelineArray = Object.entries(timeline);
-        if (timelineArray.length < latestDays) {
-            return <React.Fragment key={key}></React.Fragment>
-        }
+
+        if (timelineArray.length < latestDays) return null;
 
         // Title
         const _title = key.charAt(0).toUpperCase() + key.slice(1);
@@ -112,6 +106,8 @@ function DetailsView(props) {
         
         const maxData = timelineArray[latestDays - 1].count;
         const yAxisMax = chartYMax(maxData);
+
+        if (maxData === 0) return null;
 
         return (
             <React.Fragment key={key}>

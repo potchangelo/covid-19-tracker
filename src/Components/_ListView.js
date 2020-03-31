@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Logo from '../Images/Logo64.png';
-import LoadingView from './_LoadingView';
 import './Css/ListView.scss';
+import React, { useState, useRef, useEffect } from 'react';
+import LoadingView from './_LoadingView';
+import Logo from '../Images/Logo64.png';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 
@@ -12,7 +12,8 @@ function ListView(props) {
         selectedLocation, 
         isLoading, 
         onSelectItem, 
-        onDeselectItem 
+        onDeselectItem,
+        onClickInfo
     } = props;
     const [isOnTablet, setIsOnTablet] = useState(false);
     const [isOnDesktop, setIsOnDesktop] = useState(true);
@@ -71,6 +72,8 @@ function ListView(props) {
         const count = locationArray.reduce((sum, location) => {
             return sum + location.latest[key];
         }, 0);
+
+        if (count === 0) return null;
 
         let titleClass = 'title is-6';
         if (key === 'recovered') titleClass += ' has-text-success';
@@ -138,15 +141,22 @@ function ListView(props) {
 
     return (
         <div className={listviewClass}>
-            <div className="list-view__switch is-hidden-desktop" onClick={_ => setIsOnTablet(prev => !prev)}>
-                <span className={tabletIconClass}>
-                    <i className="fas fa-angle-double-right fa-lg"></i>
-                </span>
-            </div>
-            <div className="list-view__switch is-hidden-touch" onClick={_ => setIsOnDesktop(prev => !prev)}>
-                <span className={desktopIconClass}>
-                    <i className="fas fa-angle-double-right fa-lg"></i>
-                </span>
+            <div className="list-view__menu">
+                <div className="list-view__menu-item list-view__switch is-hidden-desktop" onClick={_ => setIsOnTablet(prev => !prev)}>
+                    <span className={tabletIconClass}>
+                        <i className="fas fa-angle-double-right fa-lg"></i>
+                    </span>
+                </div>
+                <div className="list-view__menu-item list-view__switch is-hidden-touch" onClick={_ => setIsOnDesktop(prev => !prev)}>
+                    <span className={desktopIconClass}>
+                        <i className="fas fa-angle-double-right fa-lg"></i>
+                    </span>
+                </div>
+                <div className="list-view__menu-item" onClick={onClickInfo}>
+                    <span className="icon is-medium">
+                        <i className="fas fa-info-circle"></i>
+                    </span>
+                </div>
             </div>
             <div className="list-view__content">
                 <div className="list-view__brand">
@@ -161,13 +171,6 @@ function ListView(props) {
                 <div className="list-view__locations list-view__content-block" ref={listLocationsRef}>
                     {loadingView}
                     {locationElements}
-                </div>
-                <div className="list-view__credit">
-                    <p className="is-size-7">
-                        <a href="https://github.com/potchangelo/covid-19-tracker" target="_blank" rel="noopener noreferrer">Project Github</a>
-                        <a href="https://github.com/ExpDev07/coronavirus-tracker-api" target="_blank" rel="noopener noreferrer">Data API Github</a>
-                    </p>
-                    <p className="is-size-7">&copy; 2020 Zinglecode</p>
                 </div>
             </div>
         </div>
