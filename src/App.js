@@ -1,17 +1,20 @@
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MapView, ListView, DetailsView, InfoView, LoadingView } from './Components';
 import api from './Api';
+
+const mqDesktop = 1024;
 
 function App() {
 	// States
 	const [locationArray, setLocationArray] = useState([]);
 	const [selectedLocation, setSelectedLocation] = useState(null);
-	const [mapCenter, setMapCenter] = useState([15, 101]);
+	const [mapViewport, setMapViewport] = useState({ center: [15, 101], zoom: 5 });
 	const [isAllLocationLoading, setIsAllLocationLoading] = useState(true);
 	const [isLocationLoading, setIsLocationLoading] = useState(false);
 	const [isShowInfo, setIsShowInfo] = useState(false);
+	const appRef = useRef(null);
 
 	// Functions
 	const onSelectLocation = useCallback((id) => {
@@ -19,8 +22,20 @@ function App() {
 		api.getLocation(id).then(response => {
 			const { location } = response.data;
 			const { coordinates: { latitude, longitude } } = location;
+
+			let nextLatitude = latitude;
+			/*
+			latitude top = 90 bottom = -90
+			*/
+			if (appRef.current.offsetWidth < mqDesktop) {
+				if (latitude >= 65) nextLatitude -= 0.5
+				else if (latitude < 65 && latitude >= 50) nextLatitude -= 1;
+				else if (latitude < 50 && latitude >= 45) nextLatitude -= 1.5;
+				else nextLatitude -= 2;
+			}
+
 			setSelectedLocation(location);
-			setMapCenter([latitude, longitude]);
+			setMapViewport({ center: [nextLatitude, longitude], zoom: 6 });
 		}).catch(error => {
 			console.error(error);
 			setSelectedLocation(null);
@@ -49,25 +64,25 @@ function App() {
 	}, []);
 
 	return (
-		<div className="app">
-			<ListView 
-				locationArray={locationArray} 
-				selectedLocation={selectedLocation} 
-				isLoading={isAllLocationLoading} 
-				onSelectItem={onSelectLocation} 
-				onDeselectItem={onDeselectLocation} 
+		<div className="app" ref={appRef}>
+			<ListView
+				locationArray={locationArray}
+				selectedLocation={selectedLocation}
+				isLoading={isAllLocationLoading}
+				onSelectItem={onSelectLocation}
+				onDeselectItem={onDeselectLocation}
 				onClickInfo={onOpenInfo} />
-			<MapView 
-				center={mapCenter} 
-				zoom={5} 
+			<MapView
+				viewport={mapViewport}
+				onViewportChanged={setMapViewport}
 				locationArray={locationArray}
 				onSelectMarker={onSelectLocation} />
-			<DetailsView 
-				location={selectedLocation} 
-				isLoading={isLocationLoading} 
+			<DetailsView
+				location={selectedLocation}
+				isLoading={isLocationLoading}
 				onClickClose={onDeselectLocation} />
-			<InfoView 
-				isShowInfo={isShowInfo} 
+			<InfoView
+				isShowInfo={isShowInfo}
 				onClickClose={onCloseInfo} />
 			<LoadingView
 				isLoading={isAllLocationLoading}
