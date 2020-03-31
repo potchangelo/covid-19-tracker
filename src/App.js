@@ -24,9 +24,6 @@ function App() {
 			const { coordinates: { latitude, longitude } } = location;
 
 			let nextLatitude = latitude;
-			/*
-			latitude top = 90 bottom = -90
-			*/
 			if (appRef.current.offsetWidth < mqDesktop) {
 				if (latitude >= 65) nextLatitude -= 0.5
 				else if (latitude < 65 && latitude >= 50) nextLatitude -= 1;
