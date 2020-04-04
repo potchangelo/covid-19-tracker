@@ -83,20 +83,19 @@
     overflow-y: auto;
 }
 
+.list-view__locations-filter {
+    padding: 12px;
+    padding-top: 16px;
+}
+
 .list-view__location {
     background-color: $white;
+    border-top: 1px solid $grey-lighter;
     padding: 20px;
     cursor: pointer;
 
-    &:first-child {
-        margin-top: 20px;
-    }
-
     &:last-child {
         margin-bottom: 20px;
-    }
-    
-    &:not(:last-child) {
         border-bottom: 1px solid $grey-lighter;
     }
 

@@ -29,7 +29,7 @@ function DetailsView(props) {
                 </div>
                 <div className="details-view__content">
                     <LoadingView 
-                        isLoading={isLoading} 
+                        isShow={isLoading} 
                         extraClass="loading-view__side" />
                 </div>
             </div>
@@ -159,7 +159,7 @@ function DetailsView(props) {
                 {textElement}
                 {chartElement}
                 {moreElement}
-                <LoadingView isLoading={isLoading} extraClass="loading-view__side" />
+                <LoadingView isShow={isLoading} extraClass="loading-view__side" />
             </div>
         </div>
     );

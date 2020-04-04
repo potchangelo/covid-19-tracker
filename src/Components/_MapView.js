@@ -41,8 +41,10 @@ function MapView(props) {
         const {
             id, coordinates: { latitude, longitude },
             country, country_code, province,
-            latest: { confirmed }
+            latest: { confirmed }, isHidden
         } = location;
+
+        if (isHidden === true) return null;
 
         let markerIcon = markerIcons.xxSmall
         if (confirmed >= 101 && confirmed <= 500) {

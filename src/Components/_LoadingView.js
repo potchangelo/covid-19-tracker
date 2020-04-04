@@ -2,9 +2,9 @@ import './Css/LoadingView.scss';
 import React from 'react';
 
 function LoadingView(props) {
-    const { isLoading, label, extraClass } = props;
+    const { isShow, label, extraClass } = props;
 
-    if (!isLoading) return null;
+    if (!isShow) return null;
 
     let labelElement = null;
     if (label !== undefined) {
