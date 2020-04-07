@@ -105,8 +105,9 @@ function App() {
 				onClickInfo={onOpenInfo} />
 			<MapView
 				viewport={mapViewport}
-				onViewportChanged={setMapViewport}
 				locationArray={locationArray}
+				selectedLocation={selectedLocation}
+				onViewportChanged={setMapViewport}
 				onSelectMarker={onSelectLocation} />
 			<DetailsView
 				location={selectedLocation}

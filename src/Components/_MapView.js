@@ -5,10 +5,10 @@ import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 
 const markerIcons = {
     xxSmall: divIcon({
-        className: 'map-view__marker pink', iconSize: [16, 16],
+        className: 'map-view__marker pink', iconSize: [20, 20]
     }),
     xSmall: divIcon({
-        className: 'map-view__marker pink', iconSize: [24, 24]
+        className: 'map-view__marker pink', iconSize: [26, 26]
     }),
     small: divIcon({
         className: 'map-view__marker pink', iconSize: [32, 32]
@@ -27,14 +27,29 @@ const markerIcons = {
     })
 };
 
+let selectedMarkerIcons = {};
+Object.keys(markerIcons).forEach((key) => {
+    const { className, iconSize } = markerIcons[key].options;
+    const icon = divIcon({
+        className: `${className} selected`, iconSize
+    });
+    selectedMarkerIcons[key] = icon;
+});
+
 const maxBounds = [
-    [90, 210],
-    [-90, -210],
+    [90, 270],
+    [-90, -240],
 ]
 
 function MapView(props) {
     // Props
-    const { locationArray, viewport, onViewportChanged, onSelectMarker } = props;
+    const { 
+        viewport, 
+        locationArray, 
+        selectedLocation, 
+        onViewportChanged, 
+        onSelectMarker 
+    } = props;
 
     // Elements
     const markerElements = locationArray.map(location => {
@@ -46,24 +61,31 @@ function MapView(props) {
 
         if (isHidden === true) return null;
 
-        let markerIcon = markerIcons.xxSmall
+        let markerIconsSet = markerIcons;
+        if (selectedLocation !== null) {
+            if (location.id === selectedLocation.id) {
+                markerIconsSet = selectedMarkerIcons;
+            }
+        }
+
+        let markerIcon = markerIconsSet.xxSmall;
         if (confirmed >= 101 && confirmed <= 500) {
-            markerIcon = markerIcons.xSmall;
+            markerIcon = markerIconsSet.xSmall;
         }
         else if (confirmed >= 501 && confirmed <= 1000) {
-            markerIcon = markerIcons.small;
+            markerIcon = markerIconsSet.small;
         }
         else if (confirmed >= 1001 && confirmed <= 5000) {
-            markerIcon = markerIcons.normal;
+            markerIcon = markerIconsSet.normal;
         }
         else if (confirmed >= 5001 && confirmed <= 10000) {
-            markerIcon = markerIcons.large;
+            markerIcon = markerIconsSet.large;
         }
         else if (confirmed >= 10001 && confirmed <= 50000) {
-            markerIcon = markerIcons.xLarge;
+            markerIcon = markerIconsSet.xLarge;
         }
         else if (confirmed >= 50001) {
-            markerIcon = markerIcons.xxLarge;
+            markerIcon = markerIconsSet.xxLarge;
         }
 
         let title = country;
