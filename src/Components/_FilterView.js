@@ -17,7 +17,7 @@ function FilterView(props) {
     const [maxConfirmed, setMaxConfirmed] = useState(1000000);
 
     // Functions
-    function _onClickFilter() {
+    function onSubmitFilter() {
         const nextLocationArray = locationArray.map(location => {
             let nextLocation = Object.assign({}, {...location});
             const { 
@@ -25,7 +25,11 @@ function FilterView(props) {
                 latest: { confirmed } 
             } = nextLocation;
 
-            const isContainsQuery = country.includes(query) || province.includes(query);
+            const lcCountry = country.toLowerCase();
+            const lcProvince = province.toLowerCase();
+            const lcQuery = query.toLowerCase();
+
+            const isContainsQuery = lcCountry.includes(lcQuery) || lcProvince.includes(lcQuery);
             const isInConfirmedRange = confirmed >= minConfirmed && confirmed <= maxConfirmed;
 
             const isAllPassed = isContainsQuery && isInConfirmedRange;
@@ -54,65 +58,69 @@ function FilterView(props) {
         <div className="info-view modal is-active">
             <div className="modal-background" onClick={onClickClose}></div>
             <div className="filter-view__content modal-content">
-                <h4 className="title is-4">Filter countries</h4>
-                <label className="label">Search by name</label>
-                <div className="field">
-                    <div className="control is-expanded">
-                        <input 
-                            className="input" 
-                            type="text" 
-                            placeholder="Leave blank to ignore name-filter."
-                            value={query} 
-                            onChange={e => setQuery(e.target.value)} />
+                <form action="#">
+                    <h4 className="title is-4">Filter countries</h4>
+                    <label className="label">Search by name</label>
+                    <div className="field">
+                        <div className="control is-expanded">
+                            <input 
+                                className="input" 
+                                type="text" 
+                                placeholder="Leave blank to ignore name-filter."
+                                value={query} 
+                                onChange={e => setQuery(e.target.value)} />
+                        </div>
                     </div>
-                </div>
-                <label className="label">Confirmed cases</label>
-                <div className="columns is-mobile">
-                    <div className="column">
-                        <label className="label is-size-7">Min</label>
-                        <div className="field">
-                            <div className="control is-expanded">
-                                <input 
-                                    className="input" 
-                                    type="number" 
-                                    value={minConfirmed} 
-                                    onChange={e => setMinConfirmed(e.target.value)} />
+                    <label className="label">Confirmed cases</label>
+                    <div className="columns is-mobile">
+                        <div className="column">
+                            <label className="label is-size-7">Min</label>
+                            <div className="field">
+                                <div className="control is-expanded">
+                                    <input 
+                                        className="input" 
+                                        type="number" 
+                                        value={minConfirmed} 
+                                        onChange={e => setMinConfirmed(e.target.value)} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="column is-narrow">
+                            <label className="label is-size-7">&nbsp;</label>
+                            <p className="is-size-4"> - </p>
+                        </div>
+                        <div className="column">
+                            <label className="label is-size-7">Max</label>
+                            <div className="field">
+                                <div className="control is-expanded">
+                                    <input 
+                                        className="input" 
+                                        type="number" 
+                                        value={maxConfirmed} 
+                                        onChange={e => setMaxConfirmed(e.target.value)} />
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="column is-narrow">
-                        <label className="label is-size-7">&nbsp;</label>
-                        <p className="is-size-4"> - </p>
-                    </div>
-                    <div className="column">
-                        <label className="label is-size-7">Max</label>
-                        <div className="field">
-                            <div className="control is-expanded">
-                                <input 
-                                    className="input" 
-                                    type="number" 
-                                    value={maxConfirmed} 
-                                    onChange={e => setMaxConfirmed(e.target.value)} />
-                            </div>
+                    <div className="field is-grouped is-grouped-right">
+                        <div className="control">
+                            <button 
+                                className="button" 
+                                type="button"
+                                onClick={onClickClose}>
+                                Cancel
+                            </button>
+                        </div>
+                        <div className="control">
+                            <button 
+                                className="button is-link" 
+                                type="submit"
+                                onClick={onSubmitFilter}>
+                                Filter
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div className="field is-grouped is-grouped-right">
-                    <div className="control">
-                        <button 
-                            className="button" 
-                            onClick={onClickClose}>
-                            Cancel
-                        </button>
-                    </div>
-                    <div className="control">
-                        <button 
-                            className="button is-link" 
-                            onClick={_onClickFilter}>
-                            Filter
-                        </button>
-                    </div>
-                </div>
+                </form>
             </div>
             <button className="modal-close is-large" onClick={onClickClose}></button>
         </div>
