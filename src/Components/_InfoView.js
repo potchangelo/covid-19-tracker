@@ -2,13 +2,12 @@ import './Css/InfoView.scss';
 import React from 'react';
 
 function InfoView(props) {
-    const { isShowInfo, onClickClose } = props;
+    const { isShow, onClickClose } = props;
 
-    let infoviewClass = 'info-view modal';
-    if (isShowInfo) infoviewClass += ' is-active';
+    if (!isShow) return null;
 
     return (
-        <div className={infoviewClass}>
+        <div className="info-view modal is-active">
             <div className="modal-background" onClick={onClickClose}></div>
             <div className="info-view__content modal-content has-text-centered">
                 <div className="columns is-mobile">

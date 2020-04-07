@@ -1,22 +1,49 @@
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { MapView, ListView, DetailsView, InfoView, LoadingView } from './Components';
+import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView } from './Components';
 import api from './Api';
 
 const mqDesktop = 1024;
 
 function App() {
-	// States
+	// States, Refs
 	const [locationArray, setLocationArray] = useState([]);
 	const [selectedLocation, setSelectedLocation] = useState(null);
 	const [mapViewport, setMapViewport] = useState({ center: [15, 101], zoom: 5 });
+
 	const [isAllLocationLoading, setIsAllLocationLoading] = useState(true);
 	const [isLocationLoading, setIsLocationLoading] = useState(false);
+	const [isShowFilter, setIsShowFilter] = useState(false);
+	const [isNeedResetFilter, setIsNeedResetFilter] = useState(false);
 	const [isShowInfo, setIsShowInfo] = useState(false);
+
 	const appRef = useRef(null);
 
 	// Functions
+	// - Filter
+	const onFilterLocations = useCallback((nextLocationArray) => {
+		setSelectedLocation(null);
+		setLocationArray(nextLocationArray);
+		setIsShowFilter(false);
+	}, []);
+
+	const onResetFilterLocations = useCallback(() => {
+		setSelectedLocation(null);
+		setLocationArray(prevArray => {
+			return prevArray.map(location => {
+				const nextLocation = Object.assign({}, {...location});
+				delete nextLocation.isHidden;
+				return nextLocation;
+			});
+		});
+		setIsShowFilter(false);
+		setIsNeedResetFilter(true);
+	}, []);
+
+	const onResetFilterEnd = useCallback(() => setIsNeedResetFilter(false), []);
+
+	// - Select
 	const onSelectLocation = useCallback((id) => {
 		setIsLocationLoading(true);
 		api.getLocation(id).then(response => {
@@ -40,7 +67,12 @@ function App() {
 			setIsLocationLoading(false);
 		});
 	}, []);
+
 	const onDeselectLocation = useCallback(() => setSelectedLocation(null), []);
+
+	// - Open popup
+	const onOpenFilter = useCallback(() => setIsShowFilter(true), []);
+	const onCloseFilter = useCallback(() => setIsShowFilter(false), []);
 
 	const onOpenInfo = useCallback(() => setIsShowInfo(true), []);
 	const onCloseInfo = useCallback(() => setIsShowInfo(false), []);
@@ -68,21 +100,31 @@ function App() {
 				isLoading={isAllLocationLoading}
 				onSelectItem={onSelectLocation}
 				onDeselectItem={onDeselectLocation}
+				onClickFilter={onOpenFilter}
+				onClickReset={onResetFilterLocations}
 				onClickInfo={onOpenInfo} />
 			<MapView
 				viewport={mapViewport}
-				onViewportChanged={setMapViewport}
 				locationArray={locationArray}
+				selectedLocation={selectedLocation}
+				onViewportChanged={setMapViewport}
 				onSelectMarker={onSelectLocation} />
 			<DetailsView
 				location={selectedLocation}
 				isLoading={isLocationLoading}
 				onClickClose={onDeselectLocation} />
+			<FilterView 
+				isShow={isShowFilter}
+				isNeedReset={isNeedResetFilter}
+				locationArray={locationArray} 
+				onClickFilter={onFilterLocations} 
+				onClickClose={onCloseFilter}
+				onResetEnd={onResetFilterEnd} />
 			<InfoView
-				isShowInfo={isShowInfo}
+				isShow={isShowInfo}
 				onClickClose={onCloseInfo} />
 			<LoadingView
-				isLoading={isAllLocationLoading}
+				isShow={isAllLocationLoading}
 				label="Loading"
 				extraClass="loading-view__app" />
 		</div>

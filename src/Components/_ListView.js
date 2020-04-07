@@ -6,21 +6,33 @@ import Logo from '../Images/Logo64.png';
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 
 function ListView(props) {
-    // Props, States
+    // Props, States, Refs
     const { 
         locationArray, 
         selectedLocation, 
         isLoading, 
         onSelectItem, 
         onDeselectItem,
+        onClickFilter,
+        onClickReset,
         onClickInfo
     } = props;
+
     const [isOnTablet, setIsOnTablet] = useState(false);
     const [isOnDesktop, setIsOnDesktop] = useState(true);
 
     const listLocationsRef = useRef(null);
 
     // Functions
+    function _onClickReset() {
+        const nextLocationArray = locationArray.map(location => {
+            let nextLocation = Object.assign({}, {...location});
+            delete nextLocation.isHidden;
+            return nextLocation;
+        });
+        onClickReset(nextLocationArray);
+    }
+
     function onClickItem(id) {
         setIsOnTablet(false);
         if (selectedLocation === null) onSelectItem(id);
@@ -32,7 +44,7 @@ function ListView(props) {
         if (location === null) return;
 
         const parentBounds = listLocationsRef.current.getBoundingClientRect();
-        const childArray = Array.from(listLocationsRef.current.childNodes);
+        const childArray = Array.from(listLocationsRef.current.childNodes[1].childNodes);
         const selectedChild = childArray.find(child => {
             return child.getAttribute('data-id') === `${location.id}`
         });
@@ -53,7 +65,7 @@ function ListView(props) {
     }, [selectedLocation]);
 
     // Elements
-    // 1. Open / Close
+    // - Open / Close
     let listviewClass = 'list-view';
     let tabletIconClass = 'icon is-medium';
     let desktopIconClass = 'icon is-medium';
@@ -66,7 +78,7 @@ function ListView(props) {
         desktopIconClass += ' is-rotate-180';
     }
 
-    // 2. Total
+    // - Total
     const totalDataElements = totalKeyArray.map(key => {
         const title = key.charAt(0).toUpperCase() + key.slice(1);
         const count = locationArray.reduce((sum, location) => {
@@ -98,12 +110,38 @@ function ListView(props) {
         </>
     );
 
-    // 3. Locations
-    let locationElements = locationArray.map(location => {
+    // - Filter
+    let filterElements = (
+        <div className="list-view__locations-filter">
+            <div className="field is-grouped is-grouped-centered">
+                <div className="control">
+                    <button className="button is-small" onClick={onClickFilter}>
+                        <span className="icon">
+                            <i className="fas fa-filter"></i>
+                        </span>
+                        <span>Filter</span>
+                    </button>
+                </div>
+                <div className="control">
+                    <button className="button is-small" onClick={_onClickReset}>
+                        <span className="icon">
+                            <i className="fas fa-undo"></i>
+                        </span>
+                        <span>Reset</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+
+    // - Locations
+    const locationDataElements = locationArray.map(location => {
         const {
             id, country, country_code, province,
-            latest: { confirmed }
+            latest: { confirmed }, isHidden
         } = location;
+
+        if (isHidden === true) return null;
 
         let title = country;
         if (province !== '' && province !== country) {
@@ -130,12 +168,19 @@ function ListView(props) {
         );
     });
 
-    // 4. Loading
+    let locationElements = (
+        <div className="list-view__locations-data">
+            {locationDataElements}
+        </div>
+    );
+
+    // - Loading
     const loadingView = (
-        <LoadingView isLoading={isLoading} extraClass="loading-view__side" />
+        <LoadingView isShow={isLoading} extraClass="loading-view__side" />
     )
     if (isLoading) {
         totalElements = null;
+        filterElements = null;
         locationElements = null;
     }
 
@@ -170,6 +215,7 @@ function ListView(props) {
                 </div>
                 <div className="list-view__locations list-view__content-block" ref={listLocationsRef}>
                     {loadingView}
+                    {filterElements}
                     {locationElements}
                 </div>
             </div>

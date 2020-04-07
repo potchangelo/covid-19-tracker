@@ -1,0 +1,8 @@
+@import "../../Css/Vars";
+
+.filter-view__content {
+    background-color: $white;
+    width: calc(100% - 32px);
+    max-width: 520px;
+    padding: 20px;
+}
