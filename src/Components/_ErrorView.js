@@ -12,7 +12,7 @@ function ErrorView(props) {
 
     return (
         <div className="error-view">
-            <div className="notification is-danger is-light">
+            <div className="notification is-danger">
                 <button className="delete" onClick={onClickClose}></button>
                 <p><b>Error : </b>{label}</p>
             </div>
