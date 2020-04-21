@@ -1,7 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView } from './Components';
+import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './Components';
 import api from './Api';
 
 const mqDesktop = 1024;
@@ -17,6 +17,8 @@ function App() {
 	const [isShowFilter, setIsShowFilter] = useState(false);
 	const [isNeedResetFilter, setIsNeedResetFilter] = useState(false);
 	const [isShowInfo, setIsShowInfo] = useState(false);
+
+	const [error, setError] = useState(null);
 
 	const appRef = useRef(null);
 
@@ -46,6 +48,7 @@ function App() {
 	// - Select
 	const onSelectLocation = useCallback((id) => {
 		setIsLocationLoading(true);
+		setError(null);
 		api.getLocation(id).then(response => {
 			const { location } = response.data;
 			const { coordinates: { latitude, longitude } } = location;
@@ -63,6 +66,7 @@ function App() {
 		}).catch(error => {
 			console.error(error);
 			setSelectedLocation(null);
+			setError(error);
 		}).finally(() => {
 			setIsLocationLoading(false);
 		});
@@ -77,6 +81,9 @@ function App() {
 	const onOpenInfo = useCallback(() => setIsShowInfo(true), []);
 	const onCloseInfo = useCallback(() => setIsShowInfo(false), []);
 
+	// - Close error
+	const onCloseError = useCallback(() => setError(null), []);
+
 	// Effects
 	useEffect(() => {
 		api.getAllLocation().then(response => {
@@ -87,6 +94,7 @@ function App() {
 			setLocationArray(sortedLocation);
 		}).catch(error => {
 			console.error(error);
+			setError(error);
 		}).finally(() => {
 			setIsAllLocationLoading(false);
 		});
@@ -127,6 +135,7 @@ function App() {
 				isShow={isAllLocationLoading}
 				label="Loading"
 				extraClass="loading-view__app" />
+			<ErrorView error={error} onClickClose={onCloseError} />
 		</div>
 	);
 }

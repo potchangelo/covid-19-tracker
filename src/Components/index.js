@@ -4,3 +4,4 @@ export { default as DetailsView } from './_DetailsView';
 export { default as LoadingView } from './_LoadingView';
 export { default as FilterView } from './_FilterView';
 export { default as InfoView } from './_InfoView';
+export { default as ErrorView } from './_ErrorView';
