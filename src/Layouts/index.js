@@ -1,12 +1,12 @@
 import React from 'react';
 
 function Modal(props) {
-    const { 
-        extraClass, 
+    const {
+        extraClass,
         extraContentClass,
-        isShow, 
-        onClickClose, 
-        children 
+        isShow,
+        onClickClose,
+        children
     } = props;
 
     if (!isShow) return null;
@@ -21,7 +21,7 @@ function Modal(props) {
         <div className={modalClass}>
             <div className="modal-background" onClick={onClickClose}></div>
             <div className={contentClass}>
-                { children }
+                {children}
             </div>
             <button className="modal-close is-large" onClick={onClickClose}></button>
         </div>
