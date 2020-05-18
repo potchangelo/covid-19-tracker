@@ -128,9 +128,7 @@ function App() {
 				onClickFilter={onFilterLocations} 
 				onClickClose={onCloseFilter}
 				onResetEnd={onResetFilterEnd} />
-			<InfoView
-				isShow={isShowInfo}
-				onClickClose={onCloseInfo} />
+			<InfoView isShow={isShowInfo} onClickClose={onCloseInfo} />
 			<LoadingView
 				isShow={isAllLocationLoading}
 				label="Loading"

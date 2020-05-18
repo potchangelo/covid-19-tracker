@@ -4,12 +4,12 @@ import { Modal } from '../Layouts';
 
 function FilterView(props) {
     // Props, States
-    const { 
-        isShow, 
-        isNeedReset, 
-        locationArray, 
-        onClickFilter, 
-        onClickClose ,
+    const {
+        isShow,
+        isNeedReset,
+        locationArray,
+        onClickFilter,
+        onClickClose,
         onResetEnd
     } = props;
 
@@ -20,10 +20,10 @@ function FilterView(props) {
     // Functions
     function onSubmitFilter() {
         const nextLocationArray = locationArray.map(location => {
-            let nextLocation = Object.assign({}, {...location});
-            const { 
-                country, province,  
-                latest: { confirmed } 
+            let nextLocation = Object.assign({}, { ...location });
+            const {
+                country, province,
+                latest: { confirmed }
             } = nextLocation;
 
             const lcCountry = country.toLowerCase();
@@ -55,14 +55,14 @@ function FilterView(props) {
 
     return (
         <Modal
-            extraClass="filter-view" 
+            extraClass="filter-view"
             extraContentClass="filter-view__content"
-            isShow={isShow} 
+            isShow={isShow}
             onClickClose={onClickClose}>
             <form action="#">
                 <h4 className="title is-4">Filter countries</h4>
                 <label className="label">Search by name</label>
-                <div className="field">
+                <div className="field more-margin-bottom">
                     <div className="control is-expanded">
                         <input
                             className="input"
@@ -73,7 +73,7 @@ function FilterView(props) {
                     </div>
                 </div>
                 <label className="label">Confirmed cases</label>
-                <div className="columns is-mobile">
+                <div className="columns is-mobile more-margin-bottom">
                     <div className="column">
                         <label className="label is-size-7">Min</label>
                         <div className="field">

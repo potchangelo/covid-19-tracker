@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import dayjs from 'dayjs';
 
-const chartOptions = {
+const chartSharedOptions = {
     height: 220,
     margin: { top: 5, right: 0, bottom: 20, left: 0 },
-    line: { stroke: '#B5B5B5' },
-    tick: { fill: '#4A4A4A', fontSize: 10 },
-    cursor: { fill: '#B5B5B5', fillOpacity: 0.2 },
     tooltipStyle: { fontSize: 12 },
-    barColor: { confirmed: '#363636', recovered: '#23D160', deaths: '#FF3860' }
 };
+
+const chartLightThemeOptions = {
+    dashColor: 'hsl(0, 0%, 71%)',
+    line: { stroke: 'hsl(0, 0%, 71%)' },
+    tick: { fill: 'hsl(0, 0%, 21%)', fontSize: 10 },
+    cursor: { fill: 'hsl(0, 0%, 71%)', fillOpacity: 0.2 },
+    barColor: { confirmed: 'hsl(0, 0%, 14%)', recovered: 'hsl(141, 53%, 53%)', deaths: 'hsl(348, 86%, 61%)' }
+}
+
+const chartDarkThemeOptions = {
+    dashColor: 'hsl(0, 0%, 48%)',
+    line: { stroke: 'hsl(0, 0%, 48%)' },
+    tick: { fill: 'hsl(0, 0%, 86%)', fontSize: 10 },
+    cursor: { fill: 'hsl(0, 0%, 48%)', fillOpacity: 0.2 },
+    barColor: { confirmed: 'hsl(0, 0%, 93%)', recovered: 'hsl(141, 53%, 53%)', deaths: 'hsl(348, 86%, 61%)' }
+}
 
 function chartXAxisFormatter(date) {
     return dayjs(date).format('MMM D');
@@ -69,7 +81,44 @@ function ChartTooltip(props) {
 
 function DetailsViewChart(props) {
     const { data, maxData, dataKey, xAxisKey, mapKey } = props;
+    const [theme, setTheme] = useState('light');
+
+    function onThemeChange() {
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        const newTheme = mql.matches ? 'dark' : 'light';
+        setTheme(newTheme);
+    }
+
+    useEffect(() => {
+        onThemeChange();
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (!!mql.addEventListener) {
+            mql.addEventListener('change', onThemeChange);
+        }
+        else {
+            mql.addListener(onThemeChange);
+        }
+        return () => {
+            if (!!mql.addEventListener) {
+                mql.removeEventListener('change', onThemeChange);
+            }
+            else {
+                mql.removeListener(onThemeChange);
+            }
+        }
+    }, []);
     
+    let chartOptions;
+    if (theme === 'dark') {
+        chartOptions = Object.assign(
+            {}, chartSharedOptions, chartDarkThemeOptions
+        );
+    }
+    else {
+        chartOptions = Object.assign(
+            {}, chartSharedOptions, chartLightThemeOptions
+        );
+    }
     const yAxisMax = chartYMax(maxData);
     const yAxisTicks = chartYTicks(maxData);
 
@@ -83,7 +132,8 @@ function DetailsViewChart(props) {
                 barCategoryGap="30%">
                 <CartesianGrid
                     vertical={false}
-                    strokeDasharray="4 4" />
+                    strokeDasharray="4 4" 
+                    stroke={chartOptions.dashColor} />
                 <XAxis
                     dataKey={xAxisKey}
                     axisLine={chartOptions.line}

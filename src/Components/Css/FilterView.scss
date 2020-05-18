@@ -2,7 +2,15 @@
 
 .filter-view__content {
     background-color: $white;
+    border: 1px solid $white;
     width: calc(100% - 32px);
     max-width: 520px;
     padding: 20px;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+    .filter-view__content {
+        background-color: $black-ter;
+        border: 1px solid $grey-dark;
+    }
 }

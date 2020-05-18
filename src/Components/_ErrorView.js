@@ -5,7 +5,7 @@ function ErrorView(props) {
     const { error, onClickClose } = props;
 
     let label = 'Something went wrong, please wait and try again.'
-    if (error === null) return null;
+    if (!error) return null;
     else if (error.message === 'Network Error') {
         label = 'API network error, please wait and try again.'
     }

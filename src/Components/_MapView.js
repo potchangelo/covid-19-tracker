@@ -36,19 +36,16 @@ Object.keys(markerIcons).forEach((key) => {
     selectedMarkerIcons[key] = icon;
 });
 
-const maxBounds = [
-    [90, 270],
-    [-90, -240],
-]
+const maxBounds = [[90, 270], [-90, -240]];
 
 function MapView(props) {
     // Props
-    const { 
-        viewport, 
-        locationArray, 
-        selectedLocation, 
-        onViewportChanged, 
-        onSelectMarker 
+    const {
+        viewport,
+        locationArray,
+        selectedLocation,
+        onViewportChanged,
+        onSelectMarker
     } = props;
 
     // Elements
@@ -59,10 +56,10 @@ function MapView(props) {
             latest: { confirmed }, isHidden
         } = location;
 
-        if (isHidden === true) return null;
+        if (!!isHidden) return null;
 
         let markerIconsSet = markerIcons;
-        if (selectedLocation !== null) {
+        if (!!selectedLocation) {
             if (location.id === selectedLocation.id) {
                 markerIconsSet = selectedMarkerIcons;
             }
