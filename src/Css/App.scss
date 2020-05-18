@@ -5,6 +5,72 @@ html, body {
     overflow: hidden;
 }
 
+.more-margin-bottom {
+    margin-bottom: 24px !important;
+}
+
 .icon.is-rotate-180 {
     transform: rotate(180deg);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+    body {
+        color: $white-ter;
+    }
+
+    .title {
+        color: $white;
+    }
+
+    .subtitle {
+        color: $grey-lightest;
+    }
+
+    a:hover {
+        color: $white-ter;
+    }
+
+    .button {
+        color: $white-ter;
+        background-color: $black-bis;
+        border-color: $grey-dark;
+    }
+
+    .button:hover, 
+    .button.is-hovered {
+        color: $white-ter;
+        border-color: $grey;
+    }
+
+    .button:focus, .button.is-focused {
+        color: $white-ter;
+        border-color: $info;
+    }
+
+    .button:active, 
+    .button.is-active {
+        color: $grey-light;
+        border-color: $grey;
+    }
+
+    .label {
+        color: $white-ter;
+    }
+
+    .input, 
+    .textarea, 
+    .select select {
+        color: $white-ter;
+        background-color: $black-bis;
+        border-color: $grey-dark;
+    }
+
+    .input:hover, 
+    .textarea:hover, 
+    .select select:hover, 
+    .is-hovered.input, 
+    .is-hovered.textarea, 
+    .select select.is-hovered {
+        border-color: $grey;
+    }
 }

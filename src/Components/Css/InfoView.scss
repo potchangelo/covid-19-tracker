@@ -6,3 +6,9 @@
     max-width: 520px;
     padding: 20px;
 }
+
+@media screen and (prefers-color-scheme: dark) {
+    .info-view__content {
+        background-color: $black-bis;
+    }
+}

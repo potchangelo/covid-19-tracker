@@ -62,7 +62,7 @@ function FilterView(props) {
             <form action="#">
                 <h4 className="title is-4">Filter countries</h4>
                 <label className="label">Search by name</label>
-                <div className="field">
+                <div className="field more-margin-bottom">
                     <div className="control is-expanded">
                         <input
                             className="input"
@@ -73,7 +73,7 @@ function FilterView(props) {
                     </div>
                 </div>
                 <label className="label">Confirmed cases</label>
-                <div className="columns is-mobile">
+                <div className="columns is-mobile more-margin-bottom">
                     <div className="column">
                         <label className="label is-size-7">Min</label>
                         <div className="field">

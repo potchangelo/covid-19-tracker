@@ -1,7 +1,6 @@
 import './Css/ListView.scss';
 import React, { useState, useRef, useEffect } from 'react';
 import LoadingView from './_LoadingView';
-import Logo from '../Images/Logo64.png';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 
@@ -207,7 +206,7 @@ function ListView(props) {
                 <div className="list-view__brand">
                     <h1 className="title is-5">COVID-19 Tracker</h1>
                     <h3 className="subtitle is-7">by Zinglecode</h3>
-                    <img className="list-view__logo" src={Logo} alt="zinglecode" />
+                    <div className="list-view__logo" />
                 </div>
                 <div className="list-view__stat list-view__content-block">
                     {loadingView}
