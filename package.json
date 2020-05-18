@@ -7,9 +7,10 @@
     "coronavirus",
     "leaflet",
     "react",
-    "bulma"
+    "bulma",
+    "recharts"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Potchara Puttawanchai",
   "homepage": "https://covid-19-tracker-app.netlify.com/",
   "repository": {
@@ -26,13 +27,13 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bulma": "^0.8.2",
-    "dayjs": "^1.8.25",
+    "dayjs": "^1.8.27",
     "leaflet": "^1.6.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-leaflet": "^2.6.3",
-    "react-scripts": "3.4.0",
+    "react-leaflet": "^2.7.0",
+    "react-scripts": "^3.4.1",
     "recharts": "^1.8.5"
   },
   "scripts": {

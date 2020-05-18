@@ -9,17 +9,19 @@ const chartSharedOptions = {
 };
 
 const chartLightThemeOptions = {
-    line: { stroke: '#B5B5B5' },
-    tick: { fill: '#4A4A4A', fontSize: 10 },
-    cursor: { fill: '#B5B5B5', fillOpacity: 0.2 },
-    barColor: { confirmed: '#363636', recovered: '#23D160', deaths: '#FF3860' }
+    dashColor: 'hsl(0, 0%, 71%)',
+    line: { stroke: 'hsl(0, 0%, 71%)' },
+    tick: { fill: 'hsl(0, 0%, 21%)', fontSize: 10 },
+    cursor: { fill: 'hsl(0, 0%, 71%)', fillOpacity: 0.2 },
+    barColor: { confirmed: 'hsl(0, 0%, 14%)', recovered: 'hsl(141, 53%, 53%)', deaths: 'hsl(348, 86%, 61%)' }
 }
 
 const chartDarkThemeOptions = {
-    line: { stroke: '#4A4A4A' },
-    tick: { fill: '#DBDBDB', fontSize: 10 },
-    cursor: { fill: '#4A4A4A', fillOpacity: 0.2 },
-    barColor: { confirmed: '#DBDBDB', recovered: '#23D160', deaths: '#FF3860' }
+    dashColor: 'hsl(0, 0%, 48%)',
+    line: { stroke: 'hsl(0, 0%, 48%)' },
+    tick: { fill: 'hsl(0, 0%, 86%)', fontSize: 10 },
+    cursor: { fill: 'hsl(0, 0%, 48%)', fillOpacity: 0.2 },
+    barColor: { confirmed: 'hsl(0, 0%, 93%)', recovered: 'hsl(141, 53%, 53%)', deaths: 'hsl(348, 86%, 61%)' }
 }
 
 function chartXAxisFormatter(date) {
@@ -130,7 +132,8 @@ function DetailsViewChart(props) {
                 barCategoryGap="30%">
                 <CartesianGrid
                     vertical={false}
-                    strokeDasharray="4 4" />
+                    strokeDasharray="4 4" 
+                    stroke={chartOptions.dashColor} />
                 <XAxis
                     dataKey={xAxisKey}
                     axisLine={chartOptions.line}
