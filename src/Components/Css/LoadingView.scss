@@ -5,8 +5,7 @@
 }
 
 .loading-view__app {
-    color: $grey-lighter;
-    background-color: $black-ter;
+    background-color: $white;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     box-shadow: 2px 2px 20px 0px rgba($black, 0.15);
@@ -25,4 +24,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+    .loading-view__app {
+        color: $white-ter;
+        background-color: $black-ter;
+    }
 }

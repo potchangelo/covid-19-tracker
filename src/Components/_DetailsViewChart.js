@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import dayjs from 'dayjs';
 
-const chartOptions = {
+const chartSharedOptions = {
     height: 220,
     margin: { top: 5, right: 0, bottom: 20, left: 0 },
+    tooltipStyle: { fontSize: 12 },
+};
+
+const chartLightThemeOptions = {
     line: { stroke: '#B5B5B5' },
     tick: { fill: '#4A4A4A', fontSize: 10 },
     cursor: { fill: '#B5B5B5', fillOpacity: 0.2 },
-    tooltipStyle: { fontSize: 12 },
     barColor: { confirmed: '#363636', recovered: '#23D160', deaths: '#FF3860' }
-};
+}
+
+const chartDarkThemeOptions = {
+    line: { stroke: '#4A4A4A' },
+    tick: { fill: '#DBDBDB', fontSize: 10 },
+    cursor: { fill: '#4A4A4A', fillOpacity: 0.2 },
+    barColor: { confirmed: '#DBDBDB', recovered: '#23D160', deaths: '#FF3860' }
+}
 
 function chartXAxisFormatter(date) {
     return dayjs(date).format('MMM D');
@@ -69,7 +79,33 @@ function ChartTooltip(props) {
 
 function DetailsViewChart(props) {
     const { data, maxData, dataKey, xAxisKey, mapKey } = props;
+    const [theme, setTheme] = useState('light');
+
+    function onThemeChange() {
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        const newTheme = mql.matches ? 'dark' : 'light';
+        setTheme(newTheme);
+    }
+
+    useEffect(() => {
+        onThemeChange();
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', onThemeChange);
+        return () => {
+            window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', onThemeChange);
+        }
+    }, []);
     
+    let chartOptions;
+    if (theme === 'dark') {
+        chartOptions = Object.assign(
+            {}, chartSharedOptions, chartDarkThemeOptions
+        );
+    }
+    else {
+        chartOptions = Object.assign(
+            {}, chartSharedOptions, chartLightThemeOptions
+        );
+    }
     const yAxisMax = chartYMax(maxData);
     const yAxisTicks = chartYTicks(maxData);
 
