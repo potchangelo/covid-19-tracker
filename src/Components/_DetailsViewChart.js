@@ -89,9 +89,20 @@ function DetailsViewChart(props) {
 
     useEffect(() => {
         onThemeChange();
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', onThemeChange);
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (!!mql.addEventListener) {
+            mql.addEventListener('change', onThemeChange);
+        }
+        else {
+            mql.addListener(onThemeChange);
+        }
         return () => {
-            window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', onThemeChange);
+            if (!!mql.addEventListener) {
+                mql.removeEventListener('change', onThemeChange);
+            }
+            else {
+                mql.removeListener(onThemeChange);
+            }
         }
     }, []);
     
