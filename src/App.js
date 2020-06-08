@@ -3,6 +3,7 @@ import './Css/App.scss';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './Components';
 import api from './Api';
+import TestRedux from './Components/_TestRedux';
 
 const mqDesktop = 1024;
 
@@ -134,6 +135,7 @@ function App() {
 				label="Loading"
 				extraClass="loading-view__app" />
 			<ErrorView error={error} onClickClose={onCloseError} />
+			<TestRedux />
 		</div>
 	);
 }
