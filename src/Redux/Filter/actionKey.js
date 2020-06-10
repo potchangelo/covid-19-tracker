@@ -1,0 +1,4 @@
+const SET_FILTER = 'SET_FILTER';
+const RESET_FILTER = 'RESET_FILTER';
+
+export { SET_FILTER, RESET_FILTER };

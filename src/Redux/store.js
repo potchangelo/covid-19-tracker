@@ -1,18 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-
-// reducers
-function locationArray22(state = [], action) {
-    switch (action.type) {
-        case 'ADD_LOCATION':
-            return [...state, action.payload];
-
-        default:
-            return state;
-    } 
-}
+import locationReducer from './Location/reducer';
+import filterReducer from './Filter/reducer';
 
 export default createStore(
-    combineReducers({locationArray22}),
+    combineReducers({locationReducer, filterReducer}),
     applyMiddleware(thunk)
 );
