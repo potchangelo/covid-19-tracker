@@ -1,52 +1,29 @@
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './Components';
+
+import React, { useState, useEffect, useCallback } from 'react';
 import { bindActionCreators } from 'redux';
-import { getLocationArray } from './Redux/Location/action';
 import { connect } from 'react-redux';
+
+import {
+	 MapView, ListView, DetailsView, 
+	 FilterView, InfoView, LoadingView, ErrorView 
+} from './Components';
+
+import { getLocationArray } from './Redux/Location/action';
 
 const mqDesktop = 1024;
 
 function App(props) {
-	// States, Refs
+	// States
 	const { isLoading, getLocationArray } = props;
 
 	const [mapViewport, setMapViewport] = useState({ center: [15, 101], zoom: 5 });
-
-	const [isShowFilter, setIsShowFilter] = useState(false);
-	const [isNeedResetFilter, setIsNeedResetFilter] = useState(false);
 	const [isShowInfo, setIsShowInfo] = useState(false);
-
 	const [error, setError] = useState(null);
 
 	// Functions
-	// - Filter
-	const onFilterLocations = useCallback((nextLocationArray) => {
-		// setSelectedLocation(null);
-		// setLocationArray(nextLocationArray);
-		setIsShowFilter(false);
-	}, []);
-
-	const onResetFilterLocations = useCallback(() => {
-		// setSelectedLocation(null);
-		// setLocationArray(prevArray => {
-		// 	return prevArray.map(location => {
-		// 		const nextLocation = Object.assign({}, {...location});
-		// 		delete nextLocation.isHidden;
-		// 		return nextLocation;
-		// 	});
-		// });
-		setIsShowFilter(false);
-		setIsNeedResetFilter(true);
-	}, []);
-
-	const onResetFilterEnd = useCallback(() => setIsNeedResetFilter(false), []);
-
 	// - Open popup
-	const onOpenFilter = useCallback(() => setIsShowFilter(true), []);
-	const onCloseFilter = useCallback(() => setIsShowFilter(false), []);
-
 	const onOpenInfo = useCallback(() => setIsShowInfo(true), []);
 	const onCloseInfo = useCallback(() => setIsShowInfo(false), []);
 
@@ -54,25 +31,17 @@ function App(props) {
 	const onCloseError = useCallback(() => setError(null), []);
 
 	// Effects
-	useEffect(() => getLocationArray(), []);
+	useEffect(() => { getLocationArray(); }, []);
 
 	return (
 		<div className="app">
 			<ListView
-				onClickFilter={onOpenFilter}
-				onClickReset={onResetFilterLocations}
 				onClickInfo={onOpenInfo} />
 			<MapView
 				viewport={mapViewport}
 				onViewportChanged={setMapViewport} />
 			<DetailsView />
-			<FilterView 
-				isShow={isShowFilter}
-				isNeedReset={isNeedResetFilter}
-				locationArray={[]} 
-				onClickFilter={onFilterLocations} 
-				onClickClose={onCloseFilter}
-				onResetEnd={onResetFilterEnd} />
+			<FilterView />
 			<InfoView isShow={isShowInfo} onClickClose={onCloseInfo} />
 			<LoadingView
 				isShow={isLoading}
@@ -85,8 +54,10 @@ function App(props) {
 }
 
 function mapStateToProps(state) {
-    const { isLocationArrayLoading } = state.locationReducer;
-    return { isLoading: isLocationArrayLoading };
+    const {
+		isLocationArrayLoading: isLoading 
+	} = state.locationReducer;
+    return { isLoading };
 }
 
 function mapDispatchToProps(dispatch) {

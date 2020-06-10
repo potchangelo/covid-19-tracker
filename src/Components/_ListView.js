@@ -1,9 +1,16 @@
 import './Css/ListView.scss';
+
 import React, { useState, useRef, useEffect } from 'react';
-import LoadingView from './_LoadingView';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import LoadingView from './_LoadingView';
+
 import { getLocation, unsetSelectedLocation } from '../Redux/Location/action';
+import { getFilteredLocationArray } from '../Redux/Location/selector';
+import { resetFilter } from '../Redux/Filter/action';
+import { setModal } from '../Redux/Modal/action';
+import { FILTER } from '../Redux/Modal/name';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 
@@ -12,7 +19,7 @@ function ListView(props) {
     const { 
         locationArray, selectedLocation, isLoading, 
         getLocation, unsetSelectedLocation,
-        onClickFilter, onClickReset, onClickInfo
+        resetFilter, setModal, onClickInfo
     } = props;
 
     const [isOnTablet, setIsOnTablet] = useState(false);
@@ -21,31 +28,23 @@ function ListView(props) {
     const listLocationsRef = useRef(null);
 
     // Functions
-    function _onClickReset() {
-        const nextLocationArray = locationArray.map(location => {
-            let nextLocation = Object.assign({}, {...location});
-            delete nextLocation.isHidden;
-            return nextLocation;
-        });
-        onClickReset(nextLocationArray);
-    }
 
     function onClickItem(id) {
         setIsOnTablet(false);
-        if (selectedLocation === null) getLocation(id);
+        if (!selectedLocation) getLocation(id);
         else if (selectedLocation.id !== id) getLocation(id);
         else unsetSelectedLocation();
     }
 
     function scrollToSelected(location) {
-        if (location === null) return;
+        if (!location) return;
 
         const parentBounds = listLocationsRef.current.getBoundingClientRect();
         const childArray = Array.from(listLocationsRef.current.childNodes[1].childNodes);
         const selectedChild = childArray.find(child => {
             return child.getAttribute('data-id') === `${location.id}`
         });
-        if (selectedChild === undefined) return;
+        if (!selectedChild) return;
 
         const childBounds = selectedChild.getBoundingClientRect();
 
@@ -112,7 +111,7 @@ function ListView(props) {
         <div className="list-view__locations-filter">
             <div className="field is-grouped is-grouped-centered">
                 <div className="control">
-                    <button className="button is-small" onClick={onClickFilter}>
+                    <button className="button is-small" onClick={_ => setModal(FILTER)}>
                         <span className="icon">
                             <i className="fas fa-filter"></i>
                         </span>
@@ -120,7 +119,7 @@ function ListView(props) {
                     </button>
                 </div>
                 <div className="control">
-                    <button className="button is-small" onClick={_onClickReset}>
+                    <button className="button is-small" onClick={resetFilter}>
                         <span className="icon">
                             <i className="fas fa-undo"></i>
                         </span>
@@ -135,17 +134,15 @@ function ListView(props) {
     const locationDataElements = locationArray.map(location => {
         const {
             id, country, country_code, province,
-            latest: { confirmed }, isHidden
+            latest: { confirmed }
         } = location;
-
-        if (isHidden === true) return null;
 
         let title = country;
         if (province !== '' && province !== country) {
             title = `${province}, ${country}`;
         }
         let locationClass = 'list-view__location';
-        if (selectedLocation !== null) {
+        if (!!selectedLocation) {
             if (location.id === selectedLocation.id) {
                 locationClass += ' selected';
             }
@@ -221,18 +218,18 @@ function ListView(props) {
 }
 
 function mapStateToProps(state) {
+    const locationArray = getFilteredLocationArray(state);
     const {
-         locationArray, selectedLocation, isLocationArrayLoading 
+         selectedLocation, 
+         isLocationArrayLoading: isLoading
     } = state.locationReducer;
-    return {
-         locationArray, selectedLocation, 
-         isLoading: isLocationArrayLoading 
-    };
+    return { locationArray, selectedLocation, isLoading };
 }
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		unsetSelectedLocation, getLocation
+        getLocation, unsetSelectedLocation, 
+        resetFilter, setModal
 	}, dispatch);
 }
 

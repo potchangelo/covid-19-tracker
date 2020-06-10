@@ -1,10 +1,13 @@
 import './Css/MapView.scss';
+
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { divIcon } from 'leaflet';
 import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+
 import { getLocation } from '../Redux/Location/action';
+import { getFilteredLocationArray } from '../Redux/Location/selector';
 
 const markerIcons = {
     xxSmall: divIcon({
@@ -53,10 +56,8 @@ function MapView(props) {
         const {
             id, coordinates: { latitude, longitude },
             country, country_code, province,
-            latest: { confirmed }, isHidden
+            latest: { confirmed }
         } = location;
-
-        if (!!isHidden) return null;
 
         let markerIconsSet = markerIcons;
         if (!!selectedLocation) {
@@ -125,7 +126,8 @@ function MapView(props) {
 }
 
 function mapStateToProps(state) {
-    const { locationArray, selectedLocation } = state.locationReducer;
+    const locationArray = getFilteredLocationArray(state);
+    const { selectedLocation } = state.locationReducer;
     return { locationArray, selectedLocation };
 }
 
