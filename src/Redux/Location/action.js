@@ -1,29 +1,29 @@
 import api from "../../Api";
-import * as key from "./actionKey";
+import * as type from "./actionType";
 
 // Normal actions
 const setLocationArray = locationArray => ({
-    type: key.SET_LOCATION_ARRAY,
+    type: type.SET_LOCATION_ARRAY,
     payload: { locationArray }
 });
 
 const setLocationArrayLoading = isLoading => ({
-    type: key.SET_LOCATION_ARRAY_LOADING,
+    type: type.SET_LOCATION_ARRAY_LOADING,
     payload: { isLoading }
 });
 
 const setSelectedLocation = location => ({
-    type: key.SET_SELECTED_LOCATION,
+    type: type.SET_SELECTED_LOCATION,
     payload: { location }
 });
 
 const setSelectedLocationLoading = isLoading => ({
-    type: key.SET_SELECTED_LOCATION_LOADING,
+    type: type.SET_SELECTED_LOCATION_LOADING,
     payload: { isLoading }
 });
 
 const unsetSelectedLocation = () => ({
-    type: key.SET_SELECTED_LOCATION,
+    type: type.SET_SELECTED_LOCATION,
     payload: { location: null }
 });
 
@@ -43,7 +43,7 @@ const getLocationArray = () => dispatch => {
     });
 }
 
-const getLocation = (id) => dispatch => {
+const getLocation = id => dispatch => {
     dispatch(setSelectedLocationLoading(true));
     return api.getLocation(id).then(response => {
         const { location } = response.data;

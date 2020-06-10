@@ -1,4 +1,4 @@
-import * as key from "./actionKey";
+import * as type from "./actionType";
 
 const initialState = {
     locationArray: [],
@@ -7,11 +7,9 @@ const initialState = {
     isSelectedLocationLoading: false
 }
 
-// reducers
-// action.type to switch, action.payload for data
 function locationReducer(state = initialState, action) {
     switch (action.type) {
-        case key.SET_LOCATION_ARRAY: {
+        case type.SET_LOCATION_ARRAY: {
             const { locationArray } = action.payload;
             return {
                 ...state,
@@ -19,21 +17,21 @@ function locationReducer(state = initialState, action) {
             };
         }
 
-        case key.SET_LOCATION_ARRAY_LOADING: {
+        case type.SET_LOCATION_ARRAY_LOADING: {
             const { isLoading } = action.payload;
             return {
                 ...state,
                 isLocationArrayLoading: isLoading
             };
         }
-        case key.SET_SELECTED_LOCATION: {
+        case type.SET_SELECTED_LOCATION: {
             const { location } = action.payload;
             return {
                 ...state,
                 selectedLocation: location
             };
         }
-        case key.SET_SELECTED_LOCATION_LOADING: {
+        case type.SET_SELECTED_LOCATION_LOADING: {
             const { isLoading } = action.payload;
             return {
                 ...state,

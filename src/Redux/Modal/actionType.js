@@ -1,0 +1,4 @@
+const SET_MODAL = 'SET_MODAL';
+const UNSET_MODAL = 'UNSET_MODAL';
+
+export { SET_MODAL, UNSET_MODAL };
