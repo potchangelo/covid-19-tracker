@@ -2,6 +2,9 @@ import './Css/MapView.scss';
 import React from 'react';
 import { divIcon } from 'leaflet';
 import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getLocation } from '../Redux/Location/action';
 
 const markerIcons = {
     xxSmall: divIcon({
@@ -41,11 +44,8 @@ const maxBounds = [[90, 270], [-90, -240]];
 function MapView(props) {
     // Props
     const {
-        viewport,
-        locationArray,
-        selectedLocation,
-        onViewportChanged,
-        onSelectMarker
+        viewport, locationArray, selectedLocation,
+        onViewportChanged, getLocation
     } = props;
 
     // Elements
@@ -95,7 +95,7 @@ function MapView(props) {
                 key={`${id}-${country_code}`}
                 position={[latitude, longitude]}
                 icon={markerIcon}
-                onclick={_ => onSelectMarker(id)}
+                onclick={_ => getLocation(id)}
                 onmouseover={e => e.target.openPopup()}
                 onmouseout={e => e.target.closePopup()} >
                 <Popup autoPan={false}>
@@ -124,7 +124,16 @@ function MapView(props) {
     )
 }
 
-export default MapView;
+function mapStateToProps(state) {
+    const { locationArray, selectedLocation } = state.locationReducer;
+    return { locationArray, selectedLocation };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ getLocation }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapView);
 
 /*
 location confirmed count => icon style

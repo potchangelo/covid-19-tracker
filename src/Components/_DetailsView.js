@@ -3,13 +3,16 @@ import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { chartYMax } from './_DetailsViewChart';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { unsetSelectedLocation } from '../Redux/Location/action';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 const latestDays = 5;
 
 function DetailsView(props) {
     // Props, States
-    const { location, isLoading, onClickClose } = props;
+    const { location, isLoading, unsetSelectedLocation } = props;
     const [isOnTablet, setIsOnTablet] = useState(false);
 
     // Effects
@@ -22,7 +25,7 @@ function DetailsView(props) {
         if (!isLoading) return null;
         return (
             <div className="details-view">
-                <div className="details-view__close" onClick={onClickClose}>
+                <div className="details-view__close" onClick={unsetSelectedLocation}>
                     <span className="icon is-medium">
                         <i className="fas fa-times fa-lg"></i>
                     </span>
@@ -150,7 +153,7 @@ function DetailsView(props) {
 
     return (
         <div className={detailsClass}>
-            <div className="details-view__close" onClick={onClickClose}>
+            <div className="details-view__close" onClick={unsetSelectedLocation}>
                 <span className="icon is-medium">
                     <i className="fas fa-times fa-lg"></i>
                 </span>
@@ -165,4 +168,18 @@ function DetailsView(props) {
     );
 }
 
-export default DetailsView;
+function mapStateToProps(state) {
+    const {
+         selectedLocation, isSelectedLocationLoading
+    } = state.locationReducer;
+    return {
+         location: selectedLocation, 
+         isLoading: isSelectedLocationLoading 
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ unsetSelectedLocation }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailsView);

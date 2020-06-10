@@ -1,20 +1,18 @@
 import './Css/ListView.scss';
 import React, { useState, useRef, useEffect } from 'react';
 import LoadingView from './_LoadingView';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getLocation, unsetSelectedLocation } from '../Redux/Location/action';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 
 function ListView(props) {
     // Props, States, Refs
     const { 
-        locationArray, 
-        selectedLocation, 
-        isLoading, 
-        onSelectItem, 
-        onDeselectItem,
-        onClickFilter,
-        onClickReset,
-        onClickInfo
+        locationArray, selectedLocation, isLoading, 
+        getLocation, unsetSelectedLocation,
+        onClickFilter, onClickReset, onClickInfo
     } = props;
 
     const [isOnTablet, setIsOnTablet] = useState(false);
@@ -34,9 +32,9 @@ function ListView(props) {
 
     function onClickItem(id) {
         setIsOnTablet(false);
-        if (selectedLocation === null) onSelectItem(id);
-        else if (selectedLocation.id !== id) onSelectItem(id);
-        else onDeselectItem();
+        if (selectedLocation === null) getLocation(id);
+        else if (selectedLocation.id !== id) getLocation(id);
+        else unsetSelectedLocation();
     }
 
     function scrollToSelected(location) {
@@ -222,4 +220,20 @@ function ListView(props) {
     );
 }
 
-export default ListView;
+function mapStateToProps(state) {
+    const {
+         locationArray, selectedLocation, isLocationArrayLoading 
+    } = state.locationReducer;
+    return {
+         locationArray, selectedLocation, 
+         isLoading: isLocationArrayLoading 
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({
+		unsetSelectedLocation, getLocation
+	}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListView);
