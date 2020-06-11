@@ -7,12 +7,13 @@
     "coronavirus",
     "leaflet",
     "react",
+    "redux",
     "bulma",
     "recharts"
   ],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Potchara Puttawanchai",
-  "homepage": "https://covid-19-tracker-app.netlify.com/",
+  "homepage": "https://covid-19-tracker-app.netlify.app/",
   "repository": {
     "type": "git",
     "url": "https://github.com/potchangelo/covid-19-tracker.git"
