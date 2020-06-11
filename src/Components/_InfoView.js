@@ -1,15 +1,21 @@
 import './Css/InfoView.scss';
+
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { Modal } from '../Layouts';
 
+import { unsetModal } from '../Redux/Modal/action';
+import { INFO } from '../Redux/Modal/name';
+
 function InfoView(props) {
-    const { isShow, onClickClose } = props;
+    const { isShow, unsetModal } = props;
     return (
         <Modal 
             extraClass="info-view" 
             extraContentClass="info-view__content has-text-centered"
             isShow={isShow} 
-            onClickClose={onClickClose}
+            onClickClose={unsetModal}
             >
             <div className="columns is-mobile">
                 <div className="column">
@@ -24,4 +30,11 @@ function InfoView(props) {
     );
 }
 
-export default InfoView;
+function mapStateToProps(state) {
+    const isShow = state.modalReducer === INFO;
+    return { isShow };
+}
+
+const mapDispatchToProps = { unsetModal };
+
+export default connect(mapStateToProps, mapDispatchToProps)(InfoView);

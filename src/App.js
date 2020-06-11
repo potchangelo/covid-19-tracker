@@ -19,15 +19,11 @@ function App(props) {
 	const { isLoading, getLocationArray } = props;
 
 	const [mapViewport, setMapViewport] = useState({ center: [15, 101], zoom: 5 });
-	const [isShowInfo, setIsShowInfo] = useState(false);
 	const [error, setError] = useState(null);
 
 	// Functions
 	const onLoad = useCallback(() => getLocationArray(), [getLocationArray]);
 
-	// - Open popup
-	const onOpenInfo = useCallback(() => setIsShowInfo(true), []);
-	const onCloseInfo = useCallback(() => setIsShowInfo(false), []);
 
 	// - Close error
 	const onCloseError = useCallback(() => setError(null), []);
@@ -37,14 +33,13 @@ function App(props) {
 
 	return (
 		<div className="app">
-			<ListView
-				onClickInfo={onOpenInfo} />
+			<ListView />
 			<MapView
 				viewport={mapViewport}
 				onViewportChanged={setMapViewport} />
 			<DetailsView />
 			<FilterView />
-			<InfoView isShow={isShowInfo} onClickClose={onCloseInfo} />
+			<InfoView />
 			<LoadingView
 				isShow={isLoading}
 				label="Loading"

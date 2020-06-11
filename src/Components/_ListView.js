@@ -10,7 +10,7 @@ import { getLocation, unsetSelectedLocation } from '../Redux/Location/action';
 import { getFilteredLocationArray } from '../Redux/Location/selector';
 import { resetFilter } from '../Redux/Filter/action';
 import { setModal } from '../Redux/Modal/action';
-import { FILTER } from '../Redux/Modal/name';
+import { FILTER, INFO } from '../Redux/Modal/name';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 
@@ -19,7 +19,7 @@ function ListView(props) {
     const { 
         locationArray, selectedLocation, isLoading, 
         getLocation, unsetSelectedLocation,
-        resetFilter, setModal, onClickInfo
+        resetFilter, setModal
     } = props;
 
     const [isOnTablet, setIsOnTablet] = useState(false);
@@ -191,7 +191,7 @@ function ListView(props) {
                         <i className="fas fa-angle-double-right fa-lg"></i>
                     </span>
                 </div>
-                <div className="list-view__menu-item" onClick={onClickInfo}>
+                <div className="list-view__menu-item" onClick={_ => setModal(INFO)}>
                     <span className="icon is-medium">
                         <i className="fas fa-info-circle"></i>
                     </span>
