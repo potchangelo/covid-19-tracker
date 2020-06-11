@@ -1,5 +1,6 @@
 import api from "../../Api";
 import * as type from "./actionType";
+import { setError, unsetError } from '../Error/action';
 
 // Normal actions
 const setLocationArray = locationArray => ({
@@ -36,8 +37,7 @@ const getLocationArray = () => dispatch => {
         });
         dispatch(setLocationArray(sortedLocation));
     }).catch(error => {
-        // console.error(error);
-        // setError(error);
+        dispatch(setError(error));
     }).finally(() => {
         dispatch(setLocationArrayLoading(false));
     });
@@ -45,6 +45,7 @@ const getLocationArray = () => dispatch => {
 
 const getLocation = id => dispatch => {
     dispatch(setSelectedLocationLoading(true));
+    dispatch(unsetError());
     return api.getLocation(id).then(response => {
         const { location } = response.data;
         // const { coordinates: { latitude, longitude } } = location;
@@ -61,9 +62,8 @@ const getLocation = id => dispatch => {
         // setMapViewport({ center: [nextLatitude, longitude], zoom: 6 });
         dispatch(setSelectedLocation(location));
     }).catch(error => {
-        // console.error(error);
-        // setSelectedLocation(null);
-        // setError(error);
+        dispatch(unsetSelectedLocation());
+        dispatch(setError(error));
     }).finally(() => {
         dispatch(setSelectedLocationLoading(false));
     });

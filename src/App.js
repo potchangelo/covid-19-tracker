@@ -15,18 +15,12 @@ import { getLocationArray } from './Redux/Location/action';
 //const mqDesktop = 1024;
 
 function App(props) {
-	// States
+	// Props, States
 	const { isLoading, getLocationArray } = props;
-
 	const [mapViewport, setMapViewport] = useState({ center: [15, 101], zoom: 5 });
-	const [error, setError] = useState(null);
 
 	// Functions
 	const onLoad = useCallback(() => getLocationArray(), [getLocationArray]);
-
-
-	// - Close error
-	const onCloseError = useCallback(() => setError(null), []);
 
 	// Effects
 	useEffect(() => { onLoad(); }, [onLoad]);
@@ -44,8 +38,7 @@ function App(props) {
 				isShow={isLoading}
 				label="Loading"
 				extraClass="loading-view__app" />
-			<ErrorView error={error} onClickClose={onCloseError} />
-			
+			<ErrorView />
 		</div>
 	);
 }
