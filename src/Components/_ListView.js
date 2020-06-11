@@ -6,9 +6,10 @@ import { connect } from 'react-redux';
 
 import LoadingView from './_LoadingView';
 
-import { getLocation, unsetSelectedLocation } from '../Redux/Location/action';
+import { unsetSelectedLocation } from '../Redux/Location/action';
+import { applyGetLocation } from '../Redux/Location/actionThunk';
 import { getFilteredLocationArray } from '../Redux/Location/selector';
-import { resetFilter } from '../Redux/Filter/action';
+import { applyResetFilter } from '../Redux/Filter/actionThunk';
 import { setModal } from '../Redux/Modal/action';
 import { FILTER, INFO } from '../Redux/Modal/name';
 
@@ -18,8 +19,8 @@ function ListView(props) {
     // Props, States, Refs
     const { 
         locationArray, selectedLocation, isLoading, 
-        getLocation, unsetSelectedLocation,
-        resetFilter, setModal
+        applyGetLocation, unsetSelectedLocation,
+        applyResetFilter, setModal
     } = props;
 
     const [isOnTablet, setIsOnTablet] = useState(false);
@@ -31,8 +32,8 @@ function ListView(props) {
 
     function onClickItem(id) {
         setIsOnTablet(false);
-        if (!selectedLocation) getLocation(id);
-        else if (selectedLocation.id !== id) getLocation(id);
+        if (!selectedLocation) applyGetLocation(id);
+        else if (selectedLocation.id !== id) applyGetLocation(id);
         else unsetSelectedLocation();
     }
 
@@ -119,7 +120,7 @@ function ListView(props) {
                     </button>
                 </div>
                 <div className="control">
-                    <button className="button is-small" onClick={resetFilter}>
+                    <button className="button is-small" onClick={applyResetFilter}>
                         <span className="icon">
                             <i className="fas fa-undo"></i>
                         </span>
@@ -228,8 +229,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-        getLocation, unsetSelectedLocation, 
-        resetFilter, setModal
+        applyGetLocation, unsetSelectedLocation, 
+        applyResetFilter, setModal
 	}, dispatch);
 }
 

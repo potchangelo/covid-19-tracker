@@ -7,9 +7,10 @@ import { Modal } from '../Layouts';
 
 import { 
     setTempName, setTempMinConfirmed, setTempMaxConfirmed, 
-    setFilter, cancelFilter 
 } from '../Redux/Filter/action';
-import { unsetModal } from '../Redux/Modal/action';
+import { 
+    applySetFilter, applyCancelFilter 
+} from '../Redux/Filter/actionThunk';
 import { FILTER } from '../Redux/Modal/name';
 
 function FilterView(props) {
@@ -17,19 +18,13 @@ function FilterView(props) {
     const {
         isShow, name, minConfirmed, maxConfirmed,
         setName, setMinConfirmed, setMaxConfirmed, 
-        setFilter, cancelFilter, unsetModal
+        applySetFilter, applyCancelFilter
     } = props;
 
     // Functions
     function onSubmitFilter(e) {
         e.preventDefault();
-        setFilter();
-        unsetModal();
-    }
-
-    function onCancelFilter() {
-        cancelFilter();
-        unsetModal();
+        applySetFilter();
     }
 
     return (
@@ -37,7 +32,7 @@ function FilterView(props) {
             extraClass="filter-view"
             extraContentClass="filter-view__content"
             isShow={isShow}
-            onClickClose={onCancelFilter}>
+            onClickClose={applyCancelFilter}>
             <form action="#" onSubmit={onSubmitFilter}>
                 <h4 className="title is-4">Filter countries</h4>
                 <label className="label">Search by name</label>
@@ -87,7 +82,7 @@ function FilterView(props) {
                         <button
                             className="button"
                             type="button"
-                            onClick={onCancelFilter} >
+                            onClick={applyCancelFilter} >
                             Cancel
                         </button>
                     </div>
@@ -118,7 +113,7 @@ const mapDispatchToProps = {
     setName: setTempName, 
     setMinConfirmed: setTempMinConfirmed, 
     setMaxConfirmed: setTempMaxConfirmed, 
-    setFilter, cancelFilter, unsetModal
+    applySetFilter, applyCancelFilter
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterView);

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getLocationArray, getLocation } from '../Redux/Location/action';
+import { applyGetLocationArray, applyGetLocation } from '../Redux/Location/actionThunk';
 
 function TestRedux(props) {
     console.log(props.isSelectedLocationLoading);
 
     useEffect(() => {
-        props.getLocationArray()
+        props.applyGetLocationArray()
         setTimeout(() => {
-            props.getLocation(154);
+            props.applyGetLocation(154);
         }, 1500);
     }, [])
 
@@ -23,7 +23,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getLocationArray, getLocation
+        applyGetLocationArray, applyGetLocation
     }, dispatch);
 }
 

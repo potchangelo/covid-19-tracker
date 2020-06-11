@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { divIcon } from 'leaflet';
 import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 
-import { getLocation } from '../Redux/Location/action';
+import { applyGetLocation } from '../Redux/Location/actionThunk';
 import { getFilteredLocationArray } from '../Redux/Location/selector';
 
 const markerIcons = {
@@ -48,7 +48,7 @@ const maxBounds = [[90, 270], [-90, -240]];
 function MapView(props) {
     // Props
     const {
-        locationArray, selectedLocation, getLocation
+        locationArray, selectedLocation, applyGetLocation
     } = props;
     const [viewport, setViewport] = useState({ center: [15, 101], zoom: 5 });
     const mapRef = useRef(null);
@@ -114,7 +114,7 @@ function MapView(props) {
                 key={`${id}-${country_code}`}
                 position={[latitude, longitude]}
                 icon={markerIcon}
-                onclick={_ => getLocation(id)}
+                onclick={_ => applyGetLocation(id)}
                 onmouseover={e => e.target.openPopup()}
                 onmouseout={e => e.target.closePopup()} >
                 <Popup autoPan={false}>
@@ -152,7 +152,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ getLocation }, dispatch);
+    return bindActionCreators({ applyGetLocation }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapView);

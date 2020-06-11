@@ -10,14 +10,14 @@ import {
 	 FilterView, InfoView, LoadingView, ErrorView 
 } from './Components';
 
-import { getLocationArray } from './Redux/Location/action';
+import { applyGetLocationArray } from './Redux/Location/actionThunk';
 
 function App(props) {
 	// Props, States
-	const { isLoading, getLocationArray } = props;
+	const { isLoading, applyGetLocationArray } = props;
 
 	// Functions
-	const onLoad = useCallback(() => getLocationArray(), [getLocationArray]);
+	const onLoad = useCallback(() => applyGetLocationArray(), [applyGetLocationArray]);
 
 	// Effects
 	useEffect(() => { onLoad(); }, [onLoad]);
@@ -46,7 +46,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ getLocationArray }, dispatch);
+	return bindActionCreators({ applyGetLocationArray }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
