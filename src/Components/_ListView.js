@@ -18,7 +18,8 @@ const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 function ListView(props) {
     // Props, States, Refs
     const { 
-        locationArray, selectedLocation, isLoading, 
+        locationArray, filteredLocationArray,
+        selectedLocation, isLoading, 
         applyGetLocation, unsetSelectedLocation,
         applyResetFilter, setModal
     } = props;
@@ -132,7 +133,7 @@ function ListView(props) {
     );
 
     // - Locations
-    const locationDataElements = locationArray.map(location => {
+    const locationItemElements = filteredLocationArray.map(location => {
         const {
             id, country, country_code, province,
             latest: { confirmed }
@@ -165,7 +166,7 @@ function ListView(props) {
 
     let locationElements = (
         <div className="list-view__locations-data">
-            {locationDataElements}
+            {locationItemElements}
         </div>
     );
 
@@ -219,12 +220,15 @@ function ListView(props) {
 }
 
 function mapStateToProps(state) {
-    const locationArray = getFilteredLocationArray(state);
     const {
-         selectedLocation, 
+         locationArray, selectedLocation, 
          isLocationArrayLoading: isLoading
     } = state.locationReducer;
-    return { locationArray, selectedLocation, isLoading };
+    const filteredLocationArray = getFilteredLocationArray(state);
+    return { 
+        locationArray, filteredLocationArray, 
+        selectedLocation, isLoading 
+    };
 }
 
 function mapDispatchToProps(dispatch) {
