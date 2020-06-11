@@ -1,7 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import './Css/App.scss';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -12,12 +12,9 @@ import {
 
 import { getLocationArray } from './Redux/Location/action';
 
-//const mqDesktop = 1024;
-
 function App(props) {
 	// Props, States
 	const { isLoading, getLocationArray } = props;
-	const [mapViewport, setMapViewport] = useState({ center: [15, 101], zoom: 5 });
 
 	// Functions
 	const onLoad = useCallback(() => getLocationArray(), [getLocationArray]);
@@ -28,9 +25,7 @@ function App(props) {
 	return (
 		<div className="app">
 			<ListView />
-			<MapView
-				viewport={mapViewport}
-				onViewportChanged={setMapViewport} />
+			<MapView />
 			<DetailsView />
 			<FilterView />
 			<InfoView />

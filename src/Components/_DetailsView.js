@@ -1,10 +1,13 @@
 import './Css/DetailsView.scss';
+
 import React, { useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import dayjs from 'dayjs';
+
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { chartYMax } from './_DetailsViewChart';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+
 import { unsetSelectedLocation } from '../Redux/Location/action';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
@@ -17,11 +20,11 @@ function DetailsView(props) {
 
     // Effects
     useEffect(() => {
-        if (location === null) setIsOnTablet(false);
+        if (!location) setIsOnTablet(false);
     }, [location]);
 
     // Empty view conditions
-    if (location === null) {
+    if (!location) {
         if (!isLoading) return null;
         return (
             <div className="details-view">

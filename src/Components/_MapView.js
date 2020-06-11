@@ -1,6 +1,6 @@
 import './Css/MapView.scss';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { divIcon } from 'leaflet';
@@ -42,14 +42,32 @@ Object.keys(markerIcons).forEach((key) => {
     selectedMarkerIcons[key] = icon;
 });
 
+const mqDesktop = 1024;
 const maxBounds = [[90, 270], [-90, -240]];
 
 function MapView(props) {
     // Props
     const {
-        viewport, locationArray, selectedLocation,
-        onViewportChanged, getLocation
+        locationArray, selectedLocation, getLocation
     } = props;
+    const [viewport, setViewport] = useState({ center: [15, 101], zoom: 5 });
+    const mapRef = useRef(null);
+
+    // Effects
+    useEffect(() => {
+        if (!!selectedLocation) {
+            const { coordinates: { latitude, longitude } } = selectedLocation;
+
+            let nextLatitude = latitude;
+            if (mapRef.current.offsetWidth < mqDesktop) {
+                if (latitude >= 65) nextLatitude -= 0.5
+                else if (latitude < 65 && latitude >= 50) nextLatitude -= 1;
+                else if (latitude < 50 && latitude >= 45) nextLatitude -= 1.5;
+                else nextLatitude -= 2;
+            }
+            setViewport({ center: [nextLatitude, longitude], zoom: 6 });
+        }
+    }, [selectedLocation]);
 
     // Elements
     const markerElements = locationArray.map(location => {
@@ -107,21 +125,23 @@ function MapView(props) {
     });
 
     return (
-        <Map
-            className="map-view"
-            viewport={viewport}
-            zoomControl={false}
-            maxBounds={maxBounds}
-            maxBoundsViscosity={1.0}
-            minZoom={2}
-            onViewportChanged={onViewportChanged}>
-            <ZoomControl position="topright" />
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution="&copy; <a href=&quot;http://osm.org/copyright&quot; target=&quot;_blank&quot;>OpenStreetMap</a> contributors"
-            />
-            {markerElements}
-        </Map>
+        <div className="map-view__container" ref={mapRef}>
+            <Map
+                className="map-view"
+                viewport={viewport}
+                zoomControl={false}
+                maxBounds={maxBounds}
+                maxBoundsViscosity={1.0}
+                minZoom={2}
+                onViewportChanged={setViewport}>
+                <ZoomControl position="topright" />
+                <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot; target=&quot;_blank&quot;>OpenStreetMap</a> contributors"
+                />
+                {markerElements}
+            </Map>
+        </div>
     )
 }
 
