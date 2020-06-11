@@ -1,65 +1,39 @@
 import './Css/FilterView.scss';
-import React, { useState, useEffect } from 'react';
+
+import React from 'react';
+import { connect } from 'react-redux';
+
 import { Modal } from '../Layouts';
 
+import { 
+    setTempName, setTempMinConfirmed, setTempMaxConfirmed, 
+} from '../Redux/Filter/action';
+import { 
+    applySetFilter, applyCancelFilter 
+} from '../Redux/Filter/actionThunk';
+import { FILTER } from '../Redux/Modal/name';
+
 function FilterView(props) {
-    // Props, States
+    // Props
     const {
-        isShow,
-        isNeedReset,
-        locationArray,
-        onClickFilter,
-        onClickClose,
-        onResetEnd
+        isShow, name, minConfirmed, maxConfirmed,
+        setName, setMinConfirmed, setMaxConfirmed, 
+        applySetFilter, applyCancelFilter
     } = props;
 
-    const [query, setQuery] = useState('');
-    const [minConfirmed, setMinConfirmed] = useState(0);
-    const [maxConfirmed, setMaxConfirmed] = useState(1000000);
-
     // Functions
-    function onSubmitFilter() {
-        const nextLocationArray = locationArray.map(location => {
-            let nextLocation = Object.assign({}, { ...location });
-            const {
-                country, province,
-                latest: { confirmed }
-            } = nextLocation;
-
-            const lcCountry = country.toLowerCase();
-            const lcProvince = province.toLowerCase();
-            const lcQuery = query.toLowerCase();
-
-            const isContainsQuery = lcCountry.includes(lcQuery) || lcProvince.includes(lcQuery);
-            const isInConfirmedRange = confirmed >= minConfirmed && confirmed <= maxConfirmed;
-
-            const isAllPassed = isContainsQuery && isInConfirmedRange;
-
-            if (isAllPassed) delete nextLocation.isHidden;
-            else nextLocation.isHidden = true;
-
-            return nextLocation;
-        });
-        onClickFilter(nextLocationArray);
+    function onSubmitFilter(e) {
+        e.preventDefault();
+        applySetFilter();
     }
-
-    // Effects
-    useEffect(() => {
-        if (isNeedReset) {
-            setQuery('');
-            setMinConfirmed(0);
-            setMaxConfirmed(100000);
-            onResetEnd();
-        }
-    }, [isNeedReset, onResetEnd]);
 
     return (
         <Modal
             extraClass="filter-view"
             extraContentClass="filter-view__content"
             isShow={isShow}
-            onClickClose={onClickClose}>
-            <form action="#">
+            onClickClose={applyCancelFilter}>
+            <form action="#" onSubmit={onSubmitFilter}>
                 <h4 className="title is-4">Filter countries</h4>
                 <label className="label">Search by name</label>
                 <div className="field more-margin-bottom">
@@ -68,8 +42,8 @@ function FilterView(props) {
                             className="input"
                             type="text"
                             placeholder="Leave blank to ignore name-filter."
-                            value={query}
-                            onChange={e => setQuery(e.target.value)} />
+                            value={name}
+                            onChange={e => setName(e.target.value)} />
                     </div>
                 </div>
                 <label className="label">Confirmed cases</label>
@@ -108,17 +82,16 @@ function FilterView(props) {
                         <button
                             className="button"
                             type="button"
-                            onClick={onClickClose}>
+                            onClick={applyCancelFilter} >
                             Cancel
-                            </button>
+                        </button>
                     </div>
                     <div className="control">
                         <button
                             className="button is-link"
-                            type="submit"
-                            onClick={onSubmitFilter}>
+                            type="submit" >
                             Filter
-                            </button>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -126,4 +99,21 @@ function FilterView(props) {
     )
 }
 
-export default FilterView;
+function mapStateToProps(state) {
+    const { 
+        tempName: name, 
+        tempMinConfirmed: minConfirmed,
+        tempMaxConfirmed: maxConfirmed
+    } = state.filterReducer;
+    const isShow = state.modalReducer === FILTER;
+    return { isShow, name, minConfirmed, maxConfirmed };
+}
+
+const mapDispatchToProps = { 
+    setName: setTempName, 
+    setMinConfirmed: setTempMinConfirmed, 
+    setMaxConfirmed: setTempMaxConfirmed, 
+    applySetFilter, applyCancelFilter
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterView);

@@ -1,8 +1,12 @@
 import './Css/ErrorView.scss';
+
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { unsetError } from '../Redux/Error/action';
 
 function ErrorView(props) {
-    const { error, onClickClose } = props;
+    const { error, unsetError } = props;
 
     let label = 'Something went wrong, please wait and try again.'
     if (!error) return null;
@@ -13,11 +17,18 @@ function ErrorView(props) {
     return (
         <div className="error-view">
             <div className="notification is-danger">
-                <button className="delete" onClick={onClickClose}></button>
+                <button className="delete" onClick={unsetError}></button>
                 <p><b>Error : </b>{label}</p>
             </div>
         </div>
     );
 }
 
-export default ErrorView;
+function mapStateToProps(state) {
+    const error = state.errorReducer;
+    return { error };
+}
+
+const mapDispatchToProps = { unsetError };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorView);
