@@ -12,7 +12,7 @@ import {
 
 import { getLocationArray } from './Redux/Location/action';
 
-const mqDesktop = 1024;
+//const mqDesktop = 1024;
 
 function App(props) {
 	// States
@@ -23,6 +23,8 @@ function App(props) {
 	const [error, setError] = useState(null);
 
 	// Functions
+	const onLoad = useCallback(() => getLocationArray(), [getLocationArray]);
+
 	// - Open popup
 	const onOpenInfo = useCallback(() => setIsShowInfo(true), []);
 	const onCloseInfo = useCallback(() => setIsShowInfo(false), []);
@@ -31,7 +33,7 @@ function App(props) {
 	const onCloseError = useCallback(() => setError(null), []);
 
 	// Effects
-	useEffect(() => { getLocationArray(); }, []);
+	useEffect(() => { onLoad(); }, [onLoad]);
 
 	return (
 		<div className="app">
@@ -61,7 +63,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ getLocationArray }, dispatch)
+	return bindActionCreators({ getLocationArray }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

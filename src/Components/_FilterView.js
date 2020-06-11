@@ -15,8 +15,7 @@ import { FILTER } from '../Redux/Modal/name';
 function FilterView(props) {
     // Props
     const {
-        isShow, 
-        name, minConfirmed, maxConfirmed,
+        isShow, name, minConfirmed, maxConfirmed,
         setName, setMinConfirmed, setMaxConfirmed, 
         setFilter, cancelFilter, unsetModal
     } = props;
