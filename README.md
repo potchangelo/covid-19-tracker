@@ -1,6 +1,6 @@
 # COVID-19 Tracker by Zinglecode
 
-https://covid-19-tracker-app.netlify.com/
+https://covid-19-tracker-app.netlify.app/
 
 COVID-19 Tracker, created by React x Leaflet.
 
