@@ -1,10 +1,10 @@
 import './Css/MapView.scss';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { divIcon } from 'leaflet';
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
 
 import { applyGetLocation } from '../Redux/Location/actionThunk';
 import { getFilteredLocationArray } from '../Redux/Location/selector';
@@ -52,7 +52,6 @@ function MapView(props) {
     } = props;
     const [map, setMap] = useState(null);
     const [viewport, setViewport] = useState({ center: [15, 101], zoom: 5 });
-    const mapRef = useRef(null);
 
     // Functions
     const onMapChange = useCallback(() => {
@@ -76,17 +75,16 @@ function MapView(props) {
     }, [map, onMapChange]);
 
     useEffect(() => {
-        if (!!selectedLocation) {
+        if (!!selectedLocation && !!map) {
             const { coordinates: { latitude, longitude } } = selectedLocation;
-
             let nextLatitude = latitude;
-            if (mapRef.current.offsetWidth < mqDesktop) {
+            if (map.getContainer().offsetWidth < mqDesktop) {
                 if (latitude >= 65) nextLatitude -= 0.5
                 else if (latitude < 65 && latitude >= 50) nextLatitude -= 1;
                 else if (latitude < 50 && latitude >= 45) nextLatitude -= 1.5;
                 else nextLatitude -= 2;
             }
-            if (!!map) map.setView([nextLatitude, longitude], 6);
+            map.setView([nextLatitude, longitude], 6);
         }
     }, [selectedLocation, map]);
 
@@ -99,10 +97,8 @@ function MapView(props) {
         } = location;
 
         let markerIconsSet = markerIcons;
-        if (!!selectedLocation) {
-            if (location.id === selectedLocation.id) {
-                markerIconsSet = selectedMarkerIcons;
-            }
+        if (location.id === selectedLocation?.id) {
+            markerIconsSet = selectedMarkerIcons;
         }
 
         let markerIcon = markerIconsSet.xxSmall;
@@ -135,18 +131,16 @@ function MapView(props) {
                 key={`${id}-${country_code}`}
                 position={[latitude, longitude]}
                 icon={markerIcon}
-                onclick={_ => applyGetLocation(id)}
-                onmouseover={e => e.target.openPopup()}
-                onmouseout={e => e.target.closePopup()} >
-                <Popup autoPan={false}>
+                eventHandlers={{click: () => applyGetLocation(id)}} >
+                <Tooltip direction={'top'}>
                     <b>{title}</b>
-                </Popup>
+                </Tooltip>
             </Marker>
         );
     });
 
     return (
-        <div className="map-view__container" ref={mapRef}>
+        <div className="map-view__container">
             <MapContainer
                 className="map-view"
                 center={viewport.center}
@@ -155,7 +149,7 @@ function MapView(props) {
                 maxBounds={maxBounds}
                 maxBoundsViscosity={1.0}
                 minZoom={2}
-                whenCreated={setMap}>
+                whenCreated={setMap} >
                 <ZoomControl position="topright" />
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
