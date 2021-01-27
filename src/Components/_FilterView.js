@@ -3,7 +3,7 @@ import './Css/FilterView.scss';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Modal } from '../Layouts';
+import { Modal } from '../layouts';
 
 import { 
     setTempName, setTempMinConfirmed, setTempMaxConfirmed, 

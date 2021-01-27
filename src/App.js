@@ -1,5 +1,5 @@
 import 'leaflet/dist/leaflet.css';
-import './Css/App.scss';
+import './css/App.scss';
 
 import React, { useEffect, useCallback } from 'react';
 import { bindActionCreators } from 'redux';

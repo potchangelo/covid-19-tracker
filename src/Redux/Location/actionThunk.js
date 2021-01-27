@@ -1,4 +1,4 @@
-import api from "../../Api";
+import api from "../../api";
 import { setLocationArray, setLocationArrayLoading, setSelectedLocation, setSelectedLocationLoading, unsetSelectedLocation } from './action';
 import { setError, unsetError } from '../Error/action';
 
