@@ -1,10 +1,10 @@
 import './Css/MapView.scss';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { divIcon } from 'leaflet';
-import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
 
 import { applyGetLocation } from '../Redux/Location/actionThunk';
 import { getFilteredLocationArray } from '../Redux/Location/selector';
@@ -50,10 +50,31 @@ function MapView(props) {
     const {
         locationArray, selectedLocation, applyGetLocation
     } = props;
+    const [map, setMap] = useState(null);
     const [viewport, setViewport] = useState({ center: [15, 101], zoom: 5 });
     const mapRef = useRef(null);
 
+    // Functions
+    const onMapChange = useCallback(() => {
+        const { lat, lng } = map.getCenter();
+        const zoom = map.getZoom();
+        setViewport({ center: [lat, lng], zoom });
+    }, [map]);
+
     // Effects
+    useEffect(() => {
+        if (!!map) {
+            map.on('move', onMapChange);
+            map.on('zoom', onMapChange);
+        }
+        return () => {
+            if (!!map) {
+                map.off('move', onMapChange);
+                map.off('zoom', onMapChange);
+            }
+        }
+    }, [map, onMapChange]);
+
     useEffect(() => {
         if (!!selectedLocation) {
             const { coordinates: { latitude, longitude } } = selectedLocation;
@@ -65,9 +86,9 @@ function MapView(props) {
                 else if (latitude < 50 && latitude >= 45) nextLatitude -= 1.5;
                 else nextLatitude -= 2;
             }
-            setViewport({ center: [nextLatitude, longitude], zoom: 6 });
+            if (!!map) map.setView([nextLatitude, longitude], 6);
         }
-    }, [selectedLocation]);
+    }, [selectedLocation, map]);
 
     // Elements
     const markerElements = locationArray.map(location => {
@@ -85,22 +106,22 @@ function MapView(props) {
         }
 
         let markerIcon = markerIconsSet.xxSmall;
-        if (confirmed >= 101 && confirmed <= 500) {
+        if (confirmed >= 5001 && confirmed <= 10000) {
             markerIcon = markerIconsSet.xSmall;
         }
-        else if (confirmed >= 501 && confirmed <= 1000) {
+        else if (confirmed >= 10001 && confirmed <= 50000) {
             markerIcon = markerIconsSet.small;
         }
-        else if (confirmed >= 1001 && confirmed <= 5000) {
+        else if (confirmed >= 50001 && confirmed <= 100000) {
             markerIcon = markerIconsSet.normal;
         }
-        else if (confirmed >= 5001 && confirmed <= 10000) {
+        else if (confirmed >= 100001 && confirmed <= 500000) {
             markerIcon = markerIconsSet.large;
         }
-        else if (confirmed >= 10001 && confirmed <= 50000) {
+        else if (confirmed >= 500001 && confirmed <= 1000000) {
             markerIcon = markerIconsSet.xLarge;
         }
-        else if (confirmed >= 50001) {
+        else if (confirmed >= 1000001) {
             markerIcon = markerIconsSet.xxLarge;
         }
 
@@ -126,21 +147,22 @@ function MapView(props) {
 
     return (
         <div className="map-view__container" ref={mapRef}>
-            <Map
+            <MapContainer
                 className="map-view"
-                viewport={viewport}
+                center={viewport.center}
+                zoom={viewport.zoom}
                 zoomControl={false}
                 maxBounds={maxBounds}
                 maxBoundsViscosity={1.0}
                 minZoom={2}
-                onViewportChanged={setViewport}>
+                whenCreated={setMap}>
                 <ZoomControl position="topright" />
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution="&copy; <a href=&quot;http://osm.org/copyright&quot; target=&quot;_blank&quot;>OpenStreetMap</a> contributors"
                 />
                 {markerElements}
-            </Map>
+            </MapContainer>
         </div>
     )
 }
@@ -159,11 +181,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(MapView);
 
 /*
 location confirmed count => icon style
-1-100 => pink, super very small
-101-500 => pink, very small
-501-1000 => pink, small
-1001-5000 => purple, normal
-5001-10000 => purple, big
-10001-50000 => red, very big
-50000 up => red, super very big
+0-5,000 => pink, super very small
+5,001-10,000 => pink, very small
+10,001-50,000 => pink, small
+50,001-100,000 => purple, normal
+100,001-500,000 => purple, big
+500,001-1,000,000 => red, very big
+1,000,000 up => red, super very big
 */
