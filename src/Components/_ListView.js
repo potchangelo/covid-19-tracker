@@ -91,7 +91,7 @@ function ListView(props) {
 
         return (
             <div key={key} className="columns is-mobile">
-                <div className="column is-8">
+                <div className="column is-narrow">
                     <h6 className={titleClass}>{title}</h6>
                 </div>
                 <div className="column">
@@ -153,7 +153,7 @@ function ListView(props) {
         return (
             <div key={`${id}-${country_code}`} className={locationClass} onClick={_ => onClickItem(id)} data-id={id}>
                 <div className="columns is-mobile">
-                    <div className="column is-8">
+                    <div className="column is-narrow">
                         <h6 className="title is-6">{title}</h6>
                     </div>
                     <div className="column">
