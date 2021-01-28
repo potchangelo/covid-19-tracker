@@ -118,7 +118,7 @@ function DetailsView(props) {
         return (
             <React.Fragment key={key}>
                 <h6 className={titleClass}>{_title}</h6>
-                <p className="subtitle is-6">{`(Chart max = ${yAxisMax})`}</p>
+                <p className="subtitle is-6">{`(Chart max = ${yAxisMax.toLocaleString('en')})`}</p>
                 <DetailsViewChart
                     data={timelineArray}
                     maxData={maxData}

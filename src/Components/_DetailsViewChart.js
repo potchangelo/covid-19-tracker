@@ -29,7 +29,10 @@ function chartXAxisFormatter(date) {
 }
 
 function chartYMax(number) {
-    if (number > 1e5) return 5e5;
+    if (number > 5e6) return 1e7;
+    else if (number > 1e6) return 5e6;
+    else if (number > 5e5) return 1e6;
+    else if (number > 1e5) return 5e5;
     else if (number > 5e4) return 1e5;
     else if (number > 1e4) return 5e4;
     else if (number > 5e3) return 1e4;
@@ -69,8 +72,8 @@ function chartYAxisFormatter(number) {
 function ChartTooltip(props) {
     const { payload } = props;
     let value = null;
-    if (payload !== undefined && payload !== null) {
-        if (payload.length > 0) value = payload[0].value;
+    if (payload?.length > 0) {
+        value = payload[0].value.toLocaleString('en');
     }
     return (
         <div className="details-view__chart-tooltip">
