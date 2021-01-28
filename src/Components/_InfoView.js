@@ -25,7 +25,7 @@ function InfoView(props) {
                     <a href="https://github.com/ExpDev07/coronavirus-tracker-api" target="_blank" rel="noopener noreferrer">Data API Github</a>
                 </div>
             </div>
-            <p className="is-size-7">&copy; 2020 Zinglecode</p>
+            <p className="is-size-7">&copy; 2021 Zinglecode</p>
         </Modal>
     );
 }
