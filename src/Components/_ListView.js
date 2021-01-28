@@ -91,10 +91,10 @@ function ListView(props) {
 
         return (
             <div key={key} className="columns is-mobile">
-                <div className="column is-narrow">
+                <div className="column">
                     <h6 className={titleClass}>{title}</h6>
                 </div>
-                <div className="column">
+                <div className="column is-narrow">
                     <p className="is-6 has-text-right">{count.toLocaleString('en')}</p>
                 </div>
             </div>
@@ -153,10 +153,10 @@ function ListView(props) {
         return (
             <div key={`${id}-${country_code}`} className={locationClass} onClick={_ => onClickItem(id)} data-id={id}>
                 <div className="columns is-mobile">
-                    <div className="column is-narrow">
+                    <div className="column">
                         <h6 className="title is-6">{title}</h6>
                     </div>
-                    <div className="column">
+                    <div className="column is-narrow">
                         <p className="is-6 has-text-right">{confirmed.toLocaleString('en')}</p>
                     </div>
                 </div>
