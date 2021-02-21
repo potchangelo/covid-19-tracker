@@ -1,8 +1,8 @@
 import * as type from "./actionType";
 
 const initialState = {
-    name: '', minConfirmed: 0, maxConfirmed: 5000000,
-    tempName: '', tempMinConfirmed: 0, tempMaxConfirmed: 5000000
+    name: '', minConfirmed: 0, maxConfirmed: 100000000,
+    tempName: '', tempMinConfirmed: 0, tempMaxConfirmed: 100000000
 };
 
 // reducers

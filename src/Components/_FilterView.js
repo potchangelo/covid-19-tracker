@@ -56,7 +56,7 @@ function FilterView(props) {
                                     className="input"
                                     type="number"
                                     value={minConfirmed}
-                                    onChange={e => setMinConfirmed(e.target.value)} />
+                                    onChange={e => setMinConfirmed(Number(e.target.value))} />
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ function FilterView(props) {
                                     className="input"
                                     type="number"
                                     value={maxConfirmed}
-                                    onChange={e => setMaxConfirmed(e.target.value)} />
+                                    onChange={e => setMaxConfirmed(Number(e.target.value))} />
                             </div>
                         </div>
                     </div>
