@@ -29,7 +29,11 @@ function chartXAxisFormatter(date) {
 }
 
 function chartYMax(number) {
-    if (number > 5e6) return 1e7;
+    if (number > 5e8) return 1e9;
+    else if (number > 1e8) return 5e8;
+    else if (number > 5e7) return 1e8;
+    else if (number > 1e7) return 5e7;
+    else if (number > 5e6) return 1e7;
     else if (number > 1e6) return 5e6;
     else if (number > 5e5) return 1e6;
     else if (number > 1e5) return 5e5;
