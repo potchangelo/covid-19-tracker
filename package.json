@@ -11,7 +11,7 @@
     "bulma",
     "recharts"
   ],
-  "version": "1.0.4",
+  "version": "1.1.0",
   "author": "Potchara Puttawanchai",
   "homepage": "https://covid-19-tracker-app.netlify.app/",
   "repository": {
