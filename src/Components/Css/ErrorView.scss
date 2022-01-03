@@ -1,16 +1,16 @@
-@import "../../css/Vars";
+@import '../../css/Vars';
 
 .error-view {
-    width: 100%;
-    max-width: 520px;
-    position: fixed;
-    bottom: 0px;
-    left: 50%;
-    z-index: 50;
-    transform: translateX(-50%);
+  width: 100%;
+  max-width: 520px;
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  z-index: 50;
+  transform: translateX(-50%);
 
-    .notification {
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-    }
+  .notification {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
 }

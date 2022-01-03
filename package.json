@@ -40,6 +40,9 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.45.2"
   },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -1,182 +1,182 @@
-@import "../../css/Vars";
+@import '../../css/Vars';
 
 .list-view {
-    background-color: $white-ter;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 300px;
-    z-index: 30;
-    transform: translateX(-100%);
-    transition: transform 0.15s ease-out;
+  background-color: $white-ter;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  z-index: 30;
+  transform: translateX(-100%);
+  transition: transform 0.15s ease-out;
 }
 
 .list-view__menu {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    box-shadow: 2px 2px 10px 0px rgba($black, 0.15);
-    position: absolute;
-    left: 100%;
-    top: 12px;
-    z-index: 31;
-    overflow: hidden;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 2px 2px 10px 0px rgba($black, 0.15);
+  position: absolute;
+  left: 100%;
+  top: 12px;
+  z-index: 31;
+  overflow: hidden;
 }
 
 .list-view__menu-item {
-    color: $grey;
-    background-color: $white-bis;
-    border-left: 1px solid $grey-lighter;
-    padding: 4px;
-    padding-left: 2px;
-    cursor: pointer;
+  color: $grey;
+  background-color: $white-bis;
+  border-left: 1px solid $grey-lighter;
+  padding: 4px;
+  padding-left: 2px;
+  cursor: pointer;
 }
 
 .list-view__switch {
-    color: $white;
-    background-color: $black-ter;
-    border-left: 1px solid $black-ter;
+  color: $white;
+  background-color: $black-ter;
+  border-left: 1px solid $black-ter;
 }
 
 .list-view__content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    position: relative;
-    z-index: 32;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  z-index: 32;
 }
 
 .list-view__content-block {
-    border-bottom: 1px solid $grey-lighter;
-    position: relative;
+  border-bottom: 1px solid $grey-lighter;
+  position: relative;
 
-    .column {
-        padding-top: 8px;
-        padding-bottom: 8px;
-    }
+  .column {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
 }
 
 .list-view__brand {
-    background-color: $white;
-    border-bottom: 1px solid $grey-lighter;
-    height: 68px;
-    padding: 12px 16px 12px 60px;
-    position: relative;
+  background-color: $white;
+  border-bottom: 1px solid $grey-lighter;
+  height: 68px;
+  padding: 12px 16px 12px 60px;
+  position: relative;
 }
 
 .list-view__logo {
-    background-image: url('/images/logo-64-light.png');
-    background-size: contain;
-    position: absolute;
-    left: 14px;
-    top: 16px;
-    width: 32px;
-    height: 32px;
+  background-image: url('/images/logo-64-light.png');
+  background-size: contain;
+  position: absolute;
+  left: 14px;
+  top: 16px;
+  width: 32px;
+  height: 32px;
 }
 
 .list-view__stat {
-    background-color: $white;
-    flex-shrink: 0;
-    min-height: 132px;
-    padding: 24px 20px;
+  background-color: $white;
+  flex-shrink: 0;
+  min-height: 132px;
+  padding: 24px 20px;
 }
 
 .list-view__locations {
-    flex-grow: 1;
-    overflow-y: auto;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .list-view__locations-filter {
-    padding: 12px;
-    padding-top: 16px;
+  padding: 12px;
+  padding-top: 16px;
 }
 
 .list-view__location {
-    background-color: $white;
-    border-top: 1px solid $grey-lighter;
-    padding: 20px;
-    cursor: pointer;
+  background-color: $white;
+  border-top: 1px solid $grey-lighter;
+  padding: 20px;
+  cursor: pointer;
+
+  &:last-child {
+    margin-bottom: 20px;
+    border-bottom: 1px solid $grey-lighter;
+  }
+
+  &:hover {
+    background-color: $white-bis;
+  }
+
+  &.selected,
+  &.selected .title {
+    color: $white;
+    background-color: $black-ter;
+  }
+}
+
+@media screen and (max-width: $desktop - 1px) {
+  .list-view.is-on-tablet {
+    box-shadow: 2px 2px 10px 0px rgba($black, 0.15);
+    transform: translateX(0%);
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  .list-view.is-on-desktop {
+    box-shadow: 2px 2px 10px 0px rgba($black, 0.15);
+    transform: translateX(0%);
+  }
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .list-view {
+    background-color: $grey-darker;
+  }
+
+  .list-view__menu-item {
+    color: $grey-lighter;
+    background-color: $black-bis;
+    border-left-color: $black-bis;
+  }
+
+  .list-view__switch {
+    color: $black-bis;
+    background-color: $orange;
+    border-left: $white-ter;
+  }
+
+  .list-view__content-block {
+    border-bottom-color: $grey-dark;
+  }
+
+  .list-view__brand {
+    background-color: $black-ter;
+    border-bottom-color: $grey-dark;
+  }
+
+  .list-view__logo {
+    background-image: url('/images/logo-64-dark.png');
+  }
+
+  .list-view__stat {
+    background-color: $black-ter;
+  }
+
+  .list-view__location {
+    background-color: $black-ter;
+    border-top-color: $grey-dark;
 
     &:last-child {
-        margin-bottom: 20px;
-        border-bottom: 1px solid $grey-lighter;
+      border-bottom-color: $grey-dark;
     }
 
     &:hover {
-        background-color: $white-bis;
+      background-color: $black-bis;
     }
 
     &.selected,
     &.selected .title {
-        color: $white;
-        background-color: $black-ter;
+      color: $black;
+      background-color: $white;
     }
-}
-
-@media screen and (max-width: $desktop - 1px) {
-    .list-view.is-on-tablet {
-        box-shadow: 2px 2px 10px 0px rgba($black, 0.15);
-        transform: translateX(0%);
-    }
-}
-
-@media screen and (min-width: $desktop) {
-    .list-view.is-on-desktop {
-        box-shadow: 2px 2px 10px 0px rgba($black, 0.15);
-        transform: translateX(0%);
-    }
-}
-
-@media screen and (prefers-color-scheme: dark) {
-    .list-view {
-        background-color: $grey-darker;
-    }
-
-    .list-view__menu-item {
-        color: $grey-lighter;
-        background-color: $black-bis;
-        border-left-color: $black-bis;
-    }
-
-    .list-view__switch {
-        color: $black-bis;
-        background-color: $orange;
-        border-left: $white-ter;
-    }
-
-    .list-view__content-block {
-        border-bottom-color: $grey-dark;
-    }
-
-    .list-view__brand {
-        background-color: $black-ter;
-        border-bottom-color: $grey-dark;
-    }
-
-    .list-view__logo {
-        background-image: url('/images/logo-64-dark.png');
-    }
-
-    .list-view__stat {
-        background-color: $black-ter;
-    }
-
-    .list-view__location {
-        background-color: $black-ter;
-        border-top-color: $grey-dark;
-
-        &:last-child {
-            border-bottom-color: $grey-dark;
-        }
-    
-        &:hover {
-            background-color: $black-bis;
-        }
-    
-        &.selected,
-        &.selected .title {
-            color: $black;
-            background-color: $white;
-        }
-    }
+  }
 }

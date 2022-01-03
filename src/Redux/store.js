@@ -6,9 +6,11 @@ import modalReducer from './Modal/reducer';
 import errorReducer from './Error/reducer';
 
 export default createStore(
-    combineReducers({
-        locationReducer, filterReducer, 
-        modalReducer, errorReducer
-    }),
-    applyMiddleware(thunk)
+  combineReducers({
+    locationReducer,
+    filterReducer,
+    modalReducer,
+    errorReducer,
+  }),
+  applyMiddleware(thunk)
 );

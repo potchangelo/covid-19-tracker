@@ -1,131 +1,131 @@
-@import "../../css/Vars";
+@import '../../css/Vars';
 
 .details-view {
-    background-color: $white;
-    box-shadow: 2px 2px 10px 0px rgba($black, 0.15);
-    position: fixed;
-    bottom: 0px;
-    z-index: 20;
+  background-color: $white;
+  box-shadow: 2px 2px 10px 0px rgba($black, 0.15);
+  position: fixed;
+  bottom: 0px;
+  z-index: 20;
 
-    .title {
-        padding-right: 48px;
-    }
+  .title {
+    padding-right: 48px;
+  }
 }
 
 .details-view__close {
-    background-color: rgba($white, 0.8);
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 22;
-    cursor: pointer;
+  background-color: rgba($white, 0.8);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 22;
+  cursor: pointer;
 
-    .icon {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
+  .icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .details-view__content {
-    height: 100%;
-    position: relative;
-    z-index: 21;
-    overflow-x: hidden;
-    overflow-y: auto;
+  height: 100%;
+  position: relative;
+  z-index: 21;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .details-view__content-block {
-    padding: 20px;
+  padding: 20px;
 
-    &:not(:last-child) {
-        border-bottom: 1px solid $grey-lighter;
-    }
+  &:not(:last-child) {
+    border-bottom: 1px solid $grey-lighter;
+  }
 }
 
 .details-view__text {
-    padding-top: 32px;
-    padding-bottom: 24px;
+  padding-top: 32px;
+  padding-bottom: 24px;
 
-    .column {
-        padding-top: 8px;
-        padding-bottom: 8px;
-    }
+  .column {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
 }
 
 .details-view__chart-tooltip {
-    color: $black-ter;
-    background-color: $warning;
-    border-radius: 8px;
-    font-size: 12px;
-    padding: 8px;
+  color: $black-ter;
+  background-color: $warning;
+  border-radius: 8px;
+  font-size: 12px;
+  padding: 8px;
 }
 
 .details-view__more {
-    padding-top: 0px;
+  padding-top: 0px;
 }
 
 @media screen and (max-width: 560px) {
-    .details-view.is-on-tablet .details-view__text {
-        padding-top: 112px;
-    }
+  .details-view.is-on-tablet .details-view__text {
+    padding-top: 112px;
+  }
 }
 
 @media screen and (max-width: $desktop - 1px) {
-    .details-view {
-        width: 100%;
-        max-width: 480px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
+  .details-view {
+    width: 100%;
+    max-width: 480px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-    .details-view__content {
-        min-height: 172px;
-    }
+  .details-view__content {
+    min-height: 172px;
+  }
 
-    .details-view:not(.is-on-tablet) .details-view__chart {
-        display: none;
-    }
+  .details-view:not(.is-on-tablet) .details-view__chart {
+    display: none;
+  }
 
-    .details-view:not(.is-on-tablet) .details-view__text {
-        border-bottom: 1px solid transparent;
-    }
+  .details-view:not(.is-on-tablet) .details-view__text {
+    border-bottom: 1px solid transparent;
+  }
 
-    .details-view.is-on-tablet {
-        top: 0px;
-    }
+  .details-view.is-on-tablet {
+    top: 0px;
+  }
 
-    .details-view.is-on-tablet .details-view__chart {
-        border-bottom: 1px solid transparent;
-    }
+  .details-view.is-on-tablet .details-view__chart {
+    border-bottom: 1px solid transparent;
+  }
 }
 
 @media screen and (min-width: $desktop) {
-    .details-view {
-        width: 380px;
-        top: 0px;
-        right: 0px;
-    }
+  .details-view {
+    width: 380px;
+    top: 0px;
+    right: 0px;
+  }
 
-    .details-view__more {
-        display: none;
-    }
+  .details-view__more {
+    display: none;
+  }
 }
 
 @media screen and (prefers-color-scheme: dark) {
-    .details-view {
-        background-color: $black-ter;
-    }
+  .details-view {
+    background-color: $black-ter;
+  }
 
-    .details-view__close {
-        background-color: rgba($black, 0.8);
-    }
+  .details-view__close {
+    background-color: rgba($black, 0.8);
+  }
 
-    .details-view__content-block:not(:last-child) {
-        border-bottom-color: $grey-dark;
-    }
+  .details-view__content-block:not(:last-child) {
+    border-bottom-color: $grey-dark;
+  }
 }
