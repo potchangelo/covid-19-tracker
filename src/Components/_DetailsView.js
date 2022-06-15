@@ -85,9 +85,11 @@ function DetailsView(props) {
   // - Bar chart
   const barChartElements = totalKeyArray.map(key => {
     const { timeline } = timelines[key];
-    let timelineArray = Object.entries(timeline);
-
-    if (timelineArray.length < latestDays) return null;
+    /**
+     * @type [[string, number]]
+     */
+    const timelineEntries = Object.entries(timeline);
+    if (timelineEntries.length < latestDays) return null;
 
     // Title
     const _title = key.charAt(0).toUpperCase() + key.slice(1);
@@ -96,28 +98,28 @@ function DetailsView(props) {
     else if (key === 'deaths') titleClass += ' has-text-danger';
 
     // Bar chart
-    timelineArray = timelineArray.map(([dateStr, count]) => {
-      return { dateStr, count };
+    let timelineObjects = timelineEntries.map(([dateStr, count]) => {
+      return { date: dayjs(dateStr), count };
     });
-    timelineArray.sort((time1, time2) => {
-      const date1 = dayjs(time1.dateStr);
-      const date2 = dayjs(time2.dateStr);
-      return date1.isBefore(date2) ? -1 : 1;
+    timelineObjects.sort((tl1, tl2) => {
+      return tl1.date.isBefore(tl2.date) ? -1 : 1;
     });
-    timelineArray = timelineArray.filter((_, index) => {
-      return timelineArray.length - index <= latestDays;
+    const chartData = timelineObjects.map(({ date, count }) => {
+      return { x: date.format('MMM D'), y: count }
+    }).filter((_, index) => {
+      return timelineObjects.length - index <= latestDays;
     });
 
-    const maxData = timelineArray[latestDays - 1].count;
-    const yAxisMax = chartYMax(maxData);
+    const chartDataYMax = chartData[latestDays - 1].y;
+    const chartDataYMaxTick = chartYMax(chartDataYMax);
 
-    if (maxData === 0) return null;
+    if (chartDataYMax === 0) return null;
 
     return (
       <React.Fragment key={key}>
         <h6 className={titleClass}>{_title}</h6>
-        <p className="subtitle is-6">{`(Chart max = ${yAxisMax.toLocaleString('en')})`}</p>
-        <DetailsViewChart data={timelineArray} maxData={maxData} dataKey="count" xAxisKey="dateStr" mapKey={key} />
+        <p className="subtitle is-6">{`(Chart max = ${chartDataYMaxTick.toLocaleString('en')})`}</p>
+        <DetailsViewChart data={chartData} dataYMax={chartDataYMax} mapKey={key} />
       </React.Fragment>
     );
   });
