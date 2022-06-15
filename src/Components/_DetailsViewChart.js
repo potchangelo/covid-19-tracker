@@ -4,36 +4,6 @@ import { Bar } from 'react-chartjs-2';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// const chartSharedOptions = {
-//   height: 220,
-//   margin: { top: 5, right: 0, bottom: 20, left: 0 },
-//   tooltipStyle: { fontSize: 12 },
-// };
-
-// const chartLightThemeOptions = {
-//   dashColor: 'hsl(0, 0%, 71%)',
-//   line: { stroke: 'hsl(0, 0%, 71%)' },
-//   tick: { fill: 'hsl(0, 0%, 21%)', fontSize: 10 },
-//   cursor: { fill: 'hsl(0, 0%, 71%)', fillOpacity: 0.2 },
-//   barColor: {
-//     confirmed: 'hsl(0, 0%, 14%)',
-//     recovered: 'hsl(141, 53%, 53%)',
-//     deaths: 'hsl(348, 86%, 61%)',
-//   },
-// };
-
-// const chartDarkThemeOptions = {
-//   dashColor: 'hsl(0, 0%, 48%)',
-//   line: { stroke: 'hsl(0, 0%, 48%)' },
-//   tick: { fill: 'hsl(0, 0%, 86%)', fontSize: 10 },
-//   cursor: { fill: 'hsl(0, 0%, 48%)', fillOpacity: 0.2 },
-//   barColor: {
-//     confirmed: 'hsl(0, 0%, 93%)',
-//     recovered: 'hsl(141, 53%, 53%)',
-//     deaths: 'hsl(348, 86%, 61%)',
-//   },
-// };
-
 const barColor = {
   light: {
     confirmed: 'hsl(0, 0%, 14%)',
@@ -62,7 +32,7 @@ function getChartStyles(caseType, theme) {
 /**
  * @param {number} y
  */
-function chartYMax(y) {
+function getChartYMaxTick(y) {
   if (y > 5e8) return 1e9;
   else if (y > 1e8) return 5e8;
   else if (y > 5e7) return 1e8;
@@ -83,7 +53,7 @@ function chartYMax(y) {
 /**
  * @param {number} y
  */
-function chartYTickLabel(y) {
+function getChartYTickLabel(y) {
   let fixed = 0;
   if (y >= 1e9) {
     if (y % 1e9 !== 0) fixed = 1;
@@ -101,19 +71,6 @@ function chartYTickLabel(y) {
     return y.toFixed();
   }
 }
-
-// function ChartTooltip(props) {
-//   const { payload } = props;
-//   let value = null;
-//   if (payload?.length > 0) {
-//     value = payload[0].value.toLocaleString('en');
-//   }
-//   return (
-//     <div className="details-view__chart-tooltip">
-//       <b>{value}</b>
-//     </div>
-//   );
-// }
 
 /**
  * @param {object} props
@@ -149,7 +106,7 @@ function DetailsViewChart(props) {
   }, []);
 
   const chartStyles = getChartStyles(caseType, theme);
-  const chartYMaxTick = chartYMax(dataYMax);
+  const chartYMaxTick = getChartYMaxTick(dataYMax);
 
   return (
     <Bar
@@ -180,7 +137,7 @@ function DetailsViewChart(props) {
               borderDash: [4, 4],
             },
             ticks: {
-              callback: value => chartYTickLabel(value),
+              callback: value => getChartYTickLabel(value),
               color: chartStyles.ticksColor,
               font: { family: 'Open Sans', size: 10 },
               stepSize: chartYMaxTick / 4
@@ -207,4 +164,4 @@ function DetailsViewChart(props) {
 }
 
 export default DetailsViewChart;
-export { chartYMax };
+export { getChartYMaxTick };

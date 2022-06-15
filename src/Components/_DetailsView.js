@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
 import LoadingView from './_LoadingView';
-import DetailsViewChart, { chartYMax } from './_DetailsViewChart';
+import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
 
 import { unsetSelectedLocation } from '../Redux/Location/action';
 
@@ -111,7 +111,7 @@ function DetailsView(props) {
     });
 
     const chartDataYMax = chartData[latestDays - 1].y;
-    const chartDataYMaxTick = chartYMax(chartDataYMax);
+    const chartDataYMaxTick = getChartYMaxTick(chartDataYMax);
 
     if (chartDataYMax === 0) return null;
 
