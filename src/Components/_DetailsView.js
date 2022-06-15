@@ -119,7 +119,9 @@ function DetailsView(props) {
       <React.Fragment key={key}>
         <h6 className={titleClass}>{_title}</h6>
         <p className="subtitle is-6">{`(Chart max = ${chartDataYMaxTick.toLocaleString('en')})`}</p>
-        <DetailsViewChart data={chartData} dataYMax={chartDataYMax} mapKey={key} />
+        <div className="mb-5">
+          <DetailsViewChart data={chartData} dataYMax={chartDataYMax} mapKey={key} />
+        </div>
       </React.Fragment>
     );
   });

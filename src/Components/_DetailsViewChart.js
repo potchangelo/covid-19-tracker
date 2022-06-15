@@ -170,8 +170,10 @@ function DetailsViewChart(props) {
             ticks: {
               callback: value => chartYTickLabel(value),
               font: { size: 10 },
-              stepSize: chartYMaxTick / 4 },
-            max: chartYMaxTick, min: 0
+              stepSize: chartYMaxTick / 4
+            },
+            min: 0,
+            max: chartYMaxTick,
           }
         },
         plugins: {
