@@ -192,6 +192,13 @@ function DetailsViewChart(props) {
         plugins: {
           legend: {
             display: false
+          },
+          tooltip: {
+            titleColor: 'hsl(0, 0%, 21%)',
+            bodyColor: 'hsl(0, 0%, 21%)',
+            backgroundColor: 'hsl(48, 100%, 67%)',
+            borderColor: 'hsl(0, 0%, 48%)',
+            borderWidth: 3,
           }
         }
       }}
