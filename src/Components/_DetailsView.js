@@ -83,8 +83,8 @@ function DetailsView(props) {
   );
 
   // - Bar chart
-  const barChartElements = totalKeyArray.map(key => {
-    const { timeline } = timelines[key];
+  const barChartElements = totalKeyArray.map(caseType => {
+    const { timeline } = timelines[caseType];
     /**
      * @type [[string, number]]
      */
@@ -92,10 +92,10 @@ function DetailsView(props) {
     if (timelineEntries.length < latestDays) return null;
 
     // Title
-    const _title = key.charAt(0).toUpperCase() + key.slice(1);
+    const _title = caseType.charAt(0).toUpperCase() + caseType.slice(1);
     let titleClass = 'title is-6';
-    if (key === 'recovered') titleClass += ' has-text-success';
-    else if (key === 'deaths') titleClass += ' has-text-danger';
+    if (caseType === 'recovered') titleClass += ' has-text-success';
+    else if (caseType === 'deaths') titleClass += ' has-text-danger';
 
     // Bar chart
     let timelineObjects = timelineEntries.map(([dateStr, count]) => {
@@ -116,11 +116,11 @@ function DetailsView(props) {
     if (chartDataYMax === 0) return null;
 
     return (
-      <React.Fragment key={key}>
+      <React.Fragment key={caseType}>
         <h6 className={titleClass}>{_title}</h6>
         <p className="subtitle is-6">{`(Chart max = ${chartDataYMaxTick.toLocaleString('en')})`}</p>
         <div className="mb-5">
-          <DetailsViewChart data={chartData} dataYMax={chartDataYMax} mapKey={key} />
+          <DetailsViewChart data={chartData} dataYMax={chartDataYMax} caseType={caseType} />
         </div>
       </React.Fragment>
     );

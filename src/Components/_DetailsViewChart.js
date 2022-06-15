@@ -1,7 +1,6 @@
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
-// import dayjs from 'dayjs';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -35,6 +34,31 @@ Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 //   },
 // };
 
+const barColor = {
+  light: {
+    confirmed: 'hsl(0, 0%, 14%)',
+    recovered: 'hsl(141, 53%, 53%)',
+    deaths: 'hsl(348, 86%, 61%)',
+  },
+  dark: {
+    confirmed: 'hsl(0, 0%, 93%)',
+    recovered: 'hsl(141, 53%, 53%)',
+    deaths: 'hsl(348, 86%, 61%)',
+  }
+};
+
+/**
+ * @param {string} caseType
+ * @param {string} theme
+ */
+function getChartStyles(caseType, theme) {
+  return {
+    barColor: barColor[theme][caseType],
+    gridColor: theme === 'dark' ? 'hsl(0, 0%, 71%)' : 'hsl(0, 0%, 48%)',
+    ticksColor: theme === 'dark' ? 'hsl(0, 0%, 86%)' : 'hsl(0, 0%, 21%)',
+  }
+}
+
 /**
  * @param {number} y
  */
@@ -54,14 +78,6 @@ function chartYMax(y) {
   else if (y > 5e2) return 1e3;
   else if (y > 1e2) return 5e2;
   return 1e2;
-}
-
-/**
- * @param {number} y
- */
-function chartYTicks(y) {
-  const max = chartYMax(y);
-  return [0, 1, 2, 3, 4].map(i => (max * i) / 4);
 }
 
 /**
@@ -103,44 +119,36 @@ function chartYTickLabel(y) {
  * @param {object} props
  * @param {{ x: string, y: number }} props.data
  * @param {number} props.dataYMax
+ * @param {string} props.caseType
  */
 function DetailsViewChart(props) {
-  // const { data, maxData, dataKey, xAxisKey, mapKey } = props;
-  const { data, dataYMax } = props;
-  // const [theme, setTheme] = useState('light');
+  const { data, dataYMax, caseType } = props;
+  const [theme, setTheme] = useState('light');
 
-  // function onThemeChange() {
-  //   const mql = window.matchMedia('(prefers-color-scheme: dark)');
-  //   const newTheme = mql.matches ? 'dark' : 'light';
-  //   setTheme(newTheme);
-  // }
+  function onThemeChange() {
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    const newTheme = mql.matches ? 'dark' : 'light';
+    setTheme(newTheme);
+  }
 
-  // useEffect(() => {
-  //   onThemeChange();
-  //   const mql = window.matchMedia('(prefers-color-scheme: dark)');
-  //   if (!!mql.addEventListener) {
-  //     mql.addEventListener('change', onThemeChange);
-  //   } else {
-  //     mql.addListener(onThemeChange);
-  //   }
-  //   return () => {
-  //     if (!!mql.addEventListener) {
-  //       mql.removeEventListener('change', onThemeChange);
-  //     } else {
-  //       mql.removeListener(onThemeChange);
-  //     }
-  //   };
-  // }, []);
+  useEffect(() => {
+    onThemeChange();
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    if (!!mql.addEventListener) {
+      mql.addEventListener('change', onThemeChange);
+    } else {
+      mql.addListener(onThemeChange);
+    }
+    return () => {
+      if (!!mql.addEventListener) {
+        mql.removeEventListener('change', onThemeChange);
+      } else {
+        mql.removeListener(onThemeChange);
+      }
+    };
+  }, []);
 
-  // let chartOptions;
-  // if (theme === 'dark') {
-  //   chartOptions = Object.assign({}, chartSharedOptions, chartDarkThemeOptions);
-  // } else {
-  //   chartOptions = Object.assign({}, chartSharedOptions, chartLightThemeOptions);
-  // }
-  // const yAxisMax = chartYMax(maxData);
-  // const yAxisTicks = chartYTicks(maxData);
-
+  const chartStyles = getChartStyles(caseType, theme);
   const chartYMaxTick = chartYMax(dataYMax);
 
   return (
@@ -148,28 +156,33 @@ function DetailsViewChart(props) {
       data={{
         datasets: [{
           data,
-          backgroundColor: 'hsl(348, 86%, 61%)',
+          backgroundColor: chartStyles.barColor,
           barPercentage: 0.55,
         }]
       }}
       options={{
+        aspectRatio: 1.7,
         scales: {
           x: {
             grid: {
-              borderColor: 'hsl(0, 0%, 71%)',
+              borderColor: chartStyles.gridColor,
               display: false
             },
-            ticks: { font: { size: 10 } }
+            ticks: {
+              color: chartStyles.ticksColor,
+              font: { family: 'Open Sans', size: 10 }
+            },
           },
           y: {
             grid: {
-              color: 'hsl(0, 0%, 71%)',
-              borderColor: 'hsl(0, 0%, 71%)',
+              color: chartStyles.gridColor,
+              borderColor: chartStyles.gridColor,
               borderDash: [4, 4],
             },
             ticks: {
               callback: value => chartYTickLabel(value),
-              font: { size: 10 },
+              color: chartStyles.ticksColor,
+              font: { family: 'Open Sans', size: 10 },
               stepSize: chartYMaxTick / 4
             },
             min: 0,
