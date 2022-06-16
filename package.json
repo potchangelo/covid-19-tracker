@@ -39,7 +39,8 @@
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "sass": "^1.52.3"
+    "sass": "^1.52.3",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "prettier": "^2.7.0"
@@ -51,7 +52,10 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
