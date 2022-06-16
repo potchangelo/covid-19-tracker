@@ -40,7 +40,7 @@ function InfoView(props) {
           </a>
         </p>
       </div>
-      <p className="is-size-7">&copy; Copyright {(new Date()).getFullYear()} Zinglecode.</p>
+      <p className="is-size-7">&copy; Copyright {new Date().getFullYear()} Zinglecode.</p>
     </Modal>
   );
 }

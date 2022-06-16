@@ -104,11 +104,13 @@ function DetailsView(props) {
     timelineObjects.sort((tl1, tl2) => {
       return tl1.date.isBefore(tl2.date) ? -1 : 1;
     });
-    const chartData = timelineObjects.map(({ date, count }) => {
-      return { x: date.format('MMM D'), y: count }
-    }).filter((_, index) => {
-      return timelineObjects.length - index <= latestDays;
-    });
+    const chartData = timelineObjects
+      .map(({ date, count }) => {
+        return { x: date.format('MMM D'), y: count };
+      })
+      .filter((_, index) => {
+        return timelineObjects.length - index <= latestDays;
+      });
 
     const chartDataYMax = chartData[latestDays - 1].y;
     const chartDataYMaxTick = getChartYMaxTick(chartDataYMax);

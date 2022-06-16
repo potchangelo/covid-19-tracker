@@ -14,7 +14,7 @@ const barColor = {
     confirmed: 'hsl(0, 0%, 93%)',
     recovered: 'hsl(141, 53%, 53%)',
     deaths: 'hsl(348, 86%, 61%)',
-  }
+  },
 };
 
 /**
@@ -26,7 +26,7 @@ function getChartStyles(caseType, theme) {
     barColor: barColor[theme][caseType],
     gridColor: theme === 'dark' ? 'hsl(0, 0%, 71%)' : 'hsl(0, 0%, 48%)',
     ticksColor: theme === 'dark' ? 'hsl(0, 0%, 86%)' : 'hsl(0, 0%, 21%)',
-  }
+  };
 }
 
 /**
@@ -111,11 +111,13 @@ function DetailsViewChart(props) {
   return (
     <Bar
       data={{
-        datasets: [{
-          data,
-          backgroundColor: chartStyles.barColor,
-          barPercentage: 0.55,
-        }]
+        datasets: [
+          {
+            data,
+            backgroundColor: chartStyles.barColor,
+            barPercentage: 0.55,
+          },
+        ],
       }}
       options={{
         aspectRatio: 1.7,
@@ -123,11 +125,11 @@ function DetailsViewChart(props) {
           x: {
             grid: {
               borderColor: chartStyles.gridColor,
-              display: false
+              display: false,
             },
             ticks: {
               color: chartStyles.ticksColor,
-              font: { family: 'Open Sans', size: 10 }
+              font: { family: 'Open Sans', size: 10 },
             },
           },
           y: {
@@ -140,15 +142,15 @@ function DetailsViewChart(props) {
               callback: value => getChartYTickLabel(value),
               color: chartStyles.ticksColor,
               font: { family: 'Open Sans', size: 10 },
-              stepSize: chartYMaxTick / 4
+              stepSize: chartYMaxTick / 4,
             },
             min: 0,
             max: chartYMaxTick,
-          }
+          },
         },
         plugins: {
           legend: {
-            display: false
+            display: false,
           },
           tooltip: {
             titleColor: 'hsl(0, 0%, 21%)',
@@ -156,8 +158,8 @@ function DetailsViewChart(props) {
             backgroundColor: 'hsl(48, 100%, 67%)',
             borderColor: 'hsl(0, 0%, 48%)',
             borderWidth: 3,
-          }
-        }
+          },
+        },
       }}
     />
   );
