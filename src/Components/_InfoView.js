@@ -16,15 +16,15 @@ function InfoView(props) {
         <h6 className="title is-6">Marker colors</h6>
         <p>
           <span className="info-view__color-marker pink"></span>
-          <span className="info-view__color-text">0 - 50,000 confirmed cases.</span>
+          <span className="info-view__color-text">0 - 100,000 confirmed cases.</span>
         </p>
         <p>
           <span className="info-view__color-marker purple"></span>
-          <span className="info-view__color-text">50,001 - 500,000 confirmed cases.</span>
+          <span className="info-view__color-text">100,001 - 1,000,000 confirmed cases.</span>
         </p>
         <p>
           <span className="info-view__color-marker red"></span>
-          <span className="info-view__color-text">500,001+ confirmed cases.</span>
+          <span className="info-view__color-text">1,000,001+ confirmed cases.</span>
         </p>
       </div>
       <div className="content">
