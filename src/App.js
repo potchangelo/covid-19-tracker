@@ -1,4 +1,4 @@
-import 'leaflet/dist/leaflet.css';
+import './css/leaflet-fixed.css';
 import './css/App.scss';
 
 import React, { useEffect, useCallback } from 'react';
