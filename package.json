@@ -9,9 +9,9 @@
     "react",
     "redux",
     "bulma",
-    "recharts"
+    "chart.js"
   ],
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Potchara Puttawanchai",
   "homepage": "https://covid-19-tracker-app.netlify.app/",
   "repository": {
