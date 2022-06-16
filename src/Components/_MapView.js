@@ -24,19 +24,19 @@ const markerIcons = {
   }),
   normal: divIcon({
     className: 'map-view__marker purple',
-    iconSize: [48, 48],
+    iconSize: [44, 44],
   }),
   large: divIcon({
     className: 'map-view__marker purple',
-    iconSize: [64, 64],
+    iconSize: [50, 50],
   }),
   xLarge: divIcon({
     className: 'map-view__marker red',
-    iconSize: [80, 80],
+    iconSize: [62, 62],
   }),
   xxLarge: divIcon({
     className: 'map-view__marker red',
-    iconSize: [96, 96],
+    iconSize: [68, 68],
   }),
 };
 
@@ -116,17 +116,17 @@ function MapView(props) {
     }
 
     let markerIcon = markerIconsSet.xxSmall;
-    if (confirmed >= 5001 && confirmed <= 10000) {
+    if (confirmed >= 10001 && confirmed <= 50000) {
       markerIcon = markerIconsSet.xSmall;
-    } else if (confirmed >= 10001 && confirmed <= 50000) {
-      markerIcon = markerIconsSet.small;
     } else if (confirmed >= 50001 && confirmed <= 100000) {
-      markerIcon = markerIconsSet.normal;
+      markerIcon = markerIconsSet.small;
     } else if (confirmed >= 100001 && confirmed <= 500000) {
-      markerIcon = markerIconsSet.large;
+      markerIcon = markerIconsSet.normal;
     } else if (confirmed >= 500001 && confirmed <= 1000000) {
+      markerIcon = markerIconsSet.large;
+    } else if (confirmed >= 1000001 && confirmed <= 10000000) {
       markerIcon = markerIconsSet.xLarge;
-    } else if (confirmed >= 1000001) {
+    } else if (confirmed >= 10000001) {
       markerIcon = markerIconsSet.xxLarge;
     }
 
@@ -159,7 +159,7 @@ function MapView(props) {
         maxBounds={maxBounds}
         maxBoundsViscosity={1.0}
         minZoom={2}
-        whenCreated={setMap}
+        ref={setMap}
       >
         <ZoomControl position="topright" />
         <TileLayer
@@ -185,12 +185,22 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(MapView);
 
 /*
+
+20220616 => max 85M , min 0
+
 location confirmed count => icon style
-0-5,000 => pink, super very small
-5,001-10,000 => pink, very small
-10,001-50,000 => pink, small
-50,001-100,000 => purple, normal
-100,001-500,000 => purple, big
-500,001-1,000,000 => red, very big
-1,000,000 up => red, super very big
+
+0 - 100,000
+0-10,000 => pink, super very small
+10,001-50,000 => pink, very small
+50,001-100,000 => pink, small
+
+100,001 - 1,000,000
+100,001-500,000 => purple, normal
+500,001-1,000,000 => purple, big
+
+1,000,001 +
+1,000,001-10,000,000 => red, very big
+10,000,001 up => red, super very big
+
 */
