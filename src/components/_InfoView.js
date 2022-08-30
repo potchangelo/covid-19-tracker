@@ -1,12 +1,8 @@
-import './css/InfoView.scss';
-
-import React from 'react';
 import { connect } from 'react-redux';
-
 import { Modal } from '../layouts';
-
 import { unsetModal } from '../redux/modal/action';
 import { INFO } from '../redux/modal/name';
+import './css/infoView.scss';
 
 function InfoView(props) {
   const { isShow, unsetModal } = props;

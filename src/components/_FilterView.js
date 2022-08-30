@@ -1,13 +1,9 @@
-import './css/FilterView.scss';
-
-import React from 'react';
 import { connect } from 'react-redux';
-
 import { Modal } from '../layouts';
-
 import { setTempName, setTempMinConfirmed, setTempMaxConfirmed } from '../redux/filter/action';
 import { applySetFilter, applyCancelFilter } from '../redux/filter/actionThunk';
 import { FILTER } from '../redux/modal/name';
+import './css/filterView.scss';
 
 function FilterView(props) {
   // Props

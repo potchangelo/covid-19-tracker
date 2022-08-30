@@ -1,5 +1,4 @@
-import './css/LoadingView.scss';
-import React from 'react';
+import './css/loadingView.scss';
 
 function LoadingView(props) {
   const { isShow, label, extraClass } = props;

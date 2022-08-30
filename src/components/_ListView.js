@@ -1,17 +1,14 @@
-import './css/ListView.scss';
-
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import LoadingView from './_LoadingView';
-
 import { unsetSelectedLocation } from '../redux/location/action';
 import { applyGetLocation } from '../redux/location/actionThunk';
 import { getFilteredLocationArray } from '../redux/location/selector';
 import { applyResetFilter } from '../redux/filter/actionThunk';
 import { setModal } from '../redux/modal/action';
 import { FILTER, INFO } from '../redux/modal/name';
+import './css/listView.scss';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 

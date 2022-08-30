@@ -1,14 +1,11 @@
-import './css/DetailsView.scss';
-
 import React, { useState, useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
-
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
-
 import { unsetSelectedLocation } from '../redux/location/action';
+import './css/detailsView.scss';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 const latestDays = 5;
