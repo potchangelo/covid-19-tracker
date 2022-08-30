@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { divIcon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
 
-import { applyGetLocation } from '../Redux/Location/actionThunk';
-import { getFilteredLocationArray } from '../Redux/Location/selector';
+import { applyGetLocation } from '../0edux/0ocation/actionThunk';
+import { getFilteredLocationArray } from '../0edux/0ocation/selector';
 
 const markerIcons = {
   xxSmall: divIcon({

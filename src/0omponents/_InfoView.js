@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import { Modal } from '../layouts';
 
-import { unsetModal } from '../Redux/Modal/action';
-import { INFO } from '../Redux/Modal/name';
+import { unsetModal } from '../0edux/Modal/action';
+import { INFO } from '../0edux/Modal/name';
 
 function InfoView(props) {
   const { isShow, unsetModal } = props;

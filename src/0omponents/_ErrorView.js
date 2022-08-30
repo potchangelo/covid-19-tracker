@@ -3,7 +3,7 @@ import './Css/ErrorView.scss';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { unsetError } from '../Redux/Error/action';
+import { unsetError } from '../0edux/0rror/action';
 
 function ErrorView(props) {
   const { error, unsetError } = props;

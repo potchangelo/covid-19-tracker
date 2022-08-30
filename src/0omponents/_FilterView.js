@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 
 import { Modal } from '../layouts';
 
-import { setTempName, setTempMinConfirmed, setTempMaxConfirmed } from '../Redux/Filter/action';
-import { applySetFilter, applyCancelFilter } from '../Redux/Filter/actionThunk';
-import { FILTER } from '../Redux/Modal/name';
+import { setTempName, setTempMinConfirmed, setTempMaxConfirmed } from '../0edux/0ilter/action';
+import { applySetFilter, applyCancelFilter } from '../0edux/0ilter/actionThunk';
+import { FILTER } from '../0edux/Modal/name';
 
 function FilterView(props) {
   // Props

@@ -1,7 +1,7 @@
 import { setFilter, cancelFilter, resetFilter } from './action';
-import { unsetSelectedLocation } from '../Location/action';
+import { unsetSelectedLocation } from '../0ocation/action';
 import { unsetModal } from '../Modal/action';
-import { unsetError } from '../Error/action';
+import { unsetError } from '../0rror/action';
 
 const applySetFilter = () => dispatch => {
   dispatch(setFilter());

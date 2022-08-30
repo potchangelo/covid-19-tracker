@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 
 import LoadingView from './_LoadingView';
 
-import { unsetSelectedLocation } from '../Redux/Location/action';
-import { applyGetLocation } from '../Redux/Location/actionThunk';
-import { getFilteredLocationArray } from '../Redux/Location/selector';
-import { applyResetFilter } from '../Redux/Filter/actionThunk';
-import { setModal } from '../Redux/Modal/action';
-import { FILTER, INFO } from '../Redux/Modal/name';
+import { unsetSelectedLocation } from '../0edux/0ocation/action';
+import { applyGetLocation } from '../0edux/0ocation/actionThunk';
+import { getFilteredLocationArray } from '../0edux/0ocation/selector';
+import { applyResetFilter } from '../0edux/0ilter/actionThunk';
+import { setModal } from '../0edux/Modal/action';
+import { FILTER, INFO } from '../0edux/Modal/name';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 

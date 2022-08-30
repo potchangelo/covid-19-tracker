@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
 
-import { unsetSelectedLocation } from '../Redux/Location/action';
+import { unsetSelectedLocation } from '../0edux/0ocation/action';
 
 const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
 const latestDays = 5;
