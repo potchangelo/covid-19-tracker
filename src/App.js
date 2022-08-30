@@ -1,20 +1,17 @@
-import './css/leaflet-fixed.css';
-import './css/App.scss';
-
-import React, { useEffect, useCallback } from 'react';
-import { bindActionCreators } from 'redux';
+import { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
-
-import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './Components';
-
-import { applyGetLocationArray } from './Redux/Location/actionThunk';
+import { bindActionCreators } from 'redux';
+import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './components';
+import { applyGetLocations } from './redux/location/actionThunk';
+import './css/leafletFixed.css';
+import './css/app.scss';
 
 function App(props) {
   // Props, States
-  const { isLoading, applyGetLocationArray } = props;
+  const { isLoading, applyGetLocations } = props;
 
   // Functions
-  const onLoad = useCallback(() => applyGetLocationArray(), [applyGetLocationArray]);
+  const onLoad = useCallback(() => applyGetLocations(), [applyGetLocations]);
 
   // Effects
   useEffect(() => {
@@ -35,12 +32,12 @@ function App(props) {
 }
 
 function mapStateToProps(state) {
-  const { isLocationArrayLoading: isLoading } = state.locationReducer;
+  const { isLocationsLoading: isLoading } = state.locationReducer;
   return { isLoading };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ applyGetLocationArray }, dispatch);
+  return bindActionCreators({ applyGetLocations }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
