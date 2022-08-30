@@ -1,8 +1,8 @@
-function getFilteredLocationArray(state) {
-  const { locationArray } = state.locationReducer;
+function getFilteredLocations(state) {
+  const { locations } = state.locationReducer;
   const { name, minConfirmed, maxConfirmed } = state.filterReducer;
 
-  const filteredLocationArray = locationArray.filter(location => {
+  const filteredLocations = locations.filter(location => {
     const {
       country,
       province,
@@ -18,7 +18,7 @@ function getFilteredLocationArray(state) {
     return isContainsQuery && isInConfirmedRange;
   });
 
-  return filteredLocationArray;
+  return filteredLocations;
 }
 
-export { getFilteredLocationArray };
+export { getFilteredLocations };

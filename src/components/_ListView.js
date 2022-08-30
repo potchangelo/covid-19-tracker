@@ -4,19 +4,19 @@ import { connect } from 'react-redux';
 import LoadingView from './_LoadingView';
 import { unsetSelectedLocation } from '../redux/location/action';
 import { applyGetLocation } from '../redux/location/actionThunk';
-import { getFilteredLocationArray } from '../redux/location/selector';
+import { getFilteredLocations } from '../redux/location/selector';
 import { applyResetFilter } from '../redux/filter/actionThunk';
 import { setModal } from '../redux/modal/action';
 import { FILTER, INFO } from '../redux/modal/name';
 import './css/listView.scss';
 
-const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
+const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
 function ListView(props) {
   // Props, States, Refs
   const {
-    locationArray,
-    filteredLocationArray,
+    locations,
+    filteredLocations,
     selectedLocation,
     isLoading,
     applyGetLocation,
@@ -43,8 +43,8 @@ function ListView(props) {
     if (!location) return;
 
     const parentBounds = listLocationsRef.current.getBoundingClientRect();
-    const childArray = Array.from(listLocationsRef.current.childNodes[1].childNodes);
-    const selectedChild = childArray.find(child => {
+    const childNodesArray = Array.from(listLocationsRef.current.childNodes[1].childNodes);
+    const selectedChild = childNodesArray.find(child => {
       return child.getAttribute('data-id') === `${location.id}`;
     });
     if (!selectedChild) return;
@@ -78,9 +78,9 @@ function ListView(props) {
   }
 
   // - Total
-  const totalDataElements = totalKeyArray.map(key => {
+  const totalDataElements = totalKeys.map(key => {
     const title = key.charAt(0).toUpperCase() + key.slice(1);
-    const count = locationArray.reduce((sum, location) => {
+    const count = locations.reduce((sum, location) => {
       return sum + location.latest[key];
     }, 0);
 
@@ -134,7 +134,7 @@ function ListView(props) {
   );
 
   // - Locations
-  const locationItemElements = filteredLocationArray.map(location => {
+  const locationItemElements = filteredLocations.map(location => {
     const {
       id,
       country,
@@ -224,11 +224,11 @@ function ListView(props) {
 }
 
 function mapStateToProps(state) {
-  const { locationArray, selectedLocation, isLocationArrayLoading: isLoading } = state.locationReducer;
-  const filteredLocationArray = getFilteredLocationArray(state);
+  const { locations, selectedLocation, isLocationsLoading: isLoading } = state.locationReducer;
+  const filteredLocations = getFilteredLocations(state);
   return {
-    locationArray,
-    filteredLocationArray,
+    locations,
+    filteredLocations,
     selectedLocation,
     isLoading,
   };

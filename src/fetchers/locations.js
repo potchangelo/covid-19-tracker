@@ -5,9 +5,11 @@ import Axios from 'axios';
 // New baseUrl from https://github.com/Kilo59/coronavirus-tracker-api
 const baseUrl = 'https://covid-tracker-us.herokuapp.com/v2';
 
-const api = {
-  getAllLocation: () => Axios.get(`${baseUrl}/locations`),
-  getLocation: id => Axios.get(`${baseUrl}/locations/${id}`),
-};
+const getLocations = () => Axios.get(`${baseUrl}/locations`);
 
-export default api;
+/**
+ * @param {number} id
+ */
+const getLocation = id => Axios.get(`${baseUrl}/locations/${id}`);
+
+export { getLocations, getLocation };

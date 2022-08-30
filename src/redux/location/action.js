@@ -1,12 +1,12 @@
 import * as type from './actionType';
 
-const setLocationArray = locationArray => ({
-  type: type.SET_LOCATION_ARRAY,
-  payload: { locationArray },
+const setLocations = locations => ({
+  type: type.SET_LOCATIONS,
+  payload: { locations },
 });
 
-const setLocationArrayLoading = isLoading => ({
-  type: type.SET_LOCATION_ARRAY_LOADING,
+const setLocationsLoading = isLoading => ({
+  type: type.SET_LOCATIONS_LOADING,
   payload: { isLoading },
 });
 
@@ -26,8 +26,8 @@ const unsetSelectedLocation = () => ({
 });
 
 export {
-  setLocationArray,
-  setLocationArrayLoading,
+  setLocations,
+  setLocationsLoading,
   setSelectedLocation,
   setSelectedLocationLoading,
   unsetSelectedLocation,

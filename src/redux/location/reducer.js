@@ -1,27 +1,27 @@
 import * as type from './actionType';
 
 const initialState = {
-  locationArray: [],
+  locations: [],
   selectedLocation: null,
-  isLocationArrayLoading: true,
+  isLocationsLoading: true,
   isSelectedLocationLoading: false,
 };
 
 function locationReducer(state = initialState, action) {
   switch (action.type) {
-    case type.SET_LOCATION_ARRAY: {
-      const { locationArray } = action.payload;
+    case type.SET_LOCATIONS: {
+      const { locations } = action.payload;
       return {
         ...state,
-        locationArray,
+        locations,
       };
     }
 
-    case type.SET_LOCATION_ARRAY_LOADING: {
+    case type.SET_LOCATIONS_LOADING: {
       const { isLoading } = action.payload;
       return {
         ...state,
-        isLocationArrayLoading: isLoading,
+        isLocationsLoading: isLoading,
       };
     }
     case type.SET_SELECTED_LOCATION: {

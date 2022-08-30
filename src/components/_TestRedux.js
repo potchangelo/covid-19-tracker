@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { applyGetLocationArray, applyGetLocation } from '../redux/location/actionThunk';
+import { applyGetLocations, applyGetLocation } from '../redux/location/actionThunk';
 
 function TestRedux(props) {
   console.log(props.isSelectedLocationLoading);
 
   useEffect(() => {
-    props.applyGetLocationArray();
+    props.applyGetLocations();
     setTimeout(() => {
       props.applyGetLocation(154);
     }, 1500);
@@ -17,14 +17,14 @@ function TestRedux(props) {
 }
 
 function mapStateToProps(state) {
-  const { locationArray, selectedLocation, isLocationArrayLoading, isSelectedLocationLoading } = state.locationReducer;
-  return { locationArray, selectedLocation, isLocationArrayLoading, isSelectedLocationLoading };
+  const { locations, selectedLocation, isLocationsLoading, isSelectedLocationLoading } = state.locationReducer;
+  return { locations, selectedLocation, isLocationsLoading, isSelectedLocationLoading };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      applyGetLocationArray,
+      applyGetLocations,
       applyGetLocation,
     },
     dispatch

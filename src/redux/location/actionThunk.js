@@ -1,36 +1,34 @@
-import api from '../../api';
+import { getLocations, getLocation } from '../../fetchers/locations';
 import {
-  setLocationArray,
-  setLocationArrayLoading,
+  setLocations,
+  setLocationsLoading,
   setSelectedLocation,
   setSelectedLocationLoading,
   unsetSelectedLocation,
 } from './action';
 import { setError, unsetError } from '../error/action';
 
-const applyGetLocationArray = () => dispatch => {
-  return api
-    .getAllLocation()
+const applyGetLocations = () => dispatch => {
+  return getLocations()
     .then(response => {
       const { locations } = response.data;
-      const sortedLocation = [...locations].sort((location1, location2) => {
+      const sortedLocations = [...locations].sort((location1, location2) => {
         return location2.latest.confirmed - location1.latest.confirmed;
       });
-      dispatch(setLocationArray(sortedLocation));
+      dispatch(setLocations(sortedLocations));
     })
     .catch(error => {
       dispatch(setError(error));
     })
     .finally(() => {
-      dispatch(setLocationArrayLoading(false));
+      dispatch(setLocationsLoading(false));
     });
 };
 
 const applyGetLocation = id => dispatch => {
   dispatch(setSelectedLocationLoading(true));
   dispatch(unsetError());
-  return api
-    .getLocation(id)
+  return getLocation(id)
     .then(response => {
       const { location } = response.data;
       dispatch(setSelectedLocation(location));
@@ -44,4 +42,4 @@ const applyGetLocation = id => dispatch => {
     });
 };
 
-export { applyGetLocationArray, applyGetLocation };
+export { applyGetLocations, applyGetLocation };

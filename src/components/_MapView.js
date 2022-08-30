@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { divIcon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
 import { applyGetLocation } from '../redux/location/actionThunk';
-import { getFilteredLocationArray } from '../redux/location/selector';
+import { getFilteredLocations } from '../redux/location/selector';
 import './css/mapView.scss';
 
 const markerIcons = {
@@ -56,7 +56,7 @@ const maxBounds = [
 
 function MapView(props) {
   // Props
-  const { locationArray, selectedLocation, applyGetLocation } = props;
+  const { locations, selectedLocation, applyGetLocation } = props;
   const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({ center: [15, 101], zoom: 5 });
 
@@ -98,7 +98,7 @@ function MapView(props) {
   }, [selectedLocation, map]);
 
   // Elements
-  const markerElements = locationArray.map(location => {
+  const markerElements = locations.map(location => {
     const {
       id,
       coordinates: { latitude, longitude },
@@ -171,9 +171,9 @@ function MapView(props) {
 }
 
 function mapStateToProps(state) {
-  const locationArray = getFilteredLocationArray(state);
+  const locations = getFilteredLocations(state);
   const { selectedLocation } = state.locationReducer;
-  return { locationArray, selectedLocation };
+  return { locations, selectedLocation };
 }
 
 function mapDispatchToProps(dispatch) {

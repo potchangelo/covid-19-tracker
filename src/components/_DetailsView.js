@@ -7,7 +7,7 @@ import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
 import { unsetSelectedLocation } from '../redux/location/action';
 import './css/detailsView.scss';
 
-const totalKeyArray = ['confirmed', 'recovered', 'deaths'];
+const totalKeys = ['confirmed', 'recovered', 'deaths'];
 const latestDays = 5;
 
 function DetailsView(props) {
@@ -50,7 +50,7 @@ function DetailsView(props) {
     title = `${province}, ${country}`;
   }
 
-  const totalElements = totalKeyArray.map(key => {
+  const totalElements = totalKeys.map(key => {
     const _title = key.charAt(0).toUpperCase() + key.slice(1);
     const count = latest[`${key}`];
 
@@ -80,7 +80,7 @@ function DetailsView(props) {
   );
 
   // - Bar chart
-  const barChartElements = totalKeyArray.map(caseType => {
+  const barChartElements = totalKeys.map(caseType => {
     const { timeline } = timelines[caseType];
     /**
      * @type [[string, number]]
