@@ -25,10 +25,4 @@ const unsetSelectedLocation = () => ({
   payload: { location: null },
 });
 
-export {
-  setLocations,
-  setLocationsLoading,
-  setSelectedLocation,
-  setSelectedLocationLoading,
-  unsetSelectedLocation,
-};
+export { setLocations, setLocationsLoading, setSelectedLocation, setSelectedLocationLoading, unsetSelectedLocation };
