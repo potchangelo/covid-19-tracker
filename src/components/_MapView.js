@@ -1,4 +1,4 @@
-import './Css/MapView.scss';
+import './css/MapView.scss';
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { bindActionCreators } from 'redux';
@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { divIcon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
 
-import { applyGetLocation } from '../0edux/0ocation/actionThunk';
-import { getFilteredLocationArray } from '../0edux/0ocation/selector';
+import { applyGetLocation } from '../redux/location/actionThunk';
+import { getFilteredLocationArray } from '../redux/location/selector';
 
 const markerIcons = {
   xxSmall: divIcon({

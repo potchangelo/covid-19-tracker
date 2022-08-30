@@ -1,4 +1,4 @@
-import './Css/LoadingView.scss';
+import './css/LoadingView.scss';
 import React from 'react';
 
 function LoadingView(props) {

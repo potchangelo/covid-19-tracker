@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { applyGetLocationArray, applyGetLocation } from '../Redux/Location/actionThunk';
+import { bindActionCreators } from 'redux';
+import { applyGetLocationArray, applyGetLocation } from '../redux/location/actionThunk';
 
 function TestRedux(props) {
   console.log(props.isSelectedLocationLoading);

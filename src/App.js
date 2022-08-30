@@ -1,13 +1,10 @@
 import './css/leaflet-fixed.css';
 import './css/App.scss';
-
-import React, { useEffect, useCallback } from 'react';
-import { bindActionCreators } from 'redux';
+import { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
-
-import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './Components';
-
-import { applyGetLocationArray } from './Redux/Location/actionThunk';
+import { bindActionCreators } from 'redux';
+import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './components';
+import { applyGetLocationArray } from './redux/location/actionThunk';
 
 function App(props) {
   // Props, States

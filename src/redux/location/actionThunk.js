@@ -6,7 +6,7 @@ import {
   setSelectedLocationLoading,
   unsetSelectedLocation,
 } from './action';
-import { setError, unsetError } from '../0rror/action';
+import { setError, unsetError } from '../error/action';
 
 const applyGetLocationArray = () => dispatch => {
   return api

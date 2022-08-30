@@ -1,9 +1,9 @@
-import './Css/ErrorView.scss';
+import './css/ErrorView.scss';
 
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { unsetError } from '../0edux/0rror/action';
+import { unsetError } from '../redux/error/action';
 
 function ErrorView(props) {
   const { error, unsetError } = props;
