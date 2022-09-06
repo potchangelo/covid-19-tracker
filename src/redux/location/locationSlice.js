@@ -1,10 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getLocations as apiGetLocations } from '../../fetchers/locations';
+import { getLocations as apiGetLocations, getLocation as apiGetLocation } from '../../fetchers/locations';
 
 const getLocations = createAsyncThunk(
   'locations/getLocations',
   async () => {
     const response = await apiGetLocations();
+    return response.data;
+  }
+);
+
+const getLocation = createAsyncThunk(
+  'locations/getLocation',
+  async (id) => {
+    const response = await apiGetLocation(id);
     return response.data;
   }
 );
@@ -17,25 +25,12 @@ const slice = createSlice({
     isLocationsLoading: true,
     isSelectedLocationLoading: false,
   },
-  reducers: {
-    // setLocations: (state, action) => {
-    //   const { locations } = action.payload;
-    //   state.locations = locations;
-    // },
-    // setLocationsLoading: (state, action) => {
-    //   const { isLoading } = action.payload;
-    //   state.isLocationsLoading = isLoading;
-    // },
-    setSelectedLocation: (state, action) => {
-      const { location } = action.payload;
-      state.selectedLocation = location;
-    },
-    setSelectedLocationLoading: (state, action) => {
-      const { isLoading } = action.payload;
-      state.isSelectedLocationLoading = isLoading;
-    }
-  },
+  reducers: {},
   extraReducers: builder => {
+    // Locations
+    builder.addCase(getLocations.pending, state => {
+      state.isLocationsLoading = true;
+    });
     builder.addCase(getLocations.fulfilled, (state, action) => {
       const { locations } = action.payload;
       state.locations = locations;
@@ -43,10 +38,25 @@ const slice = createSlice({
     });
     builder.addCase(getLocations.rejected, (state, action) => {
       console.log(action);
+      // action.error.message
       state.isLocationsLoading = false;
+    });
+
+    // Selected location
+    builder.addCase(getLocation.pending, state => {
+      state.isSelectedLocationLoading = true;
+    });
+    builder.addCase(getLocation.fulfilled, (state, action) => {
+      const { location } = action.payload;
+      state.selectedLocation = location;
+      state.isSelectedLocationLoading = false;
+    });
+    builder.addCase(getLocation.rejected, (state, action) => {
+      console.log(action);
+      state.isSelectedLocationLoading = false;
     });
   }
 });
 
-export { getLocations };
+export { getLocations, getLocation };
 export default slice.reducer;
