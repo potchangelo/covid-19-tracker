@@ -1,10 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { divIcon } from 'leaflet';
 import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
-import { applyGetLocation } from '../redux/location/actionThunk';
-import { getFilteredLocations } from '../redux/location/selector';
 import './css/mapView.scss';
 
 const markerIcons = {
@@ -54,9 +51,9 @@ const maxBounds = [
   [-90, -240],
 ];
 
-function MapView(props) {
+function _MapView() {
   // Props
-  const { locations, selectedLocation, applyGetLocation } = props;
+  const { locations, selectedLocation } = useSelector(state => state.locations);
   const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({ center: [15, 101], zoom: 5 });
 
@@ -138,7 +135,7 @@ function MapView(props) {
         key={`${id}-${country_code}`}
         position={[latitude, longitude]}
         icon={markerIcon}
-        eventHandlers={{ click: () => applyGetLocation(id) }}
+        // eventHandlers={{ click: () => {applyGetLocation(id)} }}
       >
         <Tooltip direction={'top'}>
           <b>{title}</b>
@@ -170,17 +167,7 @@ function MapView(props) {
   );
 }
 
-function mapStateToProps(state) {
-  const locations = getFilteredLocations(state);
-  const { selectedLocation } = state.locationReducer;
-  return { locations, selectedLocation };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ applyGetLocation }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MapView);
+export default _MapView;
 
 /*
 
