@@ -16,7 +16,7 @@
 // );
 
 import { configureStore } from '@reduxjs/toolkit';
-import filtersReducer from './filter/filterSlice';
+import filtersReducer from './filters/filtersSlice';
 import locationsReducer from './locations/locationsSlice';
 
 export default configureStore({

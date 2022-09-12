@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Modal } from '../layouts';
-import { setTempName, setTempMinConfirmed, setTempMaxConfirmed } from '../redux/filter/action';
-import { applySetFilter, applyCancelFilter } from '../redux/filter/actionThunk';
+import { setTempName, setTempMinConfirmed, setTempMaxConfirmed } from '../redux/filters/action';
+import { applySetFilter, applyCancelFilter } from '../redux/filters/actionThunk';
 import { FILTER } from '../redux/modal/name';
 import './css/filterView.scss';
 
