@@ -2,7 +2,7 @@ import { divIcon } from 'leaflet';
 import { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
-import { getLocation } from '../redux/location/locationSlice';
+import { getLocation } from '../redux/locations/locationsSlice';
 import './css/mapView.scss';
 
 const markerIcons = {

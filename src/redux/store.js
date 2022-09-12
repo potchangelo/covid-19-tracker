@@ -16,7 +16,7 @@
 // );
 
 import { configureStore } from '@reduxjs/toolkit';
-import locationsReducer from './location/locationSlice';
+import locationsReducer from './locations/locationsSlice';
 
 export default configureStore({
   reducer: {

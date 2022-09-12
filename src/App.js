@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './components';
-import { getLocations } from './redux/location/locationSlice';
+import { getLocations } from './redux/locations/locationsSlice';
 import './css/leafletFixed.css';
 import './css/app.scss';
 

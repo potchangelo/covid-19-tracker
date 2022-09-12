@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
-import { unsetSelectedLocation } from '../redux/location/action';
+import { unsetSelectedLocation } from '../redux/locations/action';
 import './css/detailsView.scss';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];

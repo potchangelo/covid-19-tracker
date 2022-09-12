@@ -1,5 +1,5 @@
 import { setFilter, cancelFilter, resetFilter } from './action';
-import { unsetSelectedLocation } from '../location/action';
+import { unsetSelectedLocation } from '../locations/action';
 import { unsetModal } from '../modal/action';
 import { unsetError } from '../error/action';
 
