@@ -20,7 +20,7 @@ function App() {
       <MapView />
       {/* <DetailsView /> */}
       {/* <FilterView /> */}
-      {/* <InfoView /> */}
+      <InfoView />
       <LoadingView isShow={isLocationsLoading} label="Loading" extraClass="loading-view__app" />
       {/* <ErrorView /> */}
     </div>

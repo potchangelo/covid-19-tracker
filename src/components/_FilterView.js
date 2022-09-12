@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Modal } from '../layouts';
 import { setTempName, setTempMinConfirmed, setTempMaxConfirmed } from '../redux/filters/action';
 import { applySetFilter, applyCancelFilter } from '../redux/filters/actionThunk';
-import { FILTER } from '../redux/modal/name';
+import { MODAL_FILTER } from '../redux/modal/name';
 import './css/filterView.scss';
 
 function FilterView(props) {
@@ -98,7 +98,7 @@ function FilterView(props) {
 
 function mapStateToProps(state) {
   const { tempName: name, tempMinConfirmed: minConfirmed, tempMaxConfirmed: maxConfirmed } = state.filterReducer;
-  const isShow = state.modalReducer === FILTER;
+  const isShow = state.modalReducer === MODAL_FILTER;
   return { isShow, name, minConfirmed, maxConfirmed };
 }
 

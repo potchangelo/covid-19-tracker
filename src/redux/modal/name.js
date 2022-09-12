@@ -1,3 +1,3 @@
-const FILTER = 'filter';
-const INFO = 'info';
-export { FILTER, INFO };
+const MODAL_FILTER = 'filter';
+const MODAL_INFO = 'info';
+export { MODAL_FILTER, MODAL_INFO };

@@ -1,18 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
 import LoadingView from './_LoadingView';
-import { FILTER, INFO } from '../redux/modal/name';
+import { MODAL_INFO } from '../redux/modal/name';
 import './css/listView.scss';
 import { useLocationsSelector } from '../redux/locations/selector';
+import { useDispatch } from 'react-redux';
+import { setModal } from '../redux/modal/slice';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
 function _ListView(props) {
   // Props, States, Refs
   // const {
-  //   locations,
-  //   filteredLocations,
-  //   selectedLocation,
-  //   isLoading,
   //   applyGetLocation,
   //   unsetSelectedLocation,
   //   applyResetFilter,
@@ -21,9 +19,9 @@ function _ListView(props) {
   const {
     locations, filteredLocations, selectedLocation, isLocationsLoading
   } = useLocationsSelector();
+  const dispatch = useDispatch();
   const [isOnTablet, setIsOnTablet] = useState(false);
   const [isOnDesktop, setIsOnDesktop] = useState(true);
-
   const listLocationsRef = useRef(null);
 
   // Functions
@@ -192,7 +190,7 @@ function _ListView(props) {
             <i className="fas fa-angle-double-right fa-lg"></i>
           </span>
         </div>
-        <div className="list-view__menu-item" onClick={_ => console.log('setModal')}>
+        <div className="list-view__menu-item" onClick={_ => dispatch(setModal({ name: MODAL_INFO }))}>
           <span className="icon is-medium">
             <i className="fas fa-info-circle"></i>
           </span>

@@ -18,10 +18,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import filtersReducer from './filters/slice';
 import locationsReducer from './locations/slice';
+import modalReducer from './modal/slice';
 
 export default configureStore({
   reducer: {
     locations: locationsReducer,
-    filters: filtersReducer
+    filters: filtersReducer,
+    modal: modalReducer
   }
- });
+});

@@ -1,13 +1,15 @@
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Modal } from '../layouts';
-import { unsetModal } from '../redux/modal/action';
-import { INFO } from '../redux/modal/name';
+import { MODAL_INFO } from '../redux/modal/name';
+import { useModalSelector } from '../redux/modal/selector';
 import './css/infoView.scss';
 
-function InfoView(props) {
-  const { isShow, unsetModal } = props;
+function InfoView() {
+  const { name } = useModalSelector();
+  const isShow = name === MODAL_INFO;
+  // TODO : Unset modal
   return (
-    <Modal extraClass="info-view" extraContentClass="info-view__content" isShow={isShow} onClickClose={unsetModal}>
+    <Modal extraClass="info-view" extraContentClass="info-view__content" isShow={isShow} onClickClose={() => {}}>
       <div className="content">
         <h6 className="title is-6">Marker colors</h6>
         <p>
@@ -41,11 +43,4 @@ function InfoView(props) {
   );
 }
 
-function mapStateToProps(state) {
-  const isShow = state.modalReducer === INFO;
-  return { isShow };
-}
-
-const mapDispatchToProps = { unsetModal };
-
-export default connect(mapStateToProps, mapDispatchToProps)(InfoView);
+export default InfoView;
