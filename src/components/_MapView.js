@@ -1,8 +1,9 @@
 import { divIcon } from 'leaflet';
 import { useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
-import { getLocation } from '../redux/locations/locationsSlice';
+import { useDispatch } from 'react-redux';
+import { useLocationsSelector } from '../redux/locations/selector';
+import { getLocation } from '../redux/locations/slice';
 import './css/mapView.scss';
 
 const markerIcons = {
@@ -54,7 +55,7 @@ const maxBounds = [
 
 function _MapView() {
   // Data
-  const { locations, selectedLocation } = useSelector(state => state.locations);
+  const { locations, selectedLocation } = useLocationsSelector();
   const dispatch = useDispatch();
   const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({ center: [15, 101], zoom: 5 });

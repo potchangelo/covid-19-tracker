@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './components';
-import { getLocations } from './redux/locations/locationsSlice';
+import { useLocationsSelector } from './redux/locations/selector';
+import { getLocations } from './redux/locations/slice';
 import './css/leafletFixed.css';
 import './css/app.scss';
 
 function App() {
-  const { isLocationsLoading } = useSelector(state => state.locations);
+  const { isLocationsLoading } = useLocationsSelector();
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import LoadingView from './_LoadingView';
 import { FILTER, INFO } from '../redux/modal/name';
 import './css/listView.scss';
-import { useSelector } from 'react-redux';
+import { useLocationsSelector } from '../redux/locations/selector';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
@@ -18,7 +18,9 @@ function _ListView(props) {
   //   applyResetFilter,
   //   setModal,
   // } = props;
-  const { locations, selectedLocation, isLocationsLoading } = useSelector(state => state.locations);
+  const {
+    locations, filteredLocations, selectedLocation, isLocationsLoading
+  } = useLocationsSelector();
   const [isOnTablet, setIsOnTablet] = useState(false);
   const [isOnDesktop, setIsOnDesktop] = useState(true);
 
@@ -127,8 +129,7 @@ function _ListView(props) {
   );
 
   // - Locations
-  // TODO : Use filtered locations
-  const locationItemElements = locations.map(location => {
+  const locationItemElements = filteredLocations.map(location => {
     const {
       id,
       country,
