@@ -16,10 +16,12 @@
 // );
 
 import { configureStore } from '@reduxjs/toolkit';
+import filtersReducer from './filter/filterSlice';
 import locationsReducer from './locations/locationsSlice';
 
 export default configureStore({
   reducer: {
-    locations: locationsReducer
+    locations: locationsReducer,
+    filters: filtersReducer
   }
  });
