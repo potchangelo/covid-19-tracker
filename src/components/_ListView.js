@@ -1,67 +1,60 @@
 import { useState, useRef, useEffect } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import LoadingView from './_LoadingView';
-import { unsetSelectedLocation } from '../redux/locations/action';
-import { applyGetLocation } from '../redux/locations/actionThunk';
-import { getFilteredLocations } from '../redux/locations/selector';
-import { applyResetFilter } from '../redux/filter/actionThunk';
-import { setModal } from '../redux/modal/action';
 import { FILTER, INFO } from '../redux/modal/name';
 import './css/listView.scss';
+import { useSelector } from 'react-redux';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
-function ListView(props) {
+function _ListView(props) {
   // Props, States, Refs
-  const {
-    locations,
-    filteredLocations,
-    selectedLocation,
-    isLoading,
-    applyGetLocation,
-    unsetSelectedLocation,
-    applyResetFilter,
-    setModal,
-  } = props;
-
+  // const {
+  //   locations,
+  //   filteredLocations,
+  //   selectedLocation,
+  //   isLoading,
+  //   applyGetLocation,
+  //   unsetSelectedLocation,
+  //   applyResetFilter,
+  //   setModal,
+  // } = props;
+  const { locations, selectedLocation, isLocationsLoading } = useSelector(state => state.locations);
   const [isOnTablet, setIsOnTablet] = useState(false);
   const [isOnDesktop, setIsOnDesktop] = useState(true);
 
   const listLocationsRef = useRef(null);
 
   // Functions
-
   function onClickItem(id) {
-    setIsOnTablet(false);
-    if (!selectedLocation) applyGetLocation(id);
-    else if (selectedLocation.id !== id) applyGetLocation(id);
-    else unsetSelectedLocation();
+    // setIsOnTablet(false);
+    // if (!selectedLocation) applyGetLocation(id);
+    // else if (selectedLocation.id !== id) applyGetLocation(id);
+    // else unsetSelectedLocation();
   }
 
   function scrollToSelected(location) {
-    if (!location) return;
+    // if (!location) return;
 
-    const parentBounds = listLocationsRef.current.getBoundingClientRect();
-    const childNodesArray = Array.from(listLocationsRef.current.childNodes[1].childNodes);
-    const selectedChild = childNodesArray.find(child => {
-      return child.getAttribute('data-id') === `${location.id}`;
-    });
-    if (!selectedChild) return;
+    // const parentBounds = listLocationsRef.current.getBoundingClientRect();
+    // const childNodesArray = Array.from(listLocationsRef.current.childNodes[1].childNodes);
+    // const selectedChild = childNodesArray.find(child => {
+    //   return child.getAttribute('data-id') === `${location.id}`;
+    // });
+    // if (!selectedChild) return;
 
-    const childBounds = selectedChild.getBoundingClientRect();
+    // const childBounds = selectedChild.getBoundingClientRect();
 
-    const isExceedTop = childBounds.top < parentBounds.top;
-    const isExceedBottom = childBounds.bottom > parentBounds.bottom;
-    if (isExceedTop || isExceedBottom) {
-      listLocationsRef.current.scrollTop = selectedChild.offsetTop - 20;
-    }
+    // const isExceedTop = childBounds.top < parentBounds.top;
+    // const isExceedBottom = childBounds.bottom > parentBounds.bottom;
+    // if (isExceedTop || isExceedBottom) {
+    //   listLocationsRef.current.scrollTop = selectedChild.offsetTop - 20;
+    // }
   }
 
   // Effects
-  useEffect(() => {
-    scrollToSelected(selectedLocation);
-  }, [selectedLocation]);
+  // useEffect(() => {
+  //   scrollToSelected(selectedLocation);
+  // }, [selectedLocation]);
 
   // Elements
   // - Open / Close
@@ -114,7 +107,7 @@ function ListView(props) {
     <div className="list-view__locations-filter">
       <div className="field is-grouped is-grouped-centered">
         <div className="control">
-          <button className="button is-small" onClick={_ => setModal(FILTER)}>
+          <button className="button is-small" onClick={_ => console.log('setModal')}>
             <span className="icon">
               <i className="fas fa-filter"></i>
             </span>
@@ -122,7 +115,7 @@ function ListView(props) {
           </button>
         </div>
         <div className="control">
-          <button className="button is-small" onClick={applyResetFilter}>
+          <button className="button is-small" onClick={_ => console.log('applyResetFilter')}>
             <span className="icon">
               <i className="fas fa-undo"></i>
             </span>
@@ -134,7 +127,8 @@ function ListView(props) {
   );
 
   // - Locations
-  const locationItemElements = filteredLocations.map(location => {
+  // TODO : Use filtered locations
+  const locationItemElements = locations.map(location => {
     const {
       id,
       country,
@@ -171,8 +165,8 @@ function ListView(props) {
   let locationElements = <div className="list-view__locations-data">{locationItemElements}</div>;
 
   // - Loading
-  const loadingView = <LoadingView isShow={isLoading} extraClass="loading-view__side" />;
-  if (isLoading) {
+  const loadingView = <LoadingView isShow={isLocationsLoading} extraClass="loading-view__side" />;
+  if (isLocationsLoading) {
     totalElements = null;
     filterElements = null;
     locationElements = null;
@@ -197,7 +191,7 @@ function ListView(props) {
             <i className="fas fa-angle-double-right fa-lg"></i>
           </span>
         </div>
-        <div className="list-view__menu-item" onClick={_ => setModal(INFO)}>
+        <div className="list-view__menu-item" onClick={_ => console.log('setModal')}>
           <span className="icon is-medium">
             <i className="fas fa-info-circle"></i>
           </span>
@@ -223,27 +217,4 @@ function ListView(props) {
   );
 }
 
-function mapStateToProps(state) {
-  const { locations, selectedLocation, isLocationsLoading: isLoading } = state.locationReducer;
-  const filteredLocations = getFilteredLocations(state);
-  return {
-    locations,
-    filteredLocations,
-    selectedLocation,
-    isLoading,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      applyGetLocation,
-      unsetSelectedLocation,
-      applyResetFilter,
-      setModal,
-    },
-    dispatch
-  );
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListView);
+export default _ListView;

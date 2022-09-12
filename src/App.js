@@ -15,7 +15,7 @@ function App() {
 
   return (
     <div className="app">
-      {/* <ListView /> */}
+      <ListView />
       <MapView />
       {/* <DetailsView /> */}
       {/* <FilterView /> */}
