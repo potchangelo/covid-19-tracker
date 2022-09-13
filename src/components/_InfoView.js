@@ -6,9 +6,9 @@ import { unsetModal } from '../redux/modal/slice';
 import './css/infoView.scss';
 
 function InfoView() {
-  const { name } = useModalSelector();
+  const modalName = useModalSelector();
   const dispatch = useDispatch();
-  const isShow = name === MODAL_INFO;
+  const isShow = modalName === MODAL_INFO;
   return (
     <Modal
       extraClass="info-view"

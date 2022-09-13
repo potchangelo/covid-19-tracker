@@ -32,7 +32,7 @@ function _ListView() {
   }
 
   function onFilterOpenClick() {
-    dispatch(setModal({ name: MODAL_FILTER }));
+    dispatch(setModal(MODAL_FILTER));
   }
 
   function onFilterResetClick() {
@@ -41,7 +41,7 @@ function _ListView() {
   }
 
   function onInfoClick() {
-    dispatch(setModal({ name: MODAL_INFO }));
+    dispatch(setModal(MODAL_INFO));
   }
 
   function scrollToSelected(location) {

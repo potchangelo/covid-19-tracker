@@ -9,7 +9,7 @@ import './css/filterView.scss';
 
 function _FilterView() {
   // Data
-  const { name: modalName } = useModalSelector();
+  const modalName = useModalSelector();
   const { inputName, inputMinConfirmed, inputMaxConfirmed } = useFiltersSelector();
   const dispatch = useDispatch();
   const isShow = modalName === MODAL_FILTER;

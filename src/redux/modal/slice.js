@@ -2,15 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'modal',
-  initialState: {
-    name: null
-  },
+  initialState: null,
   reducers: {
-    setModal: (state, action) => {
-      state.name = action.payload.name;
+    setModal: (_, action) => {
+      return action.payload;
     },
-    unsetModal: state => {
-      state.name = null;
+    unsetModal: () => {
+      return null;
     },
   },
 });
