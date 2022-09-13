@@ -9,12 +9,11 @@ import { resetFilters } from '../redux/filters/slice';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
-function _ListView(props) {
+function _ListView() {
   // Props, States, Refs
   // const {
   //   applyGetLocation,
   //   unsetSelectedLocation,
-  //   applyResetFilter,
   // } = props;
   const {
     locations, filteredLocations, selectedLocation, isLocationsLoading
@@ -37,6 +36,7 @@ function _ListView(props) {
   }
 
   function onFilterResetClick() {
+    // TODO : Unset selected location and error
     dispatch(resetFilters());
   }
 

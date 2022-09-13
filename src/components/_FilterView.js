@@ -16,7 +16,7 @@ function _FilterView() {
 
   // Functions
   function onSubmit(event) {
-    // TODO : set filter
+    // TODO : unset selected location and error
     event.preventDefault();
     dispatch(setFilters());
     dispatch(unsetModal());
