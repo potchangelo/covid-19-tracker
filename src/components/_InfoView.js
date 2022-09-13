@@ -1,15 +1,22 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from '../layouts';
 import { MODAL_INFO } from '../redux/modal/name';
 import { useModalSelector } from '../redux/modal/selector';
+import { unsetModal } from '../redux/modal/slice';
 import './css/infoView.scss';
 
 function InfoView() {
   const { name } = useModalSelector();
+  const dispatch = useDispatch();
   const isShow = name === MODAL_INFO;
   // TODO : Unset modal
   return (
-    <Modal extraClass="info-view" extraContentClass="info-view__content" isShow={isShow} onClickClose={() => {}}>
+    <Modal
+      extraClass="info-view"
+      extraContentClass="info-view__content"
+      isShow={isShow}
+      onClickClose={() => dispatch(unsetModal())}
+    >
       <div className="content">
         <h6 className="title is-6">Marker colors</h6>
         <p>
@@ -28,12 +35,20 @@ function InfoView() {
       <div className="content">
         <h6 className="title is-6">Links</h6>
         <p>
-          <a href="https://github.com/potchangelo/covid-19-tracker" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://github.com/potchangelo/covid-19-tracker"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Project Github
           </a>
         </p>
         <p>
-          <a href="https://github.com/ExpDev07/coronavirus-tracker-api" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://github.com/ExpDev07/coronavirus-tracker-api"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Data API Github
           </a>
         </p>
