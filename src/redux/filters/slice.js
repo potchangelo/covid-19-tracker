@@ -4,42 +4,42 @@ const initialState = {
   name: '',
   minConfirmed: 0,
   maxConfirmed: 500000000,
-  tempName: '',
-  tempMinConfirmed: 0,
-  tempMaxConfirmed: 500000000,
+  inputName: '',
+  inputMinConfirmed: 0,
+  inputMaxConfirmed: 500000000,
 };
 
 const slice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    setFiltersTempName: (state, action) => {
-      state.tempName = action.payload.name;
+    setFiltersInputName: (state, action) => {
+      state.inputName = action.payload;
     },
-    setFiltersTempMinConfirmed: (state, action) => {
-      state.tempMinConfirmed = action.payload.minConfirmed;
+    setFiltersInputMinConfirmed: (state, action) => {
+      state.inputMinConfirmed = action.payload;
     },
-    setFiltersTempMaxConfirmed: (state, action) => {
-      state.tempMaxConfirmed = action.payload.maxConfirmed;
+    setFiltersInputMaxConfirmed: (state, action) => {
+      state.inputMaxConfirmed = action.payload;
     },
     setFilters: state => {
-      state.name = state.tempName;
-      state.minConfirmed = state.tempMinConfirmed;
-      state.maxConfirmed = state.tempMaxConfirmed;
+      state.name = state.inputName;
+      state.minConfirmed = state.inputMinConfirmed;
+      state.maxConfirmed = state.inputMaxConfirmed;
     },
     cancelFilters: state => {
-      state.tempName = state.name;
-      state.tempMinConfirmed = state.minConfirmed;
-      state.tempMaxConfirmed = state.maxConfirmed;
+      state.inputName = state.name;
+      state.inputMinConfirmed = state.minConfirmed;
+      state.inputMaxConfirmed = state.maxConfirmed;
     },
-    resetFilters: state => {
-      state = initialState;
+    resetFilters: () => {
+      return initialState;
     },
   },
 });
 
 export const {
-  setFiltersTempName, setFiltersTempMinConfirmed, setFiltersTempMaxConfirmed,
+  setFiltersInputName, setFiltersInputMinConfirmed, setFiltersInputMaxConfirmed,
   setFilters, cancelFilters, resetFilters
 } = slice.actions;
 export default slice.reducer;

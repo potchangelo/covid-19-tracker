@@ -19,7 +19,7 @@ function App() {
       <ListView />
       <MapView />
       {/* <DetailsView /> */}
-      {/* <FilterView /> */}
+      <FilterView />
       <InfoView />
       <LoadingView isShow={isLocationsLoading} label="Loading" extraClass="loading-view__app" />
       {/* <ErrorView /> */}

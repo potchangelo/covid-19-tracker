@@ -1,28 +1,30 @@
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Modal } from '../layouts';
-import { setTempName, setTempMinConfirmed, setTempMaxConfirmed } from '../redux/filters/action';
-import { applySetFilter, applyCancelFilter } from '../redux/filters/actionThunk';
+import { useFiltersSelector } from '../redux/filters/selector';
+import { cancelFilters, setFilters, setFiltersInputMaxConfirmed, setFiltersInputMinConfirmed, setFiltersInputName } from '../redux/filters/slice';
 import { MODAL_FILTER } from '../redux/modal/name';
+import { useModalSelector } from '../redux/modal/selector';
+import { unsetModal } from '../redux/modal/slice';
 import './css/filterView.scss';
 
-function FilterView(props) {
-  // Props
-  const {
-    isShow,
-    name,
-    minConfirmed,
-    maxConfirmed,
-    setName,
-    setMinConfirmed,
-    setMaxConfirmed,
-    applySetFilter,
-    applyCancelFilter,
-  } = props;
+function _FilterView() {
+  // Data
+  const { name: modalName } = useModalSelector();
+  const { inputName, inputMinConfirmed, inputMaxConfirmed } = useFiltersSelector();
+  const dispatch = useDispatch();
+  const isShow = modalName === MODAL_FILTER;
 
   // Functions
-  function onSubmitFilter(e) {
-    e.preventDefault();
-    applySetFilter();
+  function onSubmit(event) {
+    // TODO : set filter
+    event.preventDefault();
+    dispatch(setFilters());
+    dispatch(unsetModal());
+  }
+
+  function onCancel() {
+    dispatch(cancelFilters());
+    dispatch(unsetModal());
   }
 
   return (
@@ -30,9 +32,9 @@ function FilterView(props) {
       extraClass="filter-view"
       extraContentClass="filter-view__content"
       isShow={isShow}
-      onClickClose={applyCancelFilter}
+      onClickClose={onCancel}
     >
-      <form action="#" onSubmit={onSubmitFilter}>
+      <form action="#" onSubmit={onSubmit}>
         <h4 className="title is-4">Filter countries</h4>
         <label className="label">Search by name</label>
         <div className="field more-margin-bottom">
@@ -41,8 +43,8 @@ function FilterView(props) {
               className="input"
               type="text"
               placeholder="Leave blank to ignore name-filter."
-              value={name}
-              onChange={e => setName(e.target.value)}
+              value={inputName}
+              onChange={event => dispatch(setFiltersInputName(event.target.value))}
             />
           </div>
         </div>
@@ -55,8 +57,8 @@ function FilterView(props) {
                 <input
                   className="input"
                   type="number"
-                  value={minConfirmed}
-                  onChange={e => setMinConfirmed(Number(e.target.value))}
+                  value={inputMinConfirmed}
+                  onChange={event => dispatch(setFiltersInputMinConfirmed(+event.target.value))}
                 />
               </div>
             </div>
@@ -72,8 +74,8 @@ function FilterView(props) {
                 <input
                   className="input"
                   type="number"
-                  value={maxConfirmed}
-                  onChange={e => setMaxConfirmed(Number(e.target.value))}
+                  value={inputMaxConfirmed}
+                  onChange={event => dispatch(setFiltersInputMaxConfirmed(+event.target.value))}
                 />
               </div>
             </div>
@@ -81,7 +83,7 @@ function FilterView(props) {
         </div>
         <div className="field is-grouped is-grouped-right">
           <div className="control">
-            <button className="button" type="button" onClick={applyCancelFilter}>
+            <button className="button" type="button" onClick={onCancel}>
               Cancel
             </button>
           </div>
@@ -96,18 +98,4 @@ function FilterView(props) {
   );
 }
 
-function mapStateToProps(state) {
-  const { tempName: name, tempMinConfirmed: minConfirmed, tempMaxConfirmed: maxConfirmed } = state.filterReducer;
-  const isShow = state.modalReducer === MODAL_FILTER;
-  return { isShow, name, minConfirmed, maxConfirmed };
-}
-
-const mapDispatchToProps = {
-  setName: setTempName,
-  setMinConfirmed: setTempMinConfirmed,
-  setMaxConfirmed: setTempMaxConfirmed,
-  applySetFilter,
-  applyCancelFilter,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterView);
+export default _FilterView;

@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import LoadingView from './_LoadingView';
-import { MODAL_INFO } from '../redux/modal/name';
+import { MODAL_FILTER, MODAL_INFO } from '../redux/modal/name';
 import './css/listView.scss';
 import { useLocationsSelector } from '../redux/locations/selector';
 import { useDispatch } from 'react-redux';
 import { setModal } from '../redux/modal/slice';
+import { resetFilters } from '../redux/filters/slice';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
@@ -14,7 +15,6 @@ function _ListView(props) {
   //   applyGetLocation,
   //   unsetSelectedLocation,
   //   applyResetFilter,
-  //   setModal,
   // } = props;
   const {
     locations, filteredLocations, selectedLocation, isLocationsLoading
@@ -30,6 +30,18 @@ function _ListView(props) {
     // if (!selectedLocation) applyGetLocation(id);
     // else if (selectedLocation.id !== id) applyGetLocation(id);
     // else unsetSelectedLocation();
+  }
+
+  function onFilterOpenClick() {
+    dispatch(setModal({ name: MODAL_FILTER }));
+  }
+
+  function onFilterResetClick() {
+    dispatch(resetFilters());
+  }
+
+  function onInfoClick() {
+    dispatch(setModal({ name: MODAL_INFO }));
   }
 
   function scrollToSelected(location) {
@@ -107,7 +119,7 @@ function _ListView(props) {
     <div className="list-view__locations-filter">
       <div className="field is-grouped is-grouped-centered">
         <div className="control">
-          <button className="button is-small" onClick={_ => console.log('setModal')}>
+          <button className="button is-small" onClick={onFilterOpenClick}>
             <span className="icon">
               <i className="fas fa-filter"></i>
             </span>
@@ -115,7 +127,7 @@ function _ListView(props) {
           </button>
         </div>
         <div className="control">
-          <button className="button is-small" onClick={_ => console.log('applyResetFilter')}>
+          <button className="button is-small" onClick={onFilterResetClick}>
             <span className="icon">
               <i className="fas fa-undo"></i>
             </span>
@@ -190,7 +202,7 @@ function _ListView(props) {
             <i className="fas fa-angle-double-right fa-lg"></i>
           </span>
         </div>
-        <div className="list-view__menu-item" onClick={_ => dispatch(setModal({ name: MODAL_INFO }))}>
+        <div className="list-view__menu-item" onClick={onInfoClick}>
           <span className="icon is-medium">
             <i className="fas fa-info-circle"></i>
           </span>
