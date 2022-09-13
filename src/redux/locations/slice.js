@@ -33,11 +33,12 @@ const slice = createSlice({
     });
     builder.addCase(getLocations.fulfilled, (state, action) => {
       const { locations } = action.payload;
-      state.locations = locations;
+      state.locations = [...locations].sort((location1, location2) => {
+        return location2.latest.confirmed - location1.latest.confirmed;
+      });;
       state.isLocationsLoading = false;
     });
     builder.addCase(getLocations.rejected, (state, action) => {
-      console.log(action);
       // action.error.message
       state.isLocationsLoading = false;
     });
@@ -52,7 +53,7 @@ const slice = createSlice({
       state.isSelectedLocationLoading = false;
     });
     builder.addCase(getLocation.rejected, (state, action) => {
-      console.log(action);
+      state.selectedLocation = null;
       state.isSelectedLocationLoading = false;
     });
   }
