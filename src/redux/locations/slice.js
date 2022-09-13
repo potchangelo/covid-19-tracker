@@ -25,7 +25,11 @@ const slice = createSlice({
     isLocationsLoading: true,
     isSelectedLocationLoading: false,
   },
-  reducers: {},
+  reducers: {
+    unsetSelectedLocation: (state) => {
+      state.selectedLocation = null;
+    }
+  },
   extraReducers: builder => {
     // Locations
     builder.addCase(getLocations.pending, state => {
@@ -59,5 +63,6 @@ const slice = createSlice({
   }
 });
 
+export const { unsetSelectedLocation } = slice.actions;
 export { getLocations, getLocation };
 export default slice.reducer;

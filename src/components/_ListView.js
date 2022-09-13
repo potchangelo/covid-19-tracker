@@ -1,20 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import LoadingView from './_LoadingView';
 import { MODAL_FILTER, MODAL_INFO } from '../redux/modal/name';
 import './css/listView.scss';
 import { useLocationsSelector } from '../redux/locations/selector';
-import { useDispatch } from 'react-redux';
+
 import { setModal } from '../redux/modal/slice';
 import { resetFilters } from '../redux/filters/slice';
+import { getLocation, unsetSelectedLocation } from '../redux/locations/slice';
+import { setError, unsetError } from '../redux/error/slice';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
 function _ListView() {
-  // Props, States, Refs
-  // const {
-  //   applyGetLocation,
-  //   unsetSelectedLocation,
-  // } = props;
+  // Data
   const {
     locations, filteredLocations, selectedLocation, isLocationsLoading
   } = useLocationsSelector();
@@ -24,11 +23,18 @@ function _ListView() {
   const listLocationsRef = useRef(null);
 
   // Functions
-  function onClickItem(id) {
-    // setIsOnTablet(false);
-    // if (!selectedLocation) applyGetLocation(id);
-    // else if (selectedLocation.id !== id) applyGetLocation(id);
-    // else unsetSelectedLocation();
+  async function onClickItem(id) {
+    setIsOnTablet(false);
+    if (!selectedLocation || selectedLocation?.id !== id) {
+      try {
+        await dispatch(getLocation(id)).unwrap();
+      } catch (error) {
+        dispatch(setError(error));
+      }
+    }
+    else {
+      dispatch(unsetSelectedLocation());
+    }
   }
 
   function onFilterOpenClick() {
@@ -36,8 +42,9 @@ function _ListView() {
   }
 
   function onFilterResetClick() {
-    // TODO : Unset selected location and error
     dispatch(resetFilters());
+    dispatch(unsetSelectedLocation());
+    dispatch(unsetError());
   }
 
   function onInfoClick() {
@@ -45,28 +52,28 @@ function _ListView() {
   }
 
   function scrollToSelected(location) {
-    // if (!location) return;
+    if (!location) return;
 
-    // const parentBounds = listLocationsRef.current.getBoundingClientRect();
-    // const childNodesArray = Array.from(listLocationsRef.current.childNodes[1].childNodes);
-    // const selectedChild = childNodesArray.find(child => {
-    //   return child.getAttribute('data-id') === `${location.id}`;
-    // });
-    // if (!selectedChild) return;
+    const parentBounds = listLocationsRef.current.getBoundingClientRect();
+    const childNodesArray = Array.from(listLocationsRef.current.childNodes[1].childNodes);
+    const selectedChild = childNodesArray.find(child => {
+      return child.getAttribute('data-id') === `${location.id}`;
+    });
+    if (!selectedChild) return;
 
-    // const childBounds = selectedChild.getBoundingClientRect();
+    const childBounds = selectedChild.getBoundingClientRect();
 
-    // const isExceedTop = childBounds.top < parentBounds.top;
-    // const isExceedBottom = childBounds.bottom > parentBounds.bottom;
-    // if (isExceedTop || isExceedBottom) {
-    //   listLocationsRef.current.scrollTop = selectedChild.offsetTop - 20;
-    // }
+    const isExceedTop = childBounds.top < parentBounds.top;
+    const isExceedBottom = childBounds.bottom > parentBounds.bottom;
+    if (isExceedTop || isExceedBottom) {
+      listLocationsRef.current.scrollTop = selectedChild.offsetTop - 20;
+    }
   }
 
   // Effects
-  // useEffect(() => {
-  //   scrollToSelected(selectedLocation);
-  // }, [selectedLocation]);
+  useEffect(() => {
+    scrollToSelected(selectedLocation);
+  }, [selectedLocation]);
 
   // Elements
   // - Open / Close
