@@ -5,13 +5,16 @@ import { useLocationsSelector } from './redux/locations/selector';
 import { getLocations } from './redux/locations/slice';
 import './css/leafletFixed.css';
 import './css/app.scss';
+import { setError } from './redux/error/slice';
 
 function App() {
   const { isLocationsLoading } = useLocationsSelector();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getLocations());
+    dispatch(getLocations()).unwrap().catch(error => {
+      dispatch(setError(error));
+    });
   }, []);
 
   return (
@@ -22,7 +25,7 @@ function App() {
       <FilterView />
       <InfoView />
       <LoadingView isShow={isLocationsLoading} label="Loading" extraClass="loading-view__app" />
-      {/* <ErrorView /> */}
+      <ErrorView />
     </div>
   );
 }
