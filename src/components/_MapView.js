@@ -55,7 +55,7 @@ const maxBounds = [
 
 function _MapView() {
   // Data
-  const { locations, selectedLocation } = useLocationsSelector();
+  const { filteredLocations, selectedLocation } = useLocationsSelector();
   const dispatch = useDispatch();
   const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({ center: [15, 101], zoom: 5 });
@@ -98,7 +98,7 @@ function _MapView() {
   }, [selectedLocation, map]);
 
   // Elements
-  const markerElements = locations.map(location => {
+  const markerElements = filteredLocations.map(location => {
     const {
       id,
       coordinates: { latitude, longitude },
