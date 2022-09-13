@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Modal } from '../layouts';
 import { MODAL_INFO } from '../redux/modal/name';
 import { useModalSelector } from '../redux/modal/selector';
@@ -9,7 +9,6 @@ function InfoView() {
   const { name } = useModalSelector();
   const dispatch = useDispatch();
   const isShow = name === MODAL_INFO;
-  // TODO : Unset modal
   return (
     <Modal
       extraClass="info-view"
@@ -50,6 +49,15 @@ function InfoView() {
             rel="noopener noreferrer"
           >
             Data API Github
+          </a>
+        </p>
+        <p>
+          <a
+            href="https://github.com/Kilo59/coronavirus-tracker-api"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Alternative Data API Github
           </a>
         </p>
       </div>
