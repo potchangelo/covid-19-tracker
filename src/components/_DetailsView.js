@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import dayjs from 'dayjs';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
-import { unsetSelectedLocation } from '../redux/locations/action';
+import { useLocationsSelector } from '../redux/locations/selector';
+import { unsetSelectedLocation } from '../redux/locations/slice';
 import './css/detailsView.scss';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 const latestDays = 5;
 
-function DetailsView(props) {
-  // Props, States
-  const { location, isLoading, unsetSelectedLocation } = props;
+function _DetailsView() {
+  // Data
+  const {
+    selectedLocation: location,
+    isSelectedLocationLoading: isLoading
+  } = useLocationsSelector();
+  const dispatch = useDispatch();
   const [isOnTablet, setIsOnTablet] = useState(false);
 
   // Effects
@@ -25,7 +29,7 @@ function DetailsView(props) {
     if (!isLoading) return null;
     return (
       <div className="details-view">
-        <div className="details-view__close" onClick={unsetSelectedLocation}>
+        <div className="details-view__close" onClick={_ => dispatch(unsetSelectedLocation())}>
           <span className="icon is-medium">
             <i className="fas fa-times fa-lg"></i>
           </span>
@@ -150,7 +154,7 @@ function DetailsView(props) {
 
   return (
     <div className={detailsClass}>
-      <div className="details-view__close" onClick={unsetSelectedLocation}>
+      <div className="details-view__close" onClick={_ => dispatch(unsetSelectedLocation())}>
         <span className="icon is-medium">
           <i className="fas fa-times fa-lg"></i>
         </span>
@@ -165,16 +169,4 @@ function DetailsView(props) {
   );
 }
 
-function mapStateToProps(state) {
-  const { selectedLocation, isSelectedLocationLoading } = state.locationReducer;
-  return {
-    location: selectedLocation,
-    isLoading: isSelectedLocationLoading,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ unsetSelectedLocation }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DetailsView);
+export default _DetailsView;
