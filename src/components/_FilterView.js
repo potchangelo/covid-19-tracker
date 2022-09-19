@@ -1,7 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { Modal } from '../layouts';
+import { unsetError } from '../redux/error/slice';
 import { useFiltersSelector } from '../redux/filters/selector';
 import { cancelFilters, setFilters, setFiltersInputMaxConfirmed, setFiltersInputMinConfirmed, setFiltersInputName } from '../redux/filters/slice';
+import { unsetSelectedLocation } from '../redux/locations/slice';
 import { MODAL_FILTER } from '../redux/modal/name';
 import { useModalSelector } from '../redux/modal/selector';
 import { unsetModal } from '../redux/modal/slice';
@@ -16,10 +18,11 @@ function _FilterView() {
 
   // Functions
   function onSubmit(event) {
-    // TODO : unset selected location and error
     event.preventDefault();
     dispatch(setFilters());
+    dispatch(unsetSelectedLocation());
     dispatch(unsetModal());
+    dispatch(unsetError());
   }
 
   function onCancel() {

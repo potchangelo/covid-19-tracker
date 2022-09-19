@@ -5,7 +5,7 @@ import { useModalSelector } from '../redux/modal/selector';
 import { unsetModal } from '../redux/modal/slice';
 import './css/infoView.scss';
 
-function InfoView() {
+function _InfoView() {
   const modalName = useModalSelector();
   const dispatch = useDispatch();
   const isShow = modalName === MODAL_INFO;
@@ -66,4 +66,4 @@ function InfoView() {
   );
 }
 
-export default InfoView;
+export default _InfoView;

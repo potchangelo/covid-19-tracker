@@ -2,6 +2,7 @@ import { divIcon } from 'leaflet';
 import { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
+import { setError } from '../redux/error/slice';
 import { useLocationsSelector } from '../redux/locations/selector';
 import { getLocation } from '../redux/locations/slice';
 import './css/mapView.scss';
@@ -66,6 +67,14 @@ function _MapView() {
     const zoom = map.getZoom();
     setViewport({ center: [lat, lng], zoom });
   }, [map]);
+
+  async function onMarkerClick(id) {
+    try {
+      await dispatch(getLocation(id)).unwrap();
+    } catch (error) {
+      dispatch(setError(error));
+    }
+  }
 
   // Effects
   useEffect(() => {
@@ -138,7 +147,7 @@ function _MapView() {
         key={`${id}-${country_code}`}
         position={[latitude, longitude]}
         icon={markerIcon}
-        eventHandlers={{ click: () => dispatch(getLocation(id)) }}
+        eventHandlers={{ click: () => onMarkerClick(id) }}
       >
         <Tooltip direction={'top'}>
           <b>{title}</b>
