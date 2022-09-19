@@ -14,7 +14,7 @@ function _InfoView() {
       extraClass="info-view"
       extraContentClass="info-view__content"
       isShow={isShow}
-      onClickClose={() => dispatch(unsetModal())}
+      onCloseClick={() => dispatch(unsetModal())}
     >
       <div className="content">
         <h6 className="title is-6">Marker colors</h6>

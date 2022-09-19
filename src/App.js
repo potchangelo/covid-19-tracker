@@ -15,7 +15,7 @@ function App() {
     dispatch(getLocations()).unwrap().catch(error => {
       dispatch(setError(error));
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="app">

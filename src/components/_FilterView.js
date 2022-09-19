@@ -35,7 +35,7 @@ function _FilterView() {
       extraClass="filter-view"
       extraContentClass="filter-view__content"
       isShow={isShow}
-      onClickClose={onCancel}
+      onCloseClick={onCancel}
     >
       <form action="#" onSubmit={onSubmit}>
         <h4 className="title is-4">Filter countries</h4>

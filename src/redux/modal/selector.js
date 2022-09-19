@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
 
-function useModalSelector() {
-  return useSelector(state => {
-    return state.modal;
-  });
-};
+/**
+ * @returns {string|null} Modal name
+ */
+const useModalSelector = () => useSelector(state => state.modal);
 
 export { useModalSelector };
