@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { divIcon } from 'leaflet';
+import { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
-import { applyGetLocation } from '../redux/location/actionThunk';
-import { getFilteredLocations } from '../redux/location/selector';
+import { useDispatch } from 'react-redux';
+import { setError } from '../redux/error/slice';
+import { useLocationsSelector } from '../redux/locations/selector';
+import { getLocation } from '../redux/locations/slice';
 import './css/mapView.scss';
 
 const markerIcons = {
@@ -54,9 +54,10 @@ const maxBounds = [
   [-90, -240],
 ];
 
-function MapView(props) {
-  // Props
-  const { locations, selectedLocation, applyGetLocation } = props;
+function _MapView() {
+  // Data
+  const { filteredLocations, selectedLocation } = useLocationsSelector();
+  const dispatch = useDispatch();
   const [map, setMap] = useState(null);
   const [viewport, setViewport] = useState({ center: [15, 101], zoom: 5 });
 
@@ -66,6 +67,14 @@ function MapView(props) {
     const zoom = map.getZoom();
     setViewport({ center: [lat, lng], zoom });
   }, [map]);
+
+  async function onMarkerClick(id) {
+    try {
+      await dispatch(getLocation(id)).unwrap();
+    } catch (error) {
+      dispatch(setError(error));
+    }
+  }
 
   // Effects
   useEffect(() => {
@@ -98,7 +107,7 @@ function MapView(props) {
   }, [selectedLocation, map]);
 
   // Elements
-  const markerElements = locations.map(location => {
+  const markerElements = filteredLocations.map(location => {
     const {
       id,
       coordinates: { latitude, longitude },
@@ -138,7 +147,7 @@ function MapView(props) {
         key={`${id}-${country_code}`}
         position={[latitude, longitude]}
         icon={markerIcon}
-        eventHandlers={{ click: () => applyGetLocation(id) }}
+        eventHandlers={{ click: () => onMarkerClick(id) }}
       >
         <Tooltip direction={'top'}>
           <b>{title}</b>
@@ -170,17 +179,7 @@ function MapView(props) {
   );
 }
 
-function mapStateToProps(state) {
-  const locations = getFilteredLocations(state);
-  const { selectedLocation } = state.locationReducer;
-  return { locations, selectedLocation };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ applyGetLocation }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MapView);
+export default _MapView;
 
 /*
 

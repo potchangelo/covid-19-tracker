@@ -1,6 +1,12 @@
 import './css/loadingView.scss';
 
-function LoadingView(props) {
+/**
+ * @param {object} props
+ * @param {boolean} props.isShow
+ * @param {string} [props.label]
+ * @param {string} [props.extraClass]
+ */
+function _LoadingView(props) {
   const { isShow, label, extraClass } = props;
 
   if (!isShow) return null;
@@ -23,4 +29,4 @@ function LoadingView(props) {
   );
 }
 
-export default LoadingView;
+export default _LoadingView;

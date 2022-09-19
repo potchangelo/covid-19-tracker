@@ -1,22 +1,23 @@
-import { useEffect, useCallback } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { MapView, ListView, DetailsView, FilterView, InfoView, LoadingView, ErrorView } from './components';
-import { applyGetLocations } from './redux/location/actionThunk';
+import { setError } from './redux/error/slice';
+import { useLocationsSelector } from './redux/locations/selector';
+import { getLocations } from './redux/locations/slice';
 import './css/leafletFixed.css';
 import './css/app.scss';
 
-function App(props) {
-  // Props, States
-  const { isLoading, applyGetLocations } = props;
+function App() {
+  const { isLocationsLoading } = useLocationsSelector();
+  const dispatch = useDispatch();
 
-  // Functions
-  const onLoad = useCallback(() => applyGetLocations(), [applyGetLocations]);
-
-  // Effects
   useEffect(() => {
-    onLoad();
-  }, [onLoad]);
+    dispatch(getLocations())
+      .unwrap()
+      .catch(error => {
+        dispatch(setError(error));
+      });
+  }, [dispatch]);
 
   return (
     <div className="app">
@@ -25,19 +26,10 @@ function App(props) {
       <DetailsView />
       <FilterView />
       <InfoView />
-      <LoadingView isShow={isLoading} label="Loading" extraClass="loading-view__app" />
+      <LoadingView isShow={isLocationsLoading} label="Loading" extraClass="loading-view__app" />
       <ErrorView />
     </div>
   );
 }
 
-function mapStateToProps(state) {
-  const { isLocationsLoading: isLoading } = state.locationReducer;
-  return { isLoading };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ applyGetLocations }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

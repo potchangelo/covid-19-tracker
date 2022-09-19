@@ -78,7 +78,7 @@ function getChartYTickLabel(y) {
  * @param {number} props.dataYMax
  * @param {string} props.caseType
  */
-function DetailsViewChart(props) {
+function _DetailsViewChart(props) {
   const { data, dataYMax, caseType } = props;
   const [theme, setTheme] = useState('light');
 
@@ -165,5 +165,5 @@ function DetailsViewChart(props) {
   );
 }
 
-export default DetailsViewChart;
+export default _DetailsViewChart;
 export { getChartYMaxTick };

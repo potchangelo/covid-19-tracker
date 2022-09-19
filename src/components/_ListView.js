@@ -1,42 +1,50 @@
 import { useState, useRef, useEffect } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import LoadingView from './_LoadingView';
-import { unsetSelectedLocation } from '../redux/location/action';
-import { applyGetLocation } from '../redux/location/actionThunk';
-import { getFilteredLocations } from '../redux/location/selector';
-import { applyResetFilter } from '../redux/filter/actionThunk';
-import { setModal } from '../redux/modal/action';
-import { FILTER, INFO } from '../redux/modal/name';
+import { setError, unsetError } from '../redux/error/slice';
+import { resetFilters } from '../redux/filters/slice';
+import { MODAL_FILTER, MODAL_INFO } from '../redux/modal/name';
+import { setModal } from '../redux/modal/slice';
+import { useLocationsSelector } from '../redux/locations/selector';
+import { getLocation, unsetSelectedLocation } from '../redux/locations/slice';
 import './css/listView.scss';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
-function ListView(props) {
-  // Props, States, Refs
-  const {
-    locations,
-    filteredLocations,
-    selectedLocation,
-    isLoading,
-    applyGetLocation,
-    unsetSelectedLocation,
-    applyResetFilter,
-    setModal,
-  } = props;
-
+function _ListView() {
+  // Data
+  const { locations, filteredLocations, selectedLocation, isLocationsLoading } = useLocationsSelector();
+  const dispatch = useDispatch();
   const [isOnTablet, setIsOnTablet] = useState(false);
   const [isOnDesktop, setIsOnDesktop] = useState(true);
-
   const listLocationsRef = useRef(null);
 
   // Functions
-
-  function onClickItem(id) {
+  async function onClickItem(id) {
     setIsOnTablet(false);
-    if (!selectedLocation) applyGetLocation(id);
-    else if (selectedLocation.id !== id) applyGetLocation(id);
-    else unsetSelectedLocation();
+    if (!selectedLocation || selectedLocation?.id !== id) {
+      try {
+        await dispatch(getLocation(id)).unwrap();
+      } catch (error) {
+        dispatch(setError(error));
+      }
+    } else {
+      dispatch(unsetSelectedLocation());
+    }
+  }
+
+  function onFilterOpenClick() {
+    dispatch(setModal(MODAL_FILTER));
+  }
+
+  function onFilterResetClick() {
+    dispatch(resetFilters());
+    dispatch(unsetSelectedLocation());
+    dispatch(unsetError());
+  }
+
+  function onInfoClick() {
+    dispatch(setModal(MODAL_INFO));
   }
 
   function scrollToSelected(location) {
@@ -114,7 +122,7 @@ function ListView(props) {
     <div className="list-view__locations-filter">
       <div className="field is-grouped is-grouped-centered">
         <div className="control">
-          <button className="button is-small" onClick={_ => setModal(FILTER)}>
+          <button className="button is-small" onClick={onFilterOpenClick}>
             <span className="icon">
               <i className="fas fa-filter"></i>
             </span>
@@ -122,7 +130,7 @@ function ListView(props) {
           </button>
         </div>
         <div className="control">
-          <button className="button is-small" onClick={applyResetFilter}>
+          <button className="button is-small" onClick={onFilterResetClick}>
             <span className="icon">
               <i className="fas fa-undo"></i>
             </span>
@@ -171,8 +179,8 @@ function ListView(props) {
   let locationElements = <div className="list-view__locations-data">{locationItemElements}</div>;
 
   // - Loading
-  const loadingView = <LoadingView isShow={isLoading} extraClass="loading-view__side" />;
-  if (isLoading) {
+  const loadingView = <LoadingView isShow={isLocationsLoading} extraClass="loading-view__side" />;
+  if (isLocationsLoading) {
     totalElements = null;
     filterElements = null;
     locationElements = null;
@@ -197,7 +205,7 @@ function ListView(props) {
             <i className="fas fa-angle-double-right fa-lg"></i>
           </span>
         </div>
-        <div className="list-view__menu-item" onClick={_ => setModal(INFO)}>
+        <div className="list-view__menu-item" onClick={onInfoClick}>
           <span className="icon is-medium">
             <i className="fas fa-info-circle"></i>
           </span>
@@ -223,27 +231,4 @@ function ListView(props) {
   );
 }
 
-function mapStateToProps(state) {
-  const { locations, selectedLocation, isLocationsLoading: isLoading } = state.locationReducer;
-  const filteredLocations = getFilteredLocations(state);
-  return {
-    locations,
-    filteredLocations,
-    selectedLocation,
-    isLoading,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      applyGetLocation,
-      unsetSelectedLocation,
-      applyResetFilter,
-      setModal,
-    },
-    dispatch
-  );
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListView);
+export default _ListView;

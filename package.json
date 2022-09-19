@@ -11,7 +11,7 @@
     "bulma",
     "chart.js"
   ],
-  "version": "1.2.1",
+  "version": "1.3.0",
   "author": "Potchara Puttawanchai",
   "homepage": "https://covid-19-tracker-app.netlify.app/",
   "repository": {
@@ -23,8 +23,9 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.3.0",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "axios": "^0.27.2",
     "bulma": "^0.9.4",
@@ -39,8 +40,8 @@
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "sass": "^1.54.6",
-    "web-vitals": "^3.0.0"
+    "sass": "^1.54.9",
+    "web-vitals": "^3.0.2"
   },
   "devDependencies": {
     "prettier": "^2.7.1"

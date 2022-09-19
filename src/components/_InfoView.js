@@ -1,13 +1,21 @@
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Modal } from '../layouts';
-import { unsetModal } from '../redux/modal/action';
-import { INFO } from '../redux/modal/name';
+import { MODAL_INFO } from '../redux/modal/name';
+import { useModalSelector } from '../redux/modal/selector';
+import { unsetModal } from '../redux/modal/slice';
 import './css/infoView.scss';
 
-function InfoView(props) {
-  const { isShow, unsetModal } = props;
+function _InfoView() {
+  const modalName = useModalSelector();
+  const dispatch = useDispatch();
+  const isShow = modalName === MODAL_INFO;
   return (
-    <Modal extraClass="info-view" extraContentClass="info-view__content" isShow={isShow} onClickClose={unsetModal}>
+    <Modal
+      extraClass="info-view"
+      extraContentClass="info-view__content"
+      isShow={isShow}
+      onCloseClick={() => dispatch(unsetModal())}
+    >
       <div className="content">
         <h6 className="title is-6">Marker colors</h6>
         <p>
@@ -35,17 +43,15 @@ function InfoView(props) {
             Data API Github
           </a>
         </p>
+        <p>
+          <a href="https://github.com/Kilo59/coronavirus-tracker-api" target="_blank" rel="noopener noreferrer">
+            Alternative Data API Github
+          </a>
+        </p>
       </div>
       <p className="is-size-7">&copy; Copyright {new Date().getFullYear()} Zinglecode.</p>
     </Modal>
   );
 }
 
-function mapStateToProps(state) {
-  const isShow = state.modalReducer === INFO;
-  return { isShow };
-}
-
-const mapDispatchToProps = { unsetModal };
-
-export default connect(mapStateToProps, mapDispatchToProps)(InfoView);
+export default _InfoView;
