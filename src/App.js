@@ -12,9 +12,11 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getLocations()).unwrap().catch(error => {
-      dispatch(setError(error));
-    });
+    dispatch(getLocations())
+      .unwrap()
+      .catch(error => {
+        dispatch(setError(error));
+      });
   }, [dispatch]);
 
   return (

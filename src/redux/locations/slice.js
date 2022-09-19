@@ -1,21 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getLocations as apiGetLocations, getLocation as apiGetLocation } from '../../fetchers/locations';
 
-const getLocations = createAsyncThunk(
-  'locations/getLocations',
-  async () => {
-    const response = await apiGetLocations();
-    return response.data;
-  }
-);
+const getLocations = createAsyncThunk('locations/getLocations', async () => {
+  const response = await apiGetLocations();
+  return response.data;
+});
 
-const getLocation = createAsyncThunk(
-  'locations/getLocation',
-  async (id) => {
-    const response = await apiGetLocation(id);
-    return response.data;
-  }
-);
+const getLocation = createAsyncThunk('locations/getLocation', async id => {
+  const response = await apiGetLocation(id);
+  return response.data;
+});
 
 const slice = createSlice({
   name: 'locations',
@@ -26,9 +20,9 @@ const slice = createSlice({
     isSelectedLocationLoading: false,
   },
   reducers: {
-    unsetSelectedLocation: (state) => {
+    unsetSelectedLocation: state => {
       state.selectedLocation = null;
-    }
+    },
   },
   extraReducers: builder => {
     // Locations
@@ -39,7 +33,7 @@ const slice = createSlice({
       const { locations } = action.payload;
       state.locations = [...locations].sort((location1, location2) => {
         return location2.latest.confirmed - location1.latest.confirmed;
-      });;
+      });
       state.isLocationsLoading = false;
     });
     builder.addCase(getLocations.rejected, (state, action) => {
@@ -60,7 +54,7 @@ const slice = createSlice({
       state.selectedLocation = null;
       state.isSelectedLocationLoading = false;
     });
-  }
+  },
 });
 
 export const { unsetSelectedLocation } = slice.actions;

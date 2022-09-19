@@ -13,9 +13,7 @@ const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
 function _ListView() {
   // Data
-  const {
-    locations, filteredLocations, selectedLocation, isLocationsLoading
-  } = useLocationsSelector();
+  const { locations, filteredLocations, selectedLocation, isLocationsLoading } = useLocationsSelector();
   const dispatch = useDispatch();
   const [isOnTablet, setIsOnTablet] = useState(false);
   const [isOnDesktop, setIsOnDesktop] = useState(true);
@@ -30,8 +28,7 @@ function _ListView() {
       } catch (error) {
         dispatch(setError(error));
       }
-    }
-    else {
+    } else {
       dispatch(unsetSelectedLocation());
     }
   }

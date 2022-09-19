@@ -34,29 +34,17 @@ function _InfoView() {
       <div className="content">
         <h6 className="title is-6">Links</h6>
         <p>
-          <a
-            href="https://github.com/potchangelo/covid-19-tracker"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://github.com/potchangelo/covid-19-tracker" target="_blank" rel="noopener noreferrer">
             Project Github
           </a>
         </p>
         <p>
-          <a
-            href="https://github.com/ExpDev07/coronavirus-tracker-api"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://github.com/ExpDev07/coronavirus-tracker-api" target="_blank" rel="noopener noreferrer">
             Data API Github
           </a>
         </p>
         <p>
-          <a
-            href="https://github.com/Kilo59/coronavirus-tracker-api"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://github.com/Kilo59/coronavirus-tracker-api" target="_blank" rel="noopener noreferrer">
             Alternative Data API Github
           </a>
         </p>

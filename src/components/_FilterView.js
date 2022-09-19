@@ -2,7 +2,13 @@ import { useDispatch } from 'react-redux';
 import { Modal } from '../layouts';
 import { unsetError } from '../redux/error/slice';
 import { useFiltersSelector } from '../redux/filters/selector';
-import { cancelFilters, setFilters, setFiltersInputMaxConfirmed, setFiltersInputMinConfirmed, setFiltersInputName } from '../redux/filters/slice';
+import {
+  cancelFilters,
+  setFilters,
+  setFiltersInputMaxConfirmed,
+  setFiltersInputMinConfirmed,
+  setFiltersInputName,
+} from '../redux/filters/slice';
 import { unsetSelectedLocation } from '../redux/locations/slice';
 import { MODAL_FILTER } from '../redux/modal/name';
 import { useModalSelector } from '../redux/modal/selector';
@@ -31,12 +37,7 @@ function _FilterView() {
   }
 
   return (
-    <Modal
-      extraClass="filter-view"
-      extraContentClass="filter-view__content"
-      isShow={isShow}
-      onCloseClick={onCancel}
-    >
+    <Modal extraClass="filter-view" extraContentClass="filter-view__content" isShow={isShow} onCloseClick={onCancel}>
       <form action="#" onSubmit={onSubmit}>
         <h4 className="title is-4">Filter countries</h4>
         <label className="label">Search by name</label>

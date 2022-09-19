@@ -39,7 +39,11 @@ const slice = createSlice({
 });
 
 export const {
-  setFiltersInputName, setFiltersInputMinConfirmed, setFiltersInputMaxConfirmed,
-  setFilters, cancelFilters, resetFilters
+  setFiltersInputName,
+  setFiltersInputMinConfirmed,
+  setFiltersInputMaxConfirmed,
+  setFilters,
+  cancelFilters,
+  resetFilters,
 } = slice.actions;
 export default slice.reducer;

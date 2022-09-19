@@ -12,10 +12,7 @@ const latestDays = 5;
 
 function _DetailsView() {
   // Data
-  const {
-    selectedLocation: location,
-    isSelectedLocationLoading: isLoading
-  } = useLocationsSelector();
+  const { selectedLocation: location, isSelectedLocationLoading: isLoading } = useLocationsSelector();
   const dispatch = useDispatch();
   const [isOnTablet, setIsOnTablet] = useState(false);
 
