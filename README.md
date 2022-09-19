@@ -21,4 +21,5 @@ npm start
 
 ## Credits
 
-* [Data API by ExpDev07](https://github.com/ExpDev07/coronavirus-tracker-api)
+* [Data API](https://github.com/ExpDev07/coronavirus-tracker-api)
+* [Alternative data API](https://github.com/Kilo59/coronavirus-tracker-api)
