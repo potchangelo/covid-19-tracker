@@ -1,3 +1,4 @@
+import { Loader } from 'react-feather';
 import './css/loadingView.scss';
 
 /**
@@ -21,8 +22,8 @@ function _LoadingView(props) {
 
   return (
     <div className={loadingClass}>
-      <span className="icon">
-        <i className="fas fa-circle-notch fa-lg fa-spin"></i>
+      <span className="icon loading-icon">
+        <Loader />
       </span>
       {labelElement}
     </div>

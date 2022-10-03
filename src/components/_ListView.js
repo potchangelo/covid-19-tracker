@@ -8,6 +8,7 @@ import { setModal } from '../redux/modal/slice';
 import { useLocationsSelector } from '../redux/locations/selector';
 import { getLocation, unsetSelectedLocation } from '../redux/locations/slice';
 import './css/listView.scss';
+import { ChevronsRight, Filter, Info, RotateCcw } from 'react-feather';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
@@ -124,7 +125,7 @@ function _ListView() {
         <div className="control">
           <button className="button is-small" onClick={onFilterOpenClick}>
             <span className="icon">
-              <i className="fas fa-filter"></i>
+              <Filter size={14} />
             </span>
             <span>Filter</span>
           </button>
@@ -132,7 +133,7 @@ function _ListView() {
         <div className="control">
           <button className="button is-small" onClick={onFilterResetClick}>
             <span className="icon">
-              <i className="fas fa-undo"></i>
+              <RotateCcw size={14} />
             </span>
             <span>Reset</span>
           </button>
@@ -194,7 +195,7 @@ function _ListView() {
           onClick={_ => setIsOnTablet(prev => !prev)}
         >
           <span className={tabletIconClass}>
-            <i className="fas fa-angle-double-right fa-lg"></i>
+            <ChevronsRight />
           </span>
         </div>
         <div
@@ -202,12 +203,12 @@ function _ListView() {
           onClick={_ => setIsOnDesktop(prev => !prev)}
         >
           <span className={desktopIconClass}>
-            <i className="fas fa-angle-double-right fa-lg"></i>
+            <ChevronsRight />
           </span>
         </div>
         <div className="list-view__menu-item" onClick={onInfoClick}>
           <span className="icon is-medium">
-            <i className="fas fa-info-circle"></i>
+            <Info />
           </span>
         </div>
       </div>

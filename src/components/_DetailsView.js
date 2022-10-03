@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useState, useEffect } from 'react';
+import { X } from 'react-feather';
 import { useDispatch } from 'react-redux';
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
@@ -28,7 +29,7 @@ function _DetailsView() {
       <div className="details-view">
         <div className="details-view__close" onClick={_ => dispatch(unsetSelectedLocation())}>
           <span className="icon is-medium">
-            <i className="fas fa-times fa-lg"></i>
+            <X />
           </span>
         </div>
         <div className="details-view__content">
@@ -153,7 +154,7 @@ function _DetailsView() {
     <div className={detailsClass}>
       <div className="details-view__close" onClick={_ => dispatch(unsetSelectedLocation())}>
         <span className="icon is-medium">
-          <i className="fas fa-times fa-lg"></i>
+          <X />
         </span>
       </div>
       <div className="details-view__content">

@@ -26,6 +26,25 @@
   transform: translate(-50%, -50%);
 }
 
+.loading-icon {
+  animation-name: loading-icon;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes loading-icon {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media screen and (prefers-color-scheme: dark) {
   .loading-view__app {
     color: $white-ter;
