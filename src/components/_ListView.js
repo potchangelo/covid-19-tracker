@@ -113,7 +113,7 @@ function _ListView() {
 
   let totalElements = (
     <>
-      <h4 className="title is-5 mb-3">Total</h4>
+      <h5 className="title is-5 mb-4">Total</h5>
       {totalDataElements}
     </>
   );

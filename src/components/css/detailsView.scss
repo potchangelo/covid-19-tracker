@@ -40,7 +40,7 @@
 }
 
 .details-view__content-block {
-  padding: 20px;
+  padding: 16px;
 
   &:not(:last-child) {
     border-bottom: 1px solid $grey-lighter;
@@ -49,7 +49,7 @@
 
 .details-view__text {
   padding-top: 32px;
-  padding-bottom: 24px;
+  padding-bottom: 16px;
 
   .column {
     padding-top: 8px;
