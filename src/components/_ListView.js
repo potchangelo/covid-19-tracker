@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { ChevronsRight, Filter, Info, RotateCcw } from 'react-feather';
 import { useDispatch } from 'react-redux';
 import LoadingView from './_LoadingView';
 import { setError, unsetError } from '../redux/error/slice';
@@ -8,7 +9,6 @@ import { setModal } from '../redux/modal/slice';
 import { useLocationsSelector } from '../redux/locations/selector';
 import { getLocation, unsetSelectedLocation } from '../redux/locations/slice';
 import './css/listView.scss';
-import { ChevronsRight, Filter, Info, RotateCcw } from 'react-feather';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];
 
@@ -75,8 +75,8 @@ function _ListView() {
   // Elements
   // - Open / Close
   let listviewClass = 'list-view';
-  let tabletIconClass = 'icon is-medium';
-  let desktopIconClass = 'icon is-medium';
+  let tabletIconClass = 'icon';
+  let desktopIconClass = 'icon';
   if (isOnTablet) {
     listviewClass += ' is-on-tablet';
     tabletIconClass += ' is-rotate-180';
@@ -100,12 +100,12 @@ function _ListView() {
     else if (key === 'deaths') titleClass += ' has-text-danger';
 
     return (
-      <div key={key} className="columns is-mobile">
+      <div key={key} className="columns is-mobile is-gapless mb-2">
         <div className="column">
-          <h6 className={titleClass}>{title}</h6>
+          <b className={titleClass}>{title}</b>
         </div>
         <div className="column is-narrow">
-          <p className="is-6 has-text-right">{count.toLocaleString('en')}</p>
+          <span className="has-text-right">{count.toLocaleString('en')}</span>
         </div>
       </div>
     );
@@ -113,7 +113,7 @@ function _ListView() {
 
   let totalElements = (
     <>
-      <h4 className="title is-4">Total</h4>
+      <h4 className="title is-5 mb-3">Total</h4>
       {totalDataElements}
     </>
   );
@@ -167,10 +167,10 @@ function _ListView() {
       <div key={`${id}-${country_code}`} className={locationClass} onClick={_ => onClickItem(id)} data-id={id}>
         <div className="columns is-mobile">
           <div className="column">
-            <h6 className="title is-6">{title}</h6>
+            <b className="title is-6">{title}</b>
           </div>
           <div className="column is-narrow">
-            <p className="is-6 has-text-right">{confirmed.toLocaleString('en')}</p>
+            <span className="is-6 has-text-right">{confirmed.toLocaleString('en')}</span>
           </div>
         </div>
       </div>
@@ -195,7 +195,7 @@ function _ListView() {
           onClick={_ => setIsOnTablet(prev => !prev)}
         >
           <span className={tabletIconClass}>
-            <ChevronsRight />
+            <ChevronsRight size={18} />
           </span>
         </div>
         <div
@@ -203,20 +203,24 @@ function _ListView() {
           onClick={_ => setIsOnDesktop(prev => !prev)}
         >
           <span className={desktopIconClass}>
-            <ChevronsRight />
+            <ChevronsRight size={18} />
           </span>
         </div>
         <div className="list-view__menu-item" onClick={onInfoClick}>
-          <span className="icon is-medium">
-            <Info />
+          <span className="icon">
+            <Info size={18} />
           </span>
         </div>
       </div>
       <div className="list-view__content">
         <div className="list-view__brand">
-          <h1 className="title is-5">COVID-19 Tracker</h1>
-          <h3 className="subtitle is-7">by Zinglecode</h3>
-          <div className="list-view__logo" />
+          <div>
+            <div className="list-view__logo" />
+          </div>
+          <div>
+            <h1 className="title is-6">COVID-19 Tracker</h1>
+            <h3 className="subtitle is-7">by Zinglecode</h3>
+          </div>
         </div>
         <div className="list-view__stat list-view__content-block">
           {loadingView}
