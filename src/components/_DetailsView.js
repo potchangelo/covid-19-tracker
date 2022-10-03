@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useState, useEffect } from 'react';
+import { X } from 'react-feather';
 import { useDispatch } from 'react-redux';
 import LoadingView from './_LoadingView';
 import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
@@ -28,7 +29,7 @@ function _DetailsView() {
       <div className="details-view">
         <div className="details-view__close" onClick={_ => dispatch(unsetSelectedLocation())}>
           <span className="icon is-medium">
-            <i className="fas fa-times fa-lg"></i>
+            <X />
           </span>
         </div>
         <div className="details-view__content">
@@ -62,12 +63,12 @@ function _DetailsView() {
     else if (key === 'deaths') titleClass += ' has-text-danger';
 
     return (
-      <div key={key} className="columns is-mobile">
-        <div className="column is-8">
-          <h6 className={titleClass}>{_title}</h6>
-        </div>
+      <div key={key} className="columns is-mobile is-gapless mb-2">
         <div className="column">
-          <p className="is-6 has-text-right">{count.toLocaleString('en')}</p>
+          <b className={titleClass}>{_title}</b>
+        </div>
+        <div className="column is-narrow">
+          <span className="has-text-right">{count.toLocaleString('en')}</span>
         </div>
       </div>
     );
@@ -75,7 +76,7 @@ function _DetailsView() {
 
   let textElement = (
     <div className="details-view__text details-view__content-block">
-      <h4 className="title is-4">{title}</h4>
+      <h5 className="title is-5 mb-4">{title}</h5>
       {totalElements}
     </div>
   );
@@ -128,7 +129,7 @@ function _DetailsView() {
 
   let chartElement = (
     <div className="details-view__chart details-view__content-block">
-      <h4 className="title is-5">Latest {latestDays} days total</h4>
+      <h5 className="title is-5">Latest {latestDays} days total</h5>
       {barChartElements}
     </div>
   );
@@ -153,7 +154,7 @@ function _DetailsView() {
     <div className={detailsClass}>
       <div className="details-view__close" onClick={_ => dispatch(unsetSelectedLocation())}>
         <span className="icon is-medium">
-          <i className="fas fa-times fa-lg"></i>
+          <X />
         </span>
       </div>
       <div className="details-view__content">

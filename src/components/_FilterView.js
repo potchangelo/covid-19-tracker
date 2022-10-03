@@ -39,7 +39,7 @@ function _FilterView() {
   return (
     <Modal extraClass="filter-view" extraContentClass="filter-view__content" isShow={isShow} onCloseClick={onCancel}>
       <form action="#" onSubmit={onSubmit}>
-        <h4 className="title is-4">Filter countries</h4>
+        <h5 className="title is-5">Filter countries</h5>
         <label className="label">Search by name</label>
         <div className="field more-margin-bottom">
           <div className="control is-expanded">
