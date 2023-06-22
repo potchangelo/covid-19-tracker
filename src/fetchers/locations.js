@@ -3,7 +3,9 @@ import Axios from 'axios';
 // Original API
 // const baseUrl = 'https://coronavirus-tracker-api.herokuapp.com/v2';
 // Forked API
-const baseUrl = 'https://covid-tracker-us.herokuapp.com/v2';
+// const baseUrl = 'https://covid-tracker-us.herokuapp.com/v2';
+// My own forked API
+const baseUrl = 'https://covid-19-tracker-api.onrender.com/v2';
 
 const getLocations = () => Axios.get(`${baseUrl}/locations`);
 

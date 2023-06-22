@@ -48,6 +48,11 @@ function _InfoView() {
             Alternative Data API Github
           </a>
         </p>
+        <p>
+          <a href="https://github.com/potchangelo/covid-19-tracker-api" target="_blank" rel="noopener noreferrer">
+            My Own Forked API Github
+          </a>
+        </p>
       </div>
       <p className="is-size-7">&copy; Copyright {new Date().getFullYear()} Zinglecode.</p>
     </Modal>

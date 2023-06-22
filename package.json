@@ -11,7 +11,7 @@
     "bulma",
     "chart.js"
   ],
-  "version": "1.3.1",
+  "version": "1.4.0",
   "author": "Potchara Puttawanchai",
   "homepage": "https://covid-19-tracker-app.netlify.app/",
   "repository": {
@@ -22,30 +22,11 @@
     "url": "https://github.com/potchangelo/covid-19-tracker.git/issues"
   },
   "license": "MIT",
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.8.5",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.4.3",
-    "axios": "^0.27.2",
-    "bulma": "^0.9.4",
-    "chart.js": "^3.9.1",
-    "dayjs": "^1.11.5",
-    "leaflet": "^1.8.0",
-    "react": "^18.2.0",
-    "react-chartjs-2": "^4.3.1",
-    "react-dom": "^18.2.0",
-    "react-feather": "^2.0.10",
-    "react-leaflet": "^4.0.2",
-    "react-redux": "^8.0.2",
-    "react-scripts": "^5.0.1",
-    "redux": "^4.2.0",
-    "redux-thunk": "^2.4.1",
-    "sass": "^1.54.9",
-    "web-vitals": "^3.0.2"
+  "engines": {
+    "node": "18"
   },
-  "devDependencies": {
-    "prettier": "^2.7.1"
+  "volta": {
+    "node": "18.16.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -70,5 +51,31 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "axios": "^1.4.0",
+    "bulma": "^0.9.4",
+    "chart.js": "^4.3.0",
+    "dayjs": "^1.11.8",
+    "leaflet": "^1.9.4",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-feather": "^2.0.10",
+    "react-leaflet": "^4.2.1",
+    "react-redux": "^8.1.0",
+    "react-scripts": "^5.0.1",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2",
+    "sass": "^1.63.4",
+    "web-vitals": "^3.3.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "prettier": "^2.8.8"
   }
 }
