@@ -22,7 +22,6 @@
     "url": "https://github.com/potchangelo/covid-19-tracker.git/issues"
   },
   "license": "MIT",
-  "type": "module",
   "engines": {
     "node": "20"
   },
@@ -30,10 +29,28 @@
     "node": "20.10.0"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
@@ -51,18 +68,14 @@
     "react-feather": "^2.0.10",
     "react-leaflet": "^4.2.1",
     "react-redux": "^9.0.4",
+    "react-scripts": "^5.0.1",
+    "redux": "^5.0.0",
     "redux-thunk": "^3.1.0",
     "sass": "^1.69.5",
-    "vite": "^5.0.8"
+    "web-vitals": "^3.5.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.55.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "prettier": "^3.1.1"
   }
 }
