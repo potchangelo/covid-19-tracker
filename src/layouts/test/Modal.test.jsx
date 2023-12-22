@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { Modal } from '..';
+import { render, screen } from '@testing-library/react';
+import Modal from '../_Modal';
 
 test('Modal disappeared if no props passed', () => {
   const { container } = render(<Modal />);
@@ -9,11 +9,16 @@ test('Modal disappeared if no props passed', () => {
 
 test('Modal disappeared if isShow is false', () => {
   const { container } = render(<Modal isShow={false} />);
+  console.log('Disappeared')
+  console.log(screen.debug());
   expect(container.childElementCount).toBe(0);
 });
 
-test('Modal appeared if isShow is true', () => {
+test('Modal appeared if isShow is true', async () => {
   const { container } = render(<Modal isShow={true} />);
+  console.log('Appeared')
+  console.log(screen.debug());
+  // console.log(container);
   expect(container.childElementCount).toBe(1);
 });
 
