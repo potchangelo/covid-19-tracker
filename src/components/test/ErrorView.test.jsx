@@ -1,23 +1,24 @@
-import { render } from '@testing-library/react';
+// import { render } from '@testing-library/react';
 import React from 'react';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 import { ErrorView } from '..';
 import store from '../../redux/store';
 import { setError } from '../../redux/error/slice';
+import { renderWithProvider } from '../../utils/testingLibraryExtensions.jsx';
 
-test('ErrorView disappeared if no error', () => {
-  const { container } = render(<Provider store={store}><ErrorView /></Provider>);
+test('ErrorView not display if no error', () => {
+  const { container } = renderWithProvider(<ErrorView />, store);
   expect(container.querySelector('.error-view')).toBeNull();
 });
 
-test('ErrorView appeared and displayed network error message', () => {
+test('ErrorView display network error message', () => {
   store.dispatch(setError(new Error("Network Error")))
-  const { getByText } = render(<Provider store={store}><ErrorView /></Provider>);
+  const { getByText } = renderWithProvider(<ErrorView />, store);
   expect(getByText(/network error/i)).not.toBeNull();
 });
 
-test('ErrorView appeared and displayed general message for general error', () => {
-  store.dispatch(setError(new Error("Not a network error")))
-  const { getByText } = render(<Provider store={store}><ErrorView /></Provider>);
+test('ErrorView display general message for general error', () => {
+  store.dispatch(setError(new Error("Not a network errors")))
+  const { getByText } = renderWithProvider(<ErrorView />, store);
   expect(getByText(/something went wrong/i)).not.toBeNull();
 });
