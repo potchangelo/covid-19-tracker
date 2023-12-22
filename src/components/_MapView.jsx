@@ -78,12 +78,12 @@ function _MapView() {
 
   // Effects
   useEffect(() => {
-    if (!!map) {
+    if (map) {
       map.on('move', onMapChange);
       map.on('zoom', onMapChange);
     }
     return () => {
-      if (!!map) {
+      if (map) {
         map.off('move', onMapChange);
         map.off('zoom', onMapChange);
       }

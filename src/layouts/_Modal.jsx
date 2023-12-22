@@ -22,7 +22,7 @@ function _Modal(props) {
   const modal = useRef(null);
 
   let modalClass = 'modal is-active';
-  if (!!extraClass) modalClass += ` ${extraClass}`;
+  if (extraClass) modalClass += ` ${extraClass}`;
 
   if (!modal.current) {
     modal.current = document.createElement('div');
@@ -31,7 +31,7 @@ function _Modal(props) {
 
   // Children
   let contentClass = 'modal-content';
-  if (!!extraContentClass) contentClass += ` ${extraContentClass}`;
+  if (extraContentClass) contentClass += ` ${extraContentClass}`;
 
   const childrenElements = (
     <>

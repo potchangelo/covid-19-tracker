@@ -13,12 +13,12 @@ function _LoadingView(props) {
   if (!isShow) return null;
 
   let labelElement = null;
-  if (!!label) {
+  if (label) {
     labelElement = <span className="loading-view__label">{label}</span>;
   }
 
   let loadingClass = 'loading-view';
-  if (!!extraClass) loadingClass += ` ${extraClass}`;
+  if (extraClass) loadingClass += ` ${extraClass}`;
 
   return (
     <div className={loadingClass}>

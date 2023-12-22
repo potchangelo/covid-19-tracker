@@ -91,13 +91,13 @@ function _DetailsViewChart(props) {
   useEffect(() => {
     onThemeChange();
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
-    if (!!mql.addEventListener) {
+    if (mql.addEventListener) {
       mql.addEventListener('change', onThemeChange);
     } else {
       mql.addListener(onThemeChange);
     }
     return () => {
-      if (!!mql.addEventListener) {
+      if (mql.addEventListener) {
         mql.removeEventListener('change', onThemeChange);
       } else {
         mql.removeListener(onThemeChange);

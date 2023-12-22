@@ -36,8 +36,7 @@ const slice = createSlice({
       });
       state.isLocationsLoading = false;
     });
-    builder.addCase(getLocations.rejected, (state, action) => {
-      // action.error.message
+    builder.addCase(getLocations.rejected, (state, _) => {
       state.isLocationsLoading = false;
     });
 
@@ -50,7 +49,7 @@ const slice = createSlice({
       state.selectedLocation = location;
       state.isSelectedLocationLoading = false;
     });
-    builder.addCase(getLocation.rejected, (state, action) => {
+    builder.addCase(getLocation.rejected, (state, _) => {
       state.selectedLocation = null;
       state.isSelectedLocationLoading = false;
     });

@@ -157,7 +157,7 @@ function _ListView() {
       title = `${province}, ${country}`;
     }
     let locationClass = 'list-view__location';
-    if (!!selectedLocation) {
+    if (selectedLocation) {
       if (location.id === selectedLocation.id) {
         locationClass += ' selected';
       }
