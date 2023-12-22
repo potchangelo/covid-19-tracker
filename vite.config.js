@@ -9,5 +9,10 @@ export default defineConfig(config => {
       port: +(env.SERVER_PORT ?? 3001)
     },
     plugins: [react()],
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: './src/setupTests.js',
+    },
   };
 })
