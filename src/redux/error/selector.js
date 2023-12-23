@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 /**
- * @returns {Error|null} error object
+ * @returns {string|null} error message
  */
 const useErrorSelector = () => useSelector(state => state.error);
 

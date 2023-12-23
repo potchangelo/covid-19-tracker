@@ -4,12 +4,12 @@ import { unsetError } from '../redux/error/slice';
 import './css/errorView.scss';
 
 function _ErrorView() {
-  const error = useErrorSelector();
+  const errorMessage = useErrorSelector();
   const dispatch = useDispatch();
 
   let label = 'Something went wrong, please wait and try again.';
-  if (!error) return null;
-  else if (error.message === 'Network Error') {
+  if (!errorMessage) return null;
+  else if (errorMessage === 'Network Error') {
     label = 'API network error, please wait and try again.';
   }
 
