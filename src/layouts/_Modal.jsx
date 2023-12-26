@@ -1,7 +1,12 @@
 import { useEffect, useCallback, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
-const modalPortal = document.querySelector('#modal-portal');
+let modalPortal = document.querySelector('#modal-portal');
+if (!modalPortal) {
+  modalPortal = document.createElement('div');
+  modalPortal.id = 'modal-portal';
+  document.body.appendChild(modalPortal);
+}
 
 /**
  * @callback closeCallback
