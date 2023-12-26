@@ -1,10 +1,11 @@
 import React from 'react';
-import { test, expect } from 'vitest';
-import { InfoView } from '../index.js';
+import { expect, test } from 'vitest';
+
 import { MODAL_INFO } from '../../redux/modal/name';
 import { setModal } from '../../redux/modal/slice';
 import store from '../../redux/store.js';
 import { renderWithProvider } from '../../utils/testingLibraryExtensions.jsx';
+import { InfoView } from '../index.js';
 
 test('InfoView is invisible if modal is unset', () => {
   const { queryByText } = renderWithProvider(<InfoView />, store);

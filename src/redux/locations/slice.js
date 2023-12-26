@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getLocations as apiGetLocations, getLocation as apiGetLocation } from '../../fetchers/locations';
+
+import { getLocation as apiGetLocation, getLocations as apiGetLocations } from '../../fetchers/locations';
 
 const getLocations = createAsyncThunk('locations/getLocations', async () => {
   const response = await apiGetLocations();

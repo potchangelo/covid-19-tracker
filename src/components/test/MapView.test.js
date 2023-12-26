@@ -1,5 +1,6 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
+
 import { MapView } from '..';
 
 const mockViewport = { center: [15, 101], zoom: 5 };
@@ -34,7 +35,7 @@ test('MapView markers count equals location array length', () => {
 
 test('MapView selected marker has different class than others', () => {
   const { container } = render(
-    <MapView viewport={mockViewport} locations={mockLocations} selectedLocation={mockSelectedLocation} />
+    <MapView viewport={mockViewport} locations={mockLocations} selectedLocation={mockSelectedLocation} />,
   );
   expect(container.querySelector('.map-view__marker.selected')).not.toBeNull();
   expect(container.querySelectorAll('.map-view__marker:not(.selected)').length).toBe(mockLocations.length - 1);

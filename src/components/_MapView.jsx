@@ -1,7 +1,8 @@
 import { divIcon } from 'leaflet';
-import { useState, useEffect, useCallback } from 'react';
-import { MapContainer, TileLayer, Marker, ZoomControl, Tooltip } from 'react-leaflet';
+import { useCallback, useEffect, useState } from 'react';
+import { MapContainer, Marker, TileLayer, Tooltip, ZoomControl } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
+
 import { setError } from '../redux/error/slice';
 import { useLocationsSelector } from '../redux/locations/selector';
 import { getLocation } from '../redux/locations/slice';

@@ -1,13 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChevronsRight, Filter, Info, RotateCcw } from 'react-feather';
 import { useDispatch } from 'react-redux';
-import LoadingView from './_LoadingView';
+
 import { setError, unsetError } from '../redux/error/slice';
 import { resetFilters } from '../redux/filters/slice';
-import { MODAL_FILTER, MODAL_INFO } from '../redux/modal/name';
-import { setModal } from '../redux/modal/slice';
 import { useLocationsSelector } from '../redux/locations/selector';
 import { getLocation, unsetSelectedLocation } from '../redux/locations/slice';
+import { MODAL_FILTER, MODAL_INFO } from '../redux/modal/name';
+import { setModal } from '../redux/modal/slice';
+import LoadingView from './_LoadingView';
 import './css/listView.scss';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];

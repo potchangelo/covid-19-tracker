@@ -1,4 +1,4 @@
-import { render, RenderOptions, RenderResult } from '@testing-library/react';
+import { RenderOptions, RenderResult, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 /**
@@ -9,11 +9,7 @@ import { Provider } from 'react-redux';
  * @returns {RenderResult}
  */
 function renderWithProvider(ui, store, options = {}) {
-  return render((
-    <Provider store={store}>
-      {ui}
-    </Provider>
-  ), options);
+  return render(<Provider store={store}>{ui}</Provider>, options);
 }
 
 export { renderWithProvider };

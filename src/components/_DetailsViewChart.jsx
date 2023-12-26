@@ -1,5 +1,5 @@
-import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { useState, useEffect } from 'react';
+import { BarElement, CategoryScale, Chart, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);

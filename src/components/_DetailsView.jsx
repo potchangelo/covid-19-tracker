@@ -1,11 +1,12 @@
 import dayjs from 'dayjs';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X } from 'react-feather';
 import { useDispatch } from 'react-redux';
-import LoadingView from './_LoadingView';
-import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
+
 import { useLocationsSelector } from '../redux/locations/selector';
 import { unsetSelectedLocation } from '../redux/locations/slice';
+import DetailsViewChart, { getChartYMaxTick } from './_DetailsViewChart';
+import LoadingView from './_LoadingView';
 import './css/detailsView.scss';
 
 const totalKeys = ['confirmed', 'recovered', 'deaths'];

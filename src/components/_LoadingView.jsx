@@ -1,4 +1,5 @@
 import { Loader } from 'react-feather';
+
 import './css/loadingView.scss';
 
 /**

@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
 let modalPortal = document.querySelector('#modal-portal');

@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+
 import { useErrorSelector } from '../redux/error/selector';
 import { unsetError } from '../redux/error/slice';
 import './css/errorView.scss';
